@@ -8,7 +8,9 @@ set(CMAKE_CXX_STANDARD 23)
 add_executable(SolarSystem
     main.cpp
     headers/DisplayWIndow.hpp
-    src/DisplayWindow.cpp)
+    src/DisplayWindow.cpp
+    headers/ContextWindow.hpp
+    src/ContextWindow.cpp)
 
 include_directories(
     headers

@@ -8,7 +8,9 @@ set(CMAKE_CXX_STANDARD 23)
 add_executable(SolarSystem
     main.cpp
     headers/DisplayWIndow.hpp
-    src/DisplayWindow.cpp)
+    src/DisplayWindow.cpp
+    headers/ContextWindow.hpp
+    src/ContextWindow.cpp)
 
 include_directories(
     headers
@@ -19,6 +21,7 @@ include_directories(
     ..//imgui//third_party/glfw/include
     ..//imgui//third_party/gl3w/
     ..//imgui//third_party/glm-0.9.9.6/
+    ..//Utils//
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE

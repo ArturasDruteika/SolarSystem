@@ -27,6 +27,7 @@
 ContextWindow::ContextWindow()
     : m_window{glfwCreateWindow(MIN_VIEWPORT_WIDTH, MIN_VIEWPORT_HEIGHT, "Solar System", NULL, NULL)}
     , m_backgroundColor(ImVec4(0.45f, 0.55f, 0.60f, 1.00f))
+    , m_pDisplayWindow{nullptr}
 {
 
 }
@@ -88,6 +89,10 @@ int ContextWindow::Init()
     // Setup Dear ImGui context
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
+
+    // Initialize DisplayWindow
+    m_pDisplayWindow = new DisplayWindow();
+
     ImGuiIO& io = ImGui::GetIO();
     (void) io;
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;       // Enable Keyboard Controls
@@ -140,7 +145,7 @@ int ContextWindow::Run()
     int display_w;
     int display_h;
 
-    static ImGuiWindowFlags windowFlags = ImGuiWindowFlags_NoCollapse;
+//    static ImGuiWindowFlags windowFlags = ImGuiWindowFlags_NoCollapse;
 
     while (!glfwWindowShouldClose(m_window))
     {
@@ -155,13 +160,16 @@ int ContextWindow::Run()
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
-        ImGui::Begin("Test Window", NULL, windowFlags);
-        ImGui::Button("Click Me!");
-        ImGui::End();
+
+//        Dockspace
+        ImGui::DockSpaceOverViewport(ImGui::GetMainViewport());
+
+        m_pDisplayWindow->RunMainWindow();
 
         // Rendering
         ImGui::Render();
 
+        glfwMakeContextCurrent(m_window);
         glfwGetFramebufferSize(m_window, &display_w, &display_h);
         glViewport(0, 0, display_w, display_h);
         glClearColor(

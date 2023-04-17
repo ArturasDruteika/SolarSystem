@@ -2,6 +2,8 @@
 #define SOLARSYSTEMSETUP_CONTEXTWINDOW_HPP
 
 
+#include "DisplayWindow.hpp"
+
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
@@ -46,6 +48,8 @@ private:
 
     GLFWwindow* m_window;
     ImVec4 m_backgroundColor;
+
+    DisplayWindow* m_pDisplayWindow;
 
 };
 

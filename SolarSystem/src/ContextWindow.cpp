@@ -1,5 +1,6 @@
 #include "ContextWindow.hpp"
 
+#include "spdlog/spdlog.h"
 #include "implot.h"
 
 #ifdef __APPLE__
@@ -43,7 +44,7 @@ int ContextWindow::Init()
     if (!glfwInit())
         return 1;
 
-    std::cout << "Window initialized!" << std::endl;
+    spdlog::info("Window initialized!");
 
     // Decide GL+GLSL versions
 #if __APPLE__
@@ -212,7 +213,7 @@ void ContextWindow::glfw_error_callback(int error, const char* description)
 
 void ContextWindow::CreateWindowIcon()
 {
-    std::string iconFile = "icons//solar_system_32x32.png";
+    std::string iconFile = "..//res//solar_system_32x32.png";
     try
     {
         GLFWimage images[1];
@@ -222,6 +223,6 @@ void ContextWindow::CreateWindowIcon()
     }
     catch (...)
     {
-        std::cout << ("Failed to load icon from " + iconFile) << std::endl;
+        spdlog::warn("Failed to load icon from " + iconFile);
     }
 }

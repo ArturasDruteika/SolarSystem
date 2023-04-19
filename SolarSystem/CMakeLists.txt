@@ -43,6 +43,21 @@ add_dependencies(${PROJECT_NAME}
 
 ### Post builds
 # SPDLog
-add_custom_command(TARGET SolarSystem POST_BUILD COMMAND ${CMAKE_COMMAND} ARGS -E copy_if_different
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} ARGS -E copy_if_different
     ${spdlog_root_path}//bin//$<$<CONFIG:debug>:spdlogd.dll>$<$<CONFIG:release>:spdlog.dll>
-    $<TARGET_FILE_DIR:SolarSystem>)
+    $<TARGET_FILE_DIR:${PROJECT_NAME}>)
+
+#Resources
+#Create directory and copy files
+file(TO_CMAKE_PATH $<TARGET_FILE_DIR:${PROJECT_NAME}>//res// resource_path)
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} -E make_directory ${resource_path})
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} ARGS -E copy_directory
+    ${CMAKE_SOURCE_DIR}//res//
+    ${resource_path})
+
+#additional copy for visual studio near project
+file(TO_CMAKE_PATH $<TARGET_FILE_DIR:${PROJECT_NAME}>//..//${PROJECT_NAME}//res// resource_vs_path)
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} -E make_directory ${resource_vs_path})
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} ARGS -E copy_directory
+    ${CMAKE_SOURCE_DIR}//res//
+    ${resource_vs_path})

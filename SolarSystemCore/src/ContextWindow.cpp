@@ -9,12 +9,12 @@
 
 #include <GLFW/glfw3.h>
 
+//just for loading image as icon
 #define STB_IMAGE_IMPLEMENTATION
 
-//#include "stb_image/stb_image.h"
+#include "stb_image.h"
 
 #include <string>
-#include <iostream>
 #include <stdio.h>
 
 // [Win32] Our example includes a copy of glfw3.lib pre-compiled with VS2010 to maximize ease of testing and compatibility with old VS compilers.
@@ -217,9 +217,9 @@ void ContextWindow::CreateWindowIcon()
     try
     {
         GLFWimage images[1];
-//        images[0].pixels = stbi_load(iconFile.c_str(), &images[0].width, &images[0].height, 0, 4); //rgba channels
-//        glfwSetWindowIcon(m_window, 1, images);
-//        stbi_image_free(images[0].pixels);
+        images[0].pixels = stbi_load(iconFile.c_str(), &images[0].width, &images[0].height, 0, 4); //rgba channels
+        glfwSetWindowIcon(m_window, 1, images);
+        stbi_image_free(images[0].pixels);
     }
     catch (...)
     {

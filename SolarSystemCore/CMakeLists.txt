@@ -27,7 +27,7 @@ include_directories(
     ..//imgui//third_party/glfw/include
     ..//imgui//third_party/gl3w/
     ..//imgui//third_party/glm-0.9.9.6/
-    #    stb_image_path
+    ${stb_image_path}
 )
 
 add_library(${PROJECT_NAME} SHARED

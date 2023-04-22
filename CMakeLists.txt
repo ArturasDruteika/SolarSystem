@@ -1,15 +1,16 @@
-cmake_minimum_required (VERSION 3.24.0)
-project (SolarSystemSetup)
+cmake_minimum_required(VERSION 3.24.0)
+project(SolarSystemSetup)
 
-if(CMAKE_COMPILER_IS_GNUCXX)
+if (CMAKE_COMPILER_IS_GNUCXX)
     add_definitions(-std=gnu++0x)
-endif()
+endif ()
 
 set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR})
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR})
 set(CMAKE_BUILD_PARALLEL_LEVEL)
 
 add_subdirectory(SolarSystem)
+add_subdirectory(SolarSystemCore)
 add_subdirectory(imgui)
 add_subdirectory(imgui//third_party)
-add_subdirectory(Utils)
+#add_subdirectory(Utils)

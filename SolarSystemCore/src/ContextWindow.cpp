@@ -9,12 +9,12 @@
 
 #include <GLFW/glfw3.h>
 
+//just for loading image as icon
 #define STB_IMAGE_IMPLEMENTATION
 
-#include "stb_image/stb_image.h"
+#include "stb_image.h"
 
 #include <string>
-#include <iostream>
 #include <stdio.h>
 
 // [Win32] Our example includes a copy of glfw3.lib pre-compiled with VS2010 to maximize ease of testing and compatibility with old VS compilers.
@@ -213,7 +213,7 @@ void ContextWindow::glfw_error_callback(int error, const char* description)
 
 void ContextWindow::CreateWindowIcon()
 {
-    std::string iconFile = "..//res//solar_system_32x32.png";
+    std::string iconFile = "res//solar_system_32x32.png";
     try
     {
         GLFWimage images[1];

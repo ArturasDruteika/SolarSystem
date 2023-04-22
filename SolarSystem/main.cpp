@@ -1,12 +1,9 @@
-#include "ContextWindow.hpp"
+#include "GraphicalRunner.hpp"
 
 int main()
 {
-    ContextWindow contextWindow;
-
-    contextWindow.Init();
-    contextWindow.Run();
-    contextWindow.DeInit();
+    GraphicalRunner graphicalRunner;
+    graphicalRunner.Enter();
 
     return 0;
 }

@@ -10,6 +10,7 @@ set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR})
 set(CMAKE_BUILD_PARALLEL_LEVEL)
 
 add_subdirectory(SolarSystem)
+add_subdirectory(SolarSystemCore)
 add_subdirectory(imgui)
 add_subdirectory(imgui//third_party)
-add_subdirectory(Utils)
+#add_subdirectory(Utils)

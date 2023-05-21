@@ -1,4 +1,5 @@
 #include "DisplayWindow.hpp"
+#include "imgui.h"
 
 
 DisplayWindow::DisplayWindow() = default;

@@ -2,9 +2,6 @@
 #define SOLARSYSTEMSETUP_DISPLAYWINDOW_HPP
 
 
-#include "imgui.h"
-
-
 class DisplayWindow
 {
 public:

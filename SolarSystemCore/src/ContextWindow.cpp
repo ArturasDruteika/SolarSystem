@@ -7,8 +7,6 @@
 #define GL_SILENCE_DEPRECATION
 #endif
 
-#include <GLFW/glfw3.h>
-
 //just for loading image as icon
 #define STB_IMAGE_IMPLEMENTATION
 
@@ -26,7 +24,7 @@
 
 
 ContextWindow::ContextWindow()
-    : m_window{glfwCreateWindow(MIN_VIEWPORT_WIDTH, MIN_VIEWPORT_HEIGHT, "Solar System", NULL, NULL)}
+    : m_window{glfwCreateWindow(MIN_VIEWPORT_WIDTH, MIN_VIEWPORT_HEIGHT, "Solar System", nullptr, nullptr)}
     , m_backgroundColor(ImVec4(0.45f, 0.55f, 0.60f, 1.00f))
     , m_pDisplayWindow{nullptr}
 {
@@ -62,8 +60,8 @@ int ContextWindow::Init()
     //glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);            // 3.0+ only
 #endif
 
-    m_window = glfwCreateWindow(MIN_VIEWPORT_WIDTH, MIN_VIEWPORT_HEIGHT, WINDOW_TITLE, NULL, NULL);
-    if (m_window == NULL)
+    m_window = glfwCreateWindow(MIN_VIEWPORT_WIDTH, MIN_VIEWPORT_HEIGHT, WINDOW_TITLE, nullptr, nullptr);
+    if (m_window == nullptr)
         return 1;
 
     //set minimum window size

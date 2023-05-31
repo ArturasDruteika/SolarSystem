@@ -18,14 +18,17 @@ add_executable(SolarSystem
 
 include_directories(
     ../SolarSystemCore/headers/
+    ../GraphicalRendering/headers/
 )
 
 add_dependencies(${PROJECT_NAME}
     SolarSystemCore
+    GraphicalRendering
     )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
     SolarSystemCore
+    GraphicalRendering
     )
 
 ### Post builds

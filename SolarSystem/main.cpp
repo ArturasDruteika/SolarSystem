@@ -1,9 +1,7 @@
-#include "GraphicalRunner.hpp"
+#include "cube.hpp"
 
 int main()
 {
-    GraphicalRunner graphicalRunner;
-    graphicalRunner.Enter();
-
+    Cube::RenderCube();
     return 0;
 }

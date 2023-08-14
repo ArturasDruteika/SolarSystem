@@ -6,6 +6,7 @@ set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_definitions(-DSOLARSYSTEMCORE_EXPORT)
+
 find_package(OpenGL REQUIRED)
 
 # spdlog
@@ -17,9 +18,20 @@ find_package(spdlog REQUIRED)
 file(TO_CMAKE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../../3rdParty/stb_image/ stb_image_path)
 set(stb_image_includes ${stb_image_path})
 
+
+add_library(${PROJECT_NAME} SHARED
+    headers/DisplayWindow.hpp
+    src/DisplayWindow.cpp
+    headers/ContextWindow.hpp
+    src/ContextWindow.cpp
+    headers/GraphicalRunner.hpp
+    src/GraphicalRunner.cpp
+    headers/GraphicalRunnerImpl.hpp
+    src/GraphicalRunnerImpl.cpp
+    )
+
 include_directories(
     headers
-    #    ..//Utils//
     ..//implot//
     ..//imgui//
     ..//imgui//imgui//
@@ -30,20 +42,11 @@ include_directories(
     ${stb_image_path}
 )
 
-add_library(${PROJECT_NAME} SHARED
-    headers/DisplayWindow.hpp
-    src/DisplayWindow.cpp
-    headers/ContextWindow.hpp
-    src/ContextWindow.cpp
-    headers/GraphicalRunner.hpp
-    src/GraphicalRunner.cpp
-    headers/GraphicalRunnerImpl.hpp
-    src/GraphicalRunnerImpl.cpp)
-
 target_link_libraries(${PROJECT_NAME} PRIVATE
     imgui
     spdlog::spdlog
     ${OPENGL_LIBRARIES}
+    ${VTK_LIBRARIES}
     )
 
 add_dependencies(${PROJECT_NAME}

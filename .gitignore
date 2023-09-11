@@ -49,3 +49,5 @@ Thumbs.db
 
 /.vs
 out/
+
+SolarSystem/imgui.ini

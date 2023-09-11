@@ -19,8 +19,9 @@ class GRAPHICALRENDERING_API Cube
 {
 public:
 	Cube();
-	static void RenderCube();
 	~Cube();
+
+	static void RenderCube();
 };
 
 #endif //SOLARSYSTEMSETUP_CUBE_HPP

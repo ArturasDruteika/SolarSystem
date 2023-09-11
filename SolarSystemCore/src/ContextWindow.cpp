@@ -19,10 +19,6 @@
 #include "GLFW/glfw3.h"
 #include "VtkViewer.h"
 
-// VTK
-#include <vtkSmartPointer.h>
-#include <vtkActor.h>
-
 // File-Specific Includes
 #include "imgui_vtk_demo.h" // Actor generator for this demo
 
@@ -32,6 +28,11 @@
 #if defined(_MSC_VER) && (_MSC_VER >= 1900) && !defined(IMGUI_DISABLE_WIN32_FUNCTIONS)
 #pragma comment(lib, "legacy_stdio_definitions")
 #endif
+
+static void glfw_error_callback(int error, const char* description)
+{
+    fprintf(stderr, "Glfw Error %d: %s\n", error, description);
+}
 
 
 ContextWindow::ContextWindow()

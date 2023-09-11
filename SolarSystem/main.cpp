@@ -1,11 +1,11 @@
 #include "cube.hpp"
-//#include "GraphicalRunner.hpp"
+#include "GraphicalRunner.hpp"
 
 int main()
 {
-    //GraphicalRunner appRunner;
+    GraphicalRunner appRunner;
     //start application
-    //appRunner.Enter();
+    appRunner.Enter();
     Cube::RenderCube();
     return 0;
 }

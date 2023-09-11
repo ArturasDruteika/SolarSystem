@@ -17,10 +17,6 @@
 #include <array>
 #include "cube.hpp"
 
-// VTK
-//#include <vtkSmartPointer.h>
-//#include <vtkActor.h>
-
 // File-Specific Includes
 #include "imgui_vtk_demo.h" // Actor generator for this demo
 

@@ -54,6 +54,8 @@ add_library(${PROJECT_NAME} SHARED
     src/GraphicalRunner.cpp
     headers/GraphicalRunnerImpl.hpp
     src/GraphicalRunnerImpl.cpp
+	headers/VTKWindow.hpp
+	src/VTKWindow.cpp
     )
 
 include_directories(

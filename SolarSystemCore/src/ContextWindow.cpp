@@ -1,10 +1,5 @@
 #include "ContextWindow.hpp"
 #include "cube.hpp"
-#include <vtkActor.h>
-#include <vtkRenderWindow.h>
-#include <vtkRenderWindowInteractor.h>
-#include <vtkRenderer.h>
-
 #include "spdlog/spdlog.h"
 #include "implot.h"
 
@@ -41,6 +36,7 @@ ContextWindow::ContextWindow()
     : m_window{glfwCreateWindow(MIN_VIEWPORT_WIDTH, MIN_VIEWPORT_HEIGHT, "Solar System", nullptr, nullptr)}
     , m_backgroundColor(ImVec4(0.45f, 0.55f, 0.60f, 1.00f))
     , m_pDisplayWindow{nullptr}
+    , m_vtkWindow{nullptr}
 {
 
 }
@@ -105,6 +101,7 @@ int ContextWindow::Init()
 
     // Initialize DisplayWindow
     m_pDisplayWindow = new DisplayWindow();
+    m_vtkWindow = new VTKWindow();
 
     ImGuiIO& io = ImGui::GetIO();
     (void) io;
@@ -220,7 +217,6 @@ int ContextWindow::Run()
 
 int ContextWindow::RenderVtkWindow()
 {
-    InitializeVtkActors();
     //setup 'enable docking' flag
     ImGuiIO& io = ImGui::GetIO();
     io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
@@ -228,8 +224,7 @@ int ContextWindow::RenderVtkWindow()
     int display_w;
     int display_h;
 
-    bool vtk_2_open = true;
-    ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+    m_vtkWindow->InitializeVtkActors();
 
     // Main loop
     while (!glfwWindowShouldClose(m_window))
@@ -246,48 +241,7 @@ int ContextWindow::RenderVtkWindow()
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
 
-        // 5. Show a more complex VtkViewer Instance (Closable, Widgets in Window)
-        ImGui::SetNextWindowSize(ImVec2(720, 480), ImGuiCond_FirstUseEver);
-        if (vtk_2_open)
-        {
-            ImGui::Begin("Vtk Viewer 2", &vtk_2_open, VtkViewer::NoScrollFlags());
-
-            // Other widgets can be placed in the same window as the VTKViewer
-            // However, since the VTKViewer is rendered to size ImGui::GetContentRegionAvail(),
-            // it is best to put all widgets first (i.e., render the VTKViewer last).
-            // If you want the VTKViewer to be at the top of a window, you can manually calculate
-            // and define its size, accounting for the space taken up by other widgets
-
-            auto renderer = m_vtkViewer2.getRenderer();
-            if (ImGui::Button("VTK Background: Black"))
-            {
-                renderer->SetBackground(0, 0, 0);
-            }
-            ImGui::SameLine();
-            if (ImGui::Button("VTK Background: Red"))
-            {
-                renderer->SetBackground(1, 0, 0);
-            }
-            ImGui::SameLine();
-            if (ImGui::Button("VTK Background: Green"))
-            {
-                renderer->SetBackground(0, 1, 0);
-            }
-            ImGui::SameLine();
-            if (ImGui::Button("VTK Background: Blue"))
-            {
-                renderer->SetBackground(0, 0, 1);
-            }
-            static float vtk2BkgAlpha = 0.2f;
-            ImGui::SliderFloat("Background Alpha", &vtk2BkgAlpha, 0.0f, 1.0f);
-            renderer->SetBackgroundAlpha(vtk2BkgAlpha);
-
-            m_vtkViewer2.render();
-
-            ImGui::End();
-        }
-
-        ImGui::Render();
+        m_vtkWindow->RunMainWindow();
 
         int display_w, display_h;
         glfwGetFramebufferSize(m_window, &display_w, &display_h);
@@ -329,12 +283,4 @@ void ContextWindow::CreateWindowIcon()
     {
         spdlog::warn("Failed to load icon from " + iconFile);
     }
-}
-
-void ContextWindow::InitializeVtkActors()
-{
-    vtkNew<vtkActor> cubeActor = Cube::GenerateCube();
-    m_vtkViewer1.addActor(cubeActor);
-    m_vtkViewer2.getRenderer()->SetBackground(0, 0, 0); // Black background
-    m_vtkViewer2.addActor(cubeActor);
 }

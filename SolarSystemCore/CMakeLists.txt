@@ -54,6 +54,8 @@ add_library(${PROJECT_NAME} SHARED
     src/GraphicalRunner.cpp
     headers/GraphicalRunnerImpl.hpp
     src/GraphicalRunnerImpl.cpp
+	headers/VTKWindow.hpp
+	src/VTKWindow.cpp
     )
 
 include_directories(
@@ -65,10 +67,10 @@ include_directories(
     ..//imgui//third_party/glfw/include
     ..//imgui//third_party/gl3w/
     ..//imgui//third_party/glm-0.9.9.6/
+    ../imgui/imgui_vtk/
     ${stb_image_path}
     ../GraphicalRendering/headers/
     ${VTK_INCLUDES_DIR}
-
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE

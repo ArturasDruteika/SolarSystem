@@ -3,6 +3,7 @@
 
 
 #include "DisplayWindow.hpp"
+#include "VTKWindow.hpp"
 
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
@@ -25,6 +26,7 @@
 
 #include <string>
 
+
 constexpr int MIN_VIEWPORT_WIDTH{1266};
 constexpr int MIN_VIEWPORT_HEIGHT{668};
 #define WINDOW_TITLE "Solar System"
@@ -39,6 +41,7 @@ public:
     int Init();
     void DeInit();
     int Run();
+    int RenderVtkWindow();
 
 private:
     // OpenGL error callback
@@ -50,7 +53,7 @@ private:
     ImVec4 m_backgroundColor;
 
     DisplayWindow* m_pDisplayWindow;
-
+    VTKWindow* m_vtkWindow;
 };
 
 

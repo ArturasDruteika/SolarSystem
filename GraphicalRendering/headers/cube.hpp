@@ -1,6 +1,20 @@
 #ifndef SOLARSYSTEMSETUP_CUBE_HPP
 #define SOLARSYSTEMSETUP_CUBE_HPP
 
+#include <vtkActor.h>
+#include <vtkCamera.h>
+#include <vtkCellArray.h>
+#include <vtkFloatArray.h>
+#include <vtkNamedColors.h>
+#include <vtkNew.h>
+#include <vtkPointData.h>
+#include <vtkPoints.h>
+#include <vtkPolyData.h>
+#include <vtkPolyDataMapper.h>
+#include <vtkRenderWindow.h>
+#include <vtkRenderWindowInteractor.h>
+#include <vtkRenderer.h>
+
 #if defined (_WIN32)
 #if defined(GRAPHICALRENDERING_EXPORT)
 #define GRAPHICALRENDERING_API __declspec(dllexport)
@@ -21,7 +35,7 @@ public:
 	Cube();
 	~Cube();
 
-	static void RenderCube();
+	static vtkNew<vtkActor> GenerateCube();
 };
 
 #endif //SOLARSYSTEMSETUP_CUBE_HPP

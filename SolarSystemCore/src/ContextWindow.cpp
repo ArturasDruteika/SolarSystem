@@ -1,5 +1,5 @@
 #include "ContextWindow.hpp"
-
+#include "cube.hpp"
 #include "spdlog/spdlog.h"
 #include "implot.h"
 
@@ -17,10 +17,7 @@
 
 // Include glfw3.h after our OpenGL definitions
 #include "GLFW/glfw3.h"
-#include "VtkViewer.h"
 
-// File-Specific Includes
-#include "imgui_vtk_demo.h" // Actor generator for this demo
 
 // [Win32] Our example includes a copy of glfw3.lib pre-compiled with VS2010 to maximize ease of testing and compatibility with old VS compilers.
 // To link with VS2010-era libraries, VS2015+ requires linking with legacy_stdio_definitions.lib, which we do using this pragma.
@@ -39,6 +36,7 @@ ContextWindow::ContextWindow()
     : m_window{glfwCreateWindow(MIN_VIEWPORT_WIDTH, MIN_VIEWPORT_HEIGHT, "Solar System", nullptr, nullptr)}
     , m_backgroundColor(ImVec4(0.45f, 0.55f, 0.60f, 1.00f))
     , m_pDisplayWindow{nullptr}
+    , m_vtkWindow{nullptr}
 {
 
 }
@@ -103,6 +101,7 @@ int ContextWindow::Init()
 
     // Initialize DisplayWindow
     m_pDisplayWindow = new DisplayWindow();
+    m_vtkWindow = new VTKWindow();
 
     ImGuiIO& io = ImGui::GetIO();
     (void) io;
@@ -202,6 +201,55 @@ int ContextWindow::Run()
         // Update and Render additional Platform Windows
         // (Platform functions may change the current OpenGL context, so we save/restore it to make it easier to paste this code elsewhere.
         //  For this specific demo app we could also call glfwMakeContextCurrent(window) directly)
+        if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+        {
+            GLFWwindow* backup_current_context = glfwGetCurrentContext();
+            ImGui::UpdatePlatformWindows();
+            ImGui::RenderPlatformWindowsDefault();
+            glfwMakeContextCurrent(backup_current_context);
+        }
+
+        glfwSwapBuffers(m_window);
+    }
+
+    return 0;
+}
+
+int ContextWindow::RenderVtkWindow()
+{
+    //setup 'enable docking' flag
+    ImGuiIO& io = ImGui::GetIO();
+    io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+
+    int display_w;
+    int display_h;
+
+    m_vtkWindow->InitializeVtkActors();
+
+    // Main loop
+    while (!glfwWindowShouldClose(m_window))
+    {
+        // Poll and handle events (inputs, window resize, etc.)
+        // You can read the io.WantCaptureMouse, io.WantCaptureKeyboard flags to tell if dear imgui wants to use your inputs.
+        // - When io.WantCaptureMouse is true, do not dispatch mouse input data to your main application.
+        // - When io.WantCaptureKeyboard is true, do not dispatch keyboard input data to your main application.
+        // Generally you may always pass all inputs to dear imgui, and hide them from your application based on those two flags.
+        glfwPollEvents();
+
+        // Start the Dear ImGui frame
+        ImGui_ImplOpenGL3_NewFrame();
+        ImGui_ImplGlfw_NewFrame();
+        ImGui::NewFrame();
+
+        m_vtkWindow->RunMainWindow();
+
+        int display_w, display_h;
+        glfwGetFramebufferSize(m_window, &display_w, &display_h);
+        glViewport(0, 0, display_w, display_h);
+        glClear(GL_COLOR_BUFFER_BIT);
+        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+        // Update and Render additional Platform Windows
         if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
         {
             GLFWwindow* backup_current_context = glfwGetCurrentContext();

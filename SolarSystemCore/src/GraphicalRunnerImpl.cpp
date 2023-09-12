@@ -11,7 +11,8 @@ GraphicalRunner::GraphicalRunnerImpl::~GraphicalRunnerImpl()
 void GraphicalRunner::GraphicalRunnerImpl::Enter()
 {
     m_gui.Init();
-    m_gui.Run();
+    //m_gui.Run();
+    m_gui.RenderVtkWindow();
     m_gui.DeInit();
 }
 

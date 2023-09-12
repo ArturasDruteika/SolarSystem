@@ -1,4 +1,9 @@
 #include "ContextWindow.hpp"
+#include "cube.hpp"
+#include <vtkActor.h>
+#include <vtkRenderWindow.h>
+#include <vtkRenderWindowInteractor.h>
+#include <vtkRenderer.h>
 
 #include "spdlog/spdlog.h"
 #include "implot.h"
@@ -17,10 +22,7 @@
 
 // Include glfw3.h after our OpenGL definitions
 #include "GLFW/glfw3.h"
-#include "VtkViewer.h"
 
-// File-Specific Includes
-#include "imgui_vtk_demo.h" // Actor generator for this demo
 
 // [Win32] Our example includes a copy of glfw3.lib pre-compiled with VS2010 to maximize ease of testing and compatibility with old VS compilers.
 // To link with VS2010-era libraries, VS2015+ requires linking with legacy_stdio_definitions.lib, which we do using this pragma.
@@ -216,6 +218,98 @@ int ContextWindow::Run()
     return 0;
 }
 
+int ContextWindow::RenderVtkWindow()
+{
+    InitializeVtkActors();
+    //setup 'enable docking' flag
+    ImGuiIO& io = ImGui::GetIO();
+    io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+
+    int display_w;
+    int display_h;
+
+    bool vtk_2_open = true;
+    ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+
+    // Main loop
+    while (!glfwWindowShouldClose(m_window))
+    {
+        // Poll and handle events (inputs, window resize, etc.)
+        // You can read the io.WantCaptureMouse, io.WantCaptureKeyboard flags to tell if dear imgui wants to use your inputs.
+        // - When io.WantCaptureMouse is true, do not dispatch mouse input data to your main application.
+        // - When io.WantCaptureKeyboard is true, do not dispatch keyboard input data to your main application.
+        // Generally you may always pass all inputs to dear imgui, and hide them from your application based on those two flags.
+        glfwPollEvents();
+
+        // Start the Dear ImGui frame
+        ImGui_ImplOpenGL3_NewFrame();
+        ImGui_ImplGlfw_NewFrame();
+        ImGui::NewFrame();
+
+        // 5. Show a more complex VtkViewer Instance (Closable, Widgets in Window)
+        ImGui::SetNextWindowSize(ImVec2(720, 480), ImGuiCond_FirstUseEver);
+        if (vtk_2_open)
+        {
+            ImGui::Begin("Vtk Viewer 2", &vtk_2_open, VtkViewer::NoScrollFlags());
+
+            // Other widgets can be placed in the same window as the VTKViewer
+            // However, since the VTKViewer is rendered to size ImGui::GetContentRegionAvail(),
+            // it is best to put all widgets first (i.e., render the VTKViewer last).
+            // If you want the VTKViewer to be at the top of a window, you can manually calculate
+            // and define its size, accounting for the space taken up by other widgets
+
+            auto renderer = m_vtkViewer2.getRenderer();
+            if (ImGui::Button("VTK Background: Black"))
+            {
+                renderer->SetBackground(0, 0, 0);
+            }
+            ImGui::SameLine();
+            if (ImGui::Button("VTK Background: Red"))
+            {
+                renderer->SetBackground(1, 0, 0);
+            }
+            ImGui::SameLine();
+            if (ImGui::Button("VTK Background: Green"))
+            {
+                renderer->SetBackground(0, 1, 0);
+            }
+            ImGui::SameLine();
+            if (ImGui::Button("VTK Background: Blue"))
+            {
+                renderer->SetBackground(0, 0, 1);
+            }
+            static float vtk2BkgAlpha = 0.2f;
+            ImGui::SliderFloat("Background Alpha", &vtk2BkgAlpha, 0.0f, 1.0f);
+            renderer->SetBackgroundAlpha(vtk2BkgAlpha);
+
+            m_vtkViewer2.render();
+
+            ImGui::End();
+        }
+
+        ImGui::Render();
+
+        int display_w, display_h;
+        glfwGetFramebufferSize(m_window, &display_w, &display_h);
+        glViewport(0, 0, display_w, display_h);
+        glClear(GL_COLOR_BUFFER_BIT);
+        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+        // Update and Render additional Platform Windows
+        if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+        {
+            GLFWwindow* backup_current_context = glfwGetCurrentContext();
+            ImGui::UpdatePlatformWindows();
+            ImGui::RenderPlatformWindowsDefault();
+            glfwMakeContextCurrent(backup_current_context);
+        }
+
+        glfwSwapBuffers(m_window);
+    }
+
+    return 0;
+}
+
 void ContextWindow::glfw_error_callback(int error, const char* description)
 {
     fprintf(stderr, "Glfw Error %d: %s\n", error, description);
@@ -235,4 +329,12 @@ void ContextWindow::CreateWindowIcon()
     {
         spdlog::warn("Failed to load icon from " + iconFile);
     }
+}
+
+void ContextWindow::InitializeVtkActors()
+{
+    vtkNew<vtkActor> cubeActor = Cube::GenerateCube();
+    m_vtkViewer1.addActor(cubeActor);
+    m_vtkViewer2.getRenderer()->SetBackground(0, 0, 0); // Black background
+    m_vtkViewer2.addActor(cubeActor);
 }

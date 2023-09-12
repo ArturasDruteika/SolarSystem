@@ -25,6 +25,9 @@
 
 #include <string>
 
+#include "VtkViewer.h"
+
+
 constexpr int MIN_VIEWPORT_WIDTH{1266};
 constexpr int MIN_VIEWPORT_HEIGHT{668};
 #define WINDOW_TITLE "Solar System"
@@ -39,17 +42,22 @@ public:
     int Init();
     void DeInit();
     int Run();
+    int RenderVtkWindow();
 
 private:
     // OpenGL error callback
     static void glfw_error_callback(int error, const char* description);
     // Load icon
     void CreateWindowIcon();
+    void InitializeVtkActors();
 
     GLFWwindow* m_window;
     ImVec4 m_backgroundColor;
 
     DisplayWindow* m_pDisplayWindow;
+
+    VtkViewer m_vtkViewer1;
+    VtkViewer m_vtkViewer2;
 
 };
 

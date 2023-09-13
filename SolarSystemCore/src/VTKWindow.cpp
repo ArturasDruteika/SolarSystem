@@ -7,7 +7,8 @@
 
 
 VTKWindow::VTKWindow()
-    : m_isVtkOpen{true}
+    : m_cube{}
+    , m_isVtkOpen{true}
 {
 }
 
@@ -65,8 +66,8 @@ void VTKWindow::RunMainWindow()
 
 void VTKWindow::InitializeVtkActors()
 {
-    vtkNew<vtkActor> cubeActor = Cube::GenerateCube();
-    m_vtkViewer1.addActor(cubeActor);
+    vtkNew<vtkActor> actor = m_cube.ReadSTLFIle("C:/Users/artur/C++Projects/solar_system/SolarSystem_build/Debug/trappist1_h_1_25_10_7.stl");
+    m_vtkViewer1.addActor(actor);
     m_vtkViewer2.getRenderer()->SetBackground(0, 0, 0); // Black background
-    m_vtkViewer2.addActor(cubeActor);
+    m_vtkViewer2.addActor(actor);
 }

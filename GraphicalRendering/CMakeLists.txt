@@ -34,7 +34,9 @@ find_package(VTK COMPONENTS
     RenderingCore
     RenderingFreeType
     RenderingGL2PSOpenGL2
+    RenderingContextOpenGL2
     RenderingOpenGL2
+    IOGeometry
     QUIET
     )
 if (NOT VTK_FOUND)
@@ -51,9 +53,8 @@ include_directories(
 add_library(${PROJECT_NAME} SHARED
     headers/cube.hpp
     src/cube.cpp
-    # headers/VtkViewer.h
-    # src/VtkViewer.cpp
-    # headers/imgui_vtk_demo.h
+    # headers/STLReader.hpp
+    # src/STLReader.cpp
     )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE

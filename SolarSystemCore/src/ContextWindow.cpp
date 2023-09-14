@@ -155,7 +155,7 @@ int ContextWindow::Run()
     int display_w;
     int display_h;
 
-//    static ImGuiWindowFlags windowFlags = ImGuiWindowFlags_NoCollapse;
+    // static ImGuiWindowFlags windowFlags = ImGuiWindowFlags_NoCollapse;
 
     m_vtkWindow->InitializeVtkActors();
 
@@ -173,7 +173,7 @@ int ContextWindow::Run()
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
 
-//        Dockspace
+        // Dockspace
         ImGui::DockSpaceOverViewport(ImGui::GetMainViewport());
 
         m_pDisplayWindow->RunMainWindow();

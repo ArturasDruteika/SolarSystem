@@ -11,10 +11,8 @@ public:
     GraphicalRunnerImpl(GraphicalRunner& parentRef);
     ~GraphicalRunnerImpl();
 
-    //run app
     void Enter();
 private:
-    //GUI window object
     ContextWindow m_gui;
 };
 

@@ -23,9 +23,6 @@ set(gl3w_dir ${CMAKE_CURRENT_SOURCE_DIR}/third_party/gl3w)
 set(gl3w_inc ${gl3w_dir}/include)
 set(gl3w_src ${gl3w_dir}/src/gl3w.c)
 
-# message(STATUS "DIR******: "${gl3w_src})
-# execute_process(COMMAND ${CMAKE_COMMAND} -E sleep 3.0)
-
 if (EXISTS ${gl3w_src})
     message(STATUS "Found gl3w source files")
 else ()
@@ -34,10 +31,6 @@ else ()
         message(FATAL_ERROR "Could not generate gl3w source files")
     endif ()
 endif ()
-
-# add_library(gl3w STATIC ${gl3w_src})
-# target_include_directories(gl3w PUBLIC ${gl3w_inc})
-# target_link_libraries(${EXEC_NAME} gl3w)
 
 # GLFW
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)

@@ -2,18 +2,9 @@
 #define SOLARSYSTEMSETUP_CUBE_HPP
 
 #include <vtkActor.h>
-#include <vtkCamera.h>
-#include <vtkCellArray.h>
-#include <vtkFloatArray.h>
-#include <vtkNamedColors.h>
 #include <vtkNew.h>
-#include <vtkPointData.h>
-#include <vtkPoints.h>
-#include <vtkPolyData.h>
-#include <vtkPolyDataMapper.h>
-#include <vtkRenderWindow.h>
-#include <vtkRenderWindowInteractor.h>
-#include <vtkRenderer.h>
+#include <vtkSTLReader.h>
+
 
 #if defined (_WIN32)
 #if defined(GRAPHICALRENDERING_EXPORT)
@@ -35,7 +26,12 @@ public:
 	Cube();
 	~Cube();
 
-	static vtkNew<vtkActor> GenerateCube();
+	vtkNew<vtkActor> GenerateCube();
+	vtkNew<vtkActor> ReadSTLFIle(std::string pathToStlFile);
+
+	void TestFunc(std::string pathToStlFile);
+
+private:
 };
 
 #endif //SOLARSYSTEMSETUP_CUBE_HPP

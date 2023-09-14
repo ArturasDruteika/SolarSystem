@@ -3,6 +3,7 @@
 
 
 #include "VtkViewer.h"
+#include "cube.hpp"
 
 
 class VTKWindow
@@ -20,8 +21,9 @@ public:
 private:
     bool m_isVtkOpen;
 
+    Cube m_cube;
     VtkViewer m_vtkViewer1;
-    VtkViewer m_vtkViewer2;
+    VtkViewer m_vtkViewerFinal;
 };
 
 

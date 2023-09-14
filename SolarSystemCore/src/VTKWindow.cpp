@@ -7,7 +7,8 @@
 
 
 VTKWindow::VTKWindow()
-    : m_isVtkOpen{true}
+    : m_cube{}
+    , m_isVtkOpen{true}
 {
 }
 
@@ -29,9 +30,9 @@ void VTKWindow::RunMainWindow()
     ImGui::SetNextWindowSize(ImVec2(720, 480), ImGuiCond_FirstUseEver);
     if (m_isVtkOpen)
     {
-        ImGui::Begin("Vtk Viewer 2", &m_isVtkOpen, VtkViewer::NoScrollFlags());
+        ImGui::Begin("Vtk Viewer", &m_isVtkOpen, VtkViewer::NoScrollFlags());
 
-        auto renderer = m_vtkViewer2.getRenderer();
+        auto renderer = m_vtkViewerFinal.getRenderer();
         if (ImGui::Button("VTK Background: Black"))
         {
             renderer->SetBackground(0, 0, 0);
@@ -55,7 +56,7 @@ void VTKWindow::RunMainWindow()
         ImGui::SliderFloat("Background Alpha", &vtk2BkgAlpha, 0.0f, 1.0f);
         renderer->SetBackgroundAlpha(vtk2BkgAlpha);
 
-        m_vtkViewer2.render();
+        m_vtkViewerFinal.render();
 
         ImGui::End();
     }
@@ -65,8 +66,8 @@ void VTKWindow::RunMainWindow()
 
 void VTKWindow::InitializeVtkActors()
 {
-    vtkNew<vtkActor> cubeActor = Cube::GenerateCube();
-    m_vtkViewer1.addActor(cubeActor);
-    m_vtkViewer2.getRenderer()->SetBackground(0, 0, 0); // Black background
-    m_vtkViewer2.addActor(cubeActor);
+    vtkNew<vtkActor> actor = m_cube.ReadSTLFIle("C:/Users/artur/C++Projects/solar_system/SolarSystem_build/Debug/venus_1_6_10_7.stl");
+    m_vtkViewer1.addActor(actor);
+    m_vtkViewerFinal.getRenderer()->SetBackground(0, 0, 0); // Black background
+    m_vtkViewerFinal.addActor(actor);
 }

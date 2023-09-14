@@ -23,7 +23,7 @@ private:
 
     Cube m_cube;
     VtkViewer m_vtkViewer1;
-    VtkViewer m_vtkViewer2;
+    VtkViewer m_vtkViewerFinal;
 };
 
 

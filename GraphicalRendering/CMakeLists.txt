@@ -53,8 +53,6 @@ include_directories(
 add_library(${PROJECT_NAME} SHARED
     headers/cube.hpp
     src/cube.cpp
-    # headers/STLReader.hpp
-    # src/STLReader.cpp
     )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE

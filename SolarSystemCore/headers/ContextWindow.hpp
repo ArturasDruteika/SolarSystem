@@ -40,8 +40,8 @@ public:
 
     int Init();
     void DeInit();
+
     int Run();
-    int RenderVtkWindow();
 
 private:
     // OpenGL error callback

@@ -157,6 +157,8 @@ int ContextWindow::Run()
 
 //    static ImGuiWindowFlags windowFlags = ImGuiWindowFlags_NoCollapse;
 
+    m_vtkWindow->InitializeVtkActors();
+
     while (!glfwWindowShouldClose(m_window))
     {
         // Poll and handle events (inputs, window resize, etc.)
@@ -175,6 +177,8 @@ int ContextWindow::Run()
         ImGui::DockSpaceOverViewport(ImGui::GetMainViewport());
 
         m_pDisplayWindow->RunMainWindow();
+        ImGui::DockSpaceOverViewport(ImGui::GetMainViewport());
+        m_vtkWindow->RunMainWindow();
 
         // Rendering
         ImGui::Render();
@@ -201,55 +205,6 @@ int ContextWindow::Run()
         // Update and Render additional Platform Windows
         // (Platform functions may change the current OpenGL context, so we save/restore it to make it easier to paste this code elsewhere.
         //  For this specific demo app we could also call glfwMakeContextCurrent(window) directly)
-        if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
-        {
-            GLFWwindow* backup_current_context = glfwGetCurrentContext();
-            ImGui::UpdatePlatformWindows();
-            ImGui::RenderPlatformWindowsDefault();
-            glfwMakeContextCurrent(backup_current_context);
-        }
-
-        glfwSwapBuffers(m_window);
-    }
-
-    return 0;
-}
-
-int ContextWindow::RenderVtkWindow()
-{
-    //setup 'enable docking' flag
-    ImGuiIO& io = ImGui::GetIO();
-    io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
-
-    int display_w;
-    int display_h;
-
-    m_vtkWindow->InitializeVtkActors();
-
-    // Main loop
-    while (!glfwWindowShouldClose(m_window))
-    {
-        // Poll and handle events (inputs, window resize, etc.)
-        // You can read the io.WantCaptureMouse, io.WantCaptureKeyboard flags to tell if dear imgui wants to use your inputs.
-        // - When io.WantCaptureMouse is true, do not dispatch mouse input data to your main application.
-        // - When io.WantCaptureKeyboard is true, do not dispatch keyboard input data to your main application.
-        // Generally you may always pass all inputs to dear imgui, and hide them from your application based on those two flags.
-        glfwPollEvents();
-
-        // Start the Dear ImGui frame
-        ImGui_ImplOpenGL3_NewFrame();
-        ImGui_ImplGlfw_NewFrame();
-        ImGui::NewFrame();
-
-        m_vtkWindow->RunMainWindow();
-
-        int display_w, display_h;
-        glfwGetFramebufferSize(m_window, &display_w, &display_h);
-        glViewport(0, 0, display_w, display_h);
-        glClear(GL_COLOR_BUFFER_BIT);
-        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
-        // Update and Render additional Platform Windows
         if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
         {
             GLFWwindow* backup_current_context = glfwGetCurrentContext();

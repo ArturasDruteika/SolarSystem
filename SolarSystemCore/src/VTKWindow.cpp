@@ -66,7 +66,7 @@ void VTKWindow::RunMainWindow()
 
 void VTKWindow::InitializeVtkActors()
 {
-    vtkNew<vtkActor> actor = m_cube.ReadSTLFIle("C:/Users/artur/C++Projects/solar_system/SolarSystem_build/Debug/venus_1_6_10_7.stl");
+    vtkNew<vtkActor> actor = m_cube.GenerateCube();
     m_vtkViewer1.addActor(actor);
     m_vtkViewerFinal.getRenderer()->SetBackground(0, 0, 0); // Black background
     m_vtkViewerFinal.addActor(actor);

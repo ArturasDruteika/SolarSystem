@@ -17,9 +17,39 @@
 #include <array>
 
 
+#include <vtkSmartPointer.h>
+#include <vtkRenderWindow.h>
+#include <vtkRenderWindowInteractor.h>
+#include <vtkRenderer.h>
+#include <vtkPolyDataMapper.h>
+#include <vtkActor.h>
+#include <vtkCubeSource.h>
+#include <vtkTransform.h>
+#include <vtkTransformPolyDataFilter.h>
+#include <vtkCallbackCommand.h>
+#include <vtkSphereSource.h>
+
+// Define a callback function for rotation
+void TimerCallbackFunction(vtkObject* caller, long unsigned int vtkNotUsed(eventId), void* clientData, void* vtkNotUsed(callData))
+{
+    vtkActor* earthActor = static_cast<vtkActor*>(clientData);
+
+    static double angle = 1.0; // Rotation speed
+
+    vtkSmartPointer<vtkTransform> earthTransform = vtkSmartPointer<vtkTransform>::New();
+    earthTransform->Identity();
+    earthTransform->RotateY(angle); // Rotate around Y-axis
+
+    earthActor->SetUserTransform(earthTransform);
+
+    vtkRenderWindow* renderWindow = static_cast<vtkRenderWindow*>(caller);
+    renderWindow->Render();
+}
+
 
 Cube::Cube()
 {
+    //TestFunc();
 }
 
 Cube::~Cube()
@@ -91,39 +121,9 @@ vtkNew<vtkActor> Cube::ReadSTLFIle(std::string pathToStlFile)
     return actor;
 }
 
-void Cube::TestFunc(std::string pathToStlFile)
+
+void Cube::TestFunc()
 {
-    vtkNew<vtkNamedColors> colors;
 
-    vtkNew<vtkSTLReader> reader;
-    reader->SetFileName(pathToStlFile.c_str());
-    reader->Update();
-
-    // Visualize
-    vtkNew<vtkPolyDataMapper> mapper;
-    mapper->SetInputConnection(reader->GetOutputPort());
-
-    vtkNew<vtkActor> actor;
-    actor->SetMapper(mapper);
-    actor->GetProperty()->SetDiffuse(0.8);
-    actor->GetProperty()->SetDiffuseColor(
-        colors->GetColor3d("LightSteelBlue").GetData());
-    actor->GetProperty()->SetSpecular(0.3);
-    actor->GetProperty()->SetSpecularPower(60.0);
-
-    vtkNew<vtkRenderer> renderer;
-    vtkNew<vtkRenderWindow> renderWindow;
-    renderWindow->AddRenderer(renderer);
-    renderWindow->SetWindowName("ReadSTL");
-
-    vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
-    renderWindowInteractor->SetRenderWindow(renderWindow);
-
-    renderer->AddActor(actor);
-    renderer->SetBackground(colors->GetColor3d("DarkOliveGreen").GetData());
-
-    renderWindow->Render();
-    renderWindowInteractor->Start();
 }
 
-    

@@ -29,7 +29,7 @@ public:
 	vtkNew<vtkActor> GenerateCube();
 	vtkNew<vtkActor> ReadSTLFIle(std::string pathToStlFile);
 
-	void TestFunc(std::string pathToStlFile);
+	void TestFunc();
 
 private:
 };

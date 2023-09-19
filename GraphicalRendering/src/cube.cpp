@@ -1,4 +1,5 @@
 #include "cube.hpp"
+
 #include <vtkCellArray.h>
 #include <vtkFloatArray.h>
 #include <vtkNamedColors.h>
@@ -9,22 +10,9 @@
 #include <vtkProperty.h>
 #include <vtkSTLReader.h>
 #include <vtkSmartPointer.h>
-#include <vtkRenderer.h>
 #include <vtkActor.h>
-#include <vtkCubeSource.h>
-#include <vtkTransform.h>
-#include <vtkTransformPolyDataFilter.h>
-#include <vtkCallbackCommand.h>
-#include <vtkSphereSource.h>
 
-#include <vtkRenderWindow.h>
-#include <vtkRenderWindowInteractor.h>
-#include <vtkRenderer.h>
-
-#include <iostream>
-#include <array>
-#include <thread>         // std::this_thread::sleep_for
-#include <chrono>  
+#include <array> 
 
 
 Cube::Cube()

@@ -3,7 +3,6 @@
 
 #include <vtkActor.h>
 #include <vtkNew.h>
-#include <vtkSTLReader.h>
 
 
 #if defined (_WIN32)

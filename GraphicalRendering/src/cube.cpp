@@ -8,20 +8,8 @@
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
 #include <vtkSTLReader.h>
-
-#include <vtkRenderWindow.h>
-#include <vtkRenderWindowInteractor.h>
-#include <vtkRenderer.h>
-
-#include <iostream>
-#include <array>
-
-
 #include <vtkSmartPointer.h>
-#include <vtkRenderWindow.h>
-#include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
-#include <vtkPolyDataMapper.h>
 #include <vtkActor.h>
 #include <vtkCubeSource.h>
 #include <vtkTransform.h>
@@ -29,27 +17,19 @@
 #include <vtkCallbackCommand.h>
 #include <vtkSphereSource.h>
 
-// Define a callback function for rotation
-void TimerCallbackFunction(vtkObject* caller, long unsigned int vtkNotUsed(eventId), void* clientData, void* vtkNotUsed(callData))
-{
-    vtkActor* earthActor = static_cast<vtkActor*>(clientData);
+#include <vtkRenderWindow.h>
+#include <vtkRenderWindowInteractor.h>
+#include <vtkRenderer.h>
 
-    static double angle = 1.0; // Rotation speed
-
-    vtkSmartPointer<vtkTransform> earthTransform = vtkSmartPointer<vtkTransform>::New();
-    earthTransform->Identity();
-    earthTransform->RotateY(angle); // Rotate around Y-axis
-
-    earthActor->SetUserTransform(earthTransform);
-
-    vtkRenderWindow* renderWindow = static_cast<vtkRenderWindow*>(caller);
-    renderWindow->Render();
-}
+#include <iostream>
+#include <array>
+#include <thread>         // std::this_thread::sleep_for
+#include <chrono>  
 
 
 Cube::Cube()
 {
-    //TestFunc();
+    TestFunc();
 }
 
 Cube::~Cube()
@@ -126,4 +106,3 @@ void Cube::TestFunc()
 {
 
 }
-

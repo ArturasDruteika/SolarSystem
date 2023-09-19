@@ -180,8 +180,8 @@ int ContextWindow::Run()
 
         // Dockspace
         ImGui::DockSpaceOverViewport(ImGui::GetMainViewport());
+
         m_pDisplayWindow->RunMainWindow();
-        ImGui::DockSpaceOverViewport(ImGui::GetMainViewport());
         m_vtkWindow->RunMainWindow();
 
         // Rendering

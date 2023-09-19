@@ -19,6 +19,7 @@
 #include "GLFW/glfw3.h"
 
 
+
 // [Win32] Our example includes a copy of glfw3.lib pre-compiled with VS2010 to maximize ease of testing and compatibility with old VS compilers.
 // To link with VS2010-era libraries, VS2015+ requires linking with legacy_stdio_definitions.lib, which we do using this pragma.
 // Your own project should not be affected, as you are likely to link with a newer binary of GLFW that is adequate for your version of Visual Studio.
@@ -48,14 +49,18 @@ ContextWindow::~ContextWindow()
 
 int ContextWindow::Init()
 {
-    glfwSetErrorCallback(ContextWindow::glfw_error_callback);
+    glfwSetErrorCallback(glfw_error_callback);
     if (!glfwInit())
         return 1;
 
-    spdlog::info("Window initialized!");
-
     // Decide GL+GLSL versions
-#if __APPLE__
+#if defined(IMGUI_IMPL_OPENGL_ES2)
+    // GL ES 2.0 + GLSL 100
+    const char* glsl_version = "#version 100";
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 2);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
+    glfwWindowHint(GLFW_CLIENT_API, GLFW_OPENGL_ES_API);
+#elif defined(__APPLE__)
     // GL 3.2 + GLSL 150
     const char* glsl_version = "#version 150";
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -64,6 +69,7 @@ int ContextWindow::Init()
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);            // Required on Mac
 #else
     // GL 3.0 + GLSL 130
+    const char* glsl_version = "#version 130";
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
     //glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);  // 3.2+ only
@@ -99,10 +105,6 @@ int ContextWindow::Init()
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
 
-    // Initialize DisplayWindow
-    m_pDisplayWindow = new DisplayWindow();
-    m_vtkWindow = new VTKWindow();
-
     ImGuiIO& io = ImGui::GetIO();
     (void) io;
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;       // Enable Keyboard Controls
@@ -131,6 +133,9 @@ int ContextWindow::Init()
     ImPlot::CreateContext();
 
     CreateWindowIcon();
+    // Initialize DisplayWindow
+    m_pDisplayWindow = new DisplayWindow();
+    m_vtkWindow = new VTKWindow();
 
     return 0;
 }
@@ -155,7 +160,7 @@ int ContextWindow::Run()
     int display_w;
     int display_h;
 
-//    static ImGuiWindowFlags windowFlags = ImGuiWindowFlags_NoCollapse;
+    // static ImGuiWindowFlags windowFlags = ImGuiWindowFlags_NoCollapse;
 
     m_vtkWindow->InitializeVtkActors();
 
@@ -173,11 +178,10 @@ int ContextWindow::Run()
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
 
-//        Dockspace
+        // Dockspace
         ImGui::DockSpaceOverViewport(ImGui::GetMainViewport());
 
         m_pDisplayWindow->RunMainWindow();
-        ImGui::DockSpaceOverViewport(ImGui::GetMainViewport());
         m_vtkWindow->RunMainWindow();
 
         // Rendering

@@ -64,6 +64,7 @@ include_directories(
     ..//imgui//
     ..//imgui//imgui//
     ..//imgui//imgui//examples//
+    ..//imgui//imgui//backends//
     ..//imgui//third_party/glfw/include
     ..//imgui//third_party/gl3w/
     ..//imgui//third_party/glm-0.9.9.6/

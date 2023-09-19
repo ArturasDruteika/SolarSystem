@@ -20,11 +20,8 @@ endif ()
 # Either compile it as a static library like this example
 # Or add it to the source files for the main executable + imgui + vtkviewer
 set(gl3w_dir ${CMAKE_CURRENT_SOURCE_DIR}/third_party/gl3w)
-set(gl3w_inc ${gl3w_dir}/include)
-set(gl3w_src ${gl3w_dir}/src/gl3w.c)
-
-# message(STATUS "DIR******: "${gl3w_src})
-# execute_process(COMMAND ${CMAKE_COMMAND} -E sleep 3.0)
+set(gl3w_inc ${gl3w_dir}/GL/)
+set(gl3w_src ${gl3w_dir}/GL/gl3w.c)
 
 if (EXISTS ${gl3w_src})
     message(STATUS "Found gl3w source files")
@@ -34,10 +31,6 @@ else ()
         message(FATAL_ERROR "Could not generate gl3w source files")
     endif ()
 endif ()
-
-# add_library(gl3w STATIC ${gl3w_src})
-# target_include_directories(gl3w PUBLIC ${gl3w_inc})
-# target_link_libraries(${EXEC_NAME} gl3w)
 
 # GLFW
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
@@ -56,15 +49,21 @@ endif ()
 
 # VTK
 find_package(VTK COMPONENTS
-    CommonCore
     CommonColor
-    CommonDataModel
-    FiltersCore
-    InteractionStyle
-    RenderingCore
-    RenderingFreeType
-    RenderingGL2PSOpenGL2
-    RenderingOpenGL2
+	CommonCore
+	CommonDataModel
+	FiltersGeneral
+	FiltersSources
+	IOGeometry
+	IOLegacy
+	IOPLY
+	IOXML
+	InteractionStyle
+	RenderingContextOpenGL2
+	RenderingCore
+	RenderingFreeType
+	RenderingGL2PSOpenGL2
+	RenderingOpenGL2
     QUIET
     )
 if (NOT VTK_FOUND)
@@ -75,6 +74,7 @@ endif ()
 include_directories(
 	imgui/
 	imgui/examples/
+	imgui/backends/
 	third_party/glfw/include
 	third_party/gl3w/
 	third_party/glm-0.9.9.6/

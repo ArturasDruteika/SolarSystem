@@ -1,4 +1,5 @@
 #include "cube.hpp"
+
 #include <vtkCellArray.h>
 #include <vtkFloatArray.h>
 #include <vtkNamedColors.h>
@@ -8,18 +9,15 @@
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
 #include <vtkSTLReader.h>
+#include <vtkSmartPointer.h>
+#include <vtkActor.h>
 
-#include <vtkRenderWindow.h>
-#include <vtkRenderWindowInteractor.h>
-#include <vtkRenderer.h>
-
-#include <iostream>
-#include <array>
-
+#include <array> 
 
 
 Cube::Cube()
 {
+    TestFunc();
 }
 
 Cube::~Cube()
@@ -91,39 +89,8 @@ vtkNew<vtkActor> Cube::ReadSTLFIle(std::string pathToStlFile)
     return actor;
 }
 
-void Cube::TestFunc(std::string pathToStlFile)
+
+void Cube::TestFunc()
 {
-    vtkNew<vtkNamedColors> colors;
 
-    vtkNew<vtkSTLReader> reader;
-    reader->SetFileName(pathToStlFile.c_str());
-    reader->Update();
-
-    // Visualize
-    vtkNew<vtkPolyDataMapper> mapper;
-    mapper->SetInputConnection(reader->GetOutputPort());
-
-    vtkNew<vtkActor> actor;
-    actor->SetMapper(mapper);
-    actor->GetProperty()->SetDiffuse(0.8);
-    actor->GetProperty()->SetDiffuseColor(
-        colors->GetColor3d("LightSteelBlue").GetData());
-    actor->GetProperty()->SetSpecular(0.3);
-    actor->GetProperty()->SetSpecularPower(60.0);
-
-    vtkNew<vtkRenderer> renderer;
-    vtkNew<vtkRenderWindow> renderWindow;
-    renderWindow->AddRenderer(renderer);
-    renderWindow->SetWindowName("ReadSTL");
-
-    vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
-    renderWindowInteractor->SetRenderWindow(renderWindow);
-
-    renderer->AddActor(actor);
-    renderer->SetBackground(colors->GetColor3d("DarkOliveGreen").GetData());
-
-    renderWindow->Render();
-    renderWindowInteractor->Start();
 }
-
-    

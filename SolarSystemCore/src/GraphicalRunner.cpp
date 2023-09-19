@@ -1,6 +1,5 @@
 #include "GraphicalRunner.hpp"
 #include "GraphicalRunnerImpl.hpp"
-#include <iostream>
 #include "spdlog/spdlog.h"
 
 GraphicalRunner::GraphicalRunner()

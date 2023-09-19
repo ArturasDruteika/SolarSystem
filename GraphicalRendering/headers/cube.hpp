@@ -3,7 +3,6 @@
 
 #include <vtkActor.h>
 #include <vtkNew.h>
-#include <vtkSTLReader.h>
 
 
 #if defined (_WIN32)
@@ -29,7 +28,7 @@ public:
 	vtkNew<vtkActor> GenerateCube();
 	vtkNew<vtkActor> ReadSTLFIle(std::string pathToStlFile);
 
-	void TestFunc(std::string pathToStlFile);
+	void TestFunc();
 
 private:
 };

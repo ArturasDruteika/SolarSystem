@@ -25,20 +25,7 @@ if (NOT VTK_FOUND)
 endif ()
 
 # VTK
-find_package(VTK COMPONENTS
-    CommonCore
-    CommonColor
-    CommonDataModel
-    FiltersCore
-    InteractionStyle
-    RenderingCore
-    RenderingFreeType
-    RenderingGL2PSOpenGL2
-    RenderingContextOpenGL2
-    RenderingOpenGL2
-    IOGeometry
-    QUIET
-    )
+find_package(VTK QUIET)
 if (NOT VTK_FOUND)
     message(FATAL_ERROR "VTK not found!")
     return()

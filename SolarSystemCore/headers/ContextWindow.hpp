@@ -18,7 +18,7 @@
 #elif defined(IMGUI_IMPL_OPENGL_LOADER_GLAD)
 #include <glad/glad.h>  // Initialize with gladLoadGL()
 #else
-#include IMGUI_IMPL_OPENGL_LOADER_CUSTOM
+//#include IMGUI_IMPL_OPENGL_LOADER_CUSTOM
 #endif
 
 // Include glfw3.h after our OpenGL definitions

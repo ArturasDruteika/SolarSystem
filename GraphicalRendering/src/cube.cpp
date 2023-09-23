@@ -11,13 +11,9 @@
 #include <vtkActor.h>
 
 
-#include <array>
-#include <iostream>
-
-
 Cube::Cube()
-    : m_transform{nullptr}
 {
+    m_transform = vtkSmartPointer<vtkTransform>::New();
 }
 
 Cube::~Cube()
@@ -26,7 +22,6 @@ Cube::~Cube()
 
 vtkNew<vtkActor> Cube::GenerateCube()
 {
-    // Now we'll look at it.
     vtkNew<vtkPolyDataMapper> cubeMapper;
     vtkNew<vtkPolyData> cube = GenerateCubeData();
     cubeMapper->SetInputData(cube);
@@ -74,7 +69,7 @@ void Cube::MoveActor(vtkNew<vtkActor>& actor, double xPos, double yPos, double z
 
 void Cube::TestFunc()
 {
-
+    
 }
 
 vtkNew<vtkPolyData> Cube::GenerateCubeData()
@@ -123,12 +118,10 @@ vtkNew<vtkPolyData> Cube::GenerateCubeData()
 
 void Cube::SetCubeInitialPos(vtkNew<vtkActor>& actor)
 {
-    double x = 0;
-    double y = 0;
-    double z = 0;
+    double xPos = 0;
+    double yPos = 0;
+    double zPos = 0;
 
-    m_transform = vtkSmartPointer<vtkTransform>::New();
-    m_transform->Translate(x, y, z);
-    actor->SetUserTransform(m_transform);
+    actor->SetPosition(xPos, yPos, zPos);
 }
 

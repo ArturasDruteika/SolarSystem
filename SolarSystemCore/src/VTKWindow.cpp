@@ -6,12 +6,13 @@
 #include <vtkRenderer.h>
 #include <vtkSmartPointer.h>
 #include <vtkTransform.h>
+#include "spdlog/spdlog.h"
 
 
 VTKWindow::VTKWindow()
     : m_cube{}
     , m_isVtkOpen{true}
-    , m_actor{}
+    , m_cubeActor{}
 {
 }
 
@@ -62,14 +63,8 @@ void VTKWindow::RunMainWindow()
 
         m_vtkViewerFinal.render();
 
-        // Create a transform object for rotation
-        vtkSmartPointer<vtkTransform> transform = vtkSmartPointer<vtkTransform>::New();
-        // Rotate the actor around the X-axis by 45 degrees
-        transform->RotateX(i);
+        m_cube.MoveActor(m_cubeActor, 0.00001 * double(i), 0.000001 * double(i), 0.000001 * double(i));
         i++;
-
-        // Apply the transform to the actor
-        m_actor->SetUserTransform(transform);
 
         ImGui::End();
     }
@@ -79,8 +74,8 @@ void VTKWindow::RunMainWindow()
 
 void VTKWindow::InitializeVtkActors()
 {
-    m_actor = m_cube.GenerateCube();
-    m_vtkViewer1.addActor(m_actor);
+    m_cubeActor = m_cube.GenerateCube();
+    m_vtkViewer1.addActor(m_cubeActor);
     m_vtkViewerFinal.getRenderer()->SetBackground(0, 0, 0); // Black background
-    m_vtkViewerFinal.addActor(m_actor);
+    m_vtkViewerFinal.addActor(m_cubeActor);
 }

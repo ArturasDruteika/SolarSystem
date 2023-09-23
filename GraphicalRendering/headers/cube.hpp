@@ -38,6 +38,7 @@ public:
 private:
 	vtkNew<vtkPolyData> GenerateCubeData();
 	void SetCubeInitialPos(vtkNew<vtkActor>& actor);
+
 	vtkSmartPointer<vtkTransform> m_transform;
 };
 

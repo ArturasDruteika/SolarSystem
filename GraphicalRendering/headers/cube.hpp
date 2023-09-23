@@ -3,6 +3,9 @@
 
 #include <vtkActor.h>
 #include <vtkNew.h>
+#include <vtkTransform.h>
+#include <vtkSmartPointer.h>
+#include <vtkPolyData.h>
 
 
 #if defined (_WIN32)
@@ -27,10 +30,15 @@ public:
 
 	vtkNew<vtkActor> GenerateCube();
 	vtkNew<vtkActor> ReadSTLFIle(std::string pathToStlFile);
+	std::vector<double> GetActorPosition(vtkNew<vtkActor>& actor);
+	void MoveActor(vtkNew<vtkActor>& actor, double xPos, double yPos, double zPos);
 
 	void TestFunc();
 
 private:
+	vtkNew<vtkPolyData> GenerateCubeData();
+	void SetCubeInitialPos(vtkNew<vtkActor>& actor);
+	vtkSmartPointer<vtkTransform> m_transform;
 };
 
 #endif //SOLARSYSTEMSETUP_CUBE_HPP

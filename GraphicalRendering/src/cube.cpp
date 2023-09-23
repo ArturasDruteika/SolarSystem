@@ -5,19 +5,15 @@
 #include <vtkNamedColors.h>
 #include <vtkPointData.h>
 #include <vtkPoints.h>
-#include <vtkPolyData.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
 #include <vtkSTLReader.h>
-#include <vtkSmartPointer.h>
 #include <vtkActor.h>
-
-#include <array> 
 
 
 Cube::Cube()
 {
-    TestFunc();
+    m_transform = vtkSmartPointer<vtkTransform>::New();
 }
 
 Cube::~Cube()
@@ -25,6 +21,58 @@ Cube::~Cube()
 }
 
 vtkNew<vtkActor> Cube::GenerateCube()
+{
+    vtkNew<vtkPolyDataMapper> cubeMapper;
+    vtkNew<vtkPolyData> cube = GenerateCubeData();
+    cubeMapper->SetInputData(cube);
+    cubeMapper->SetScalarRange(cube->GetScalarRange());
+    vtkNew<vtkActor> cubeActor;
+    cubeActor->SetMapper(cubeMapper);
+    SetCubeInitialPos(cubeActor);
+    return cubeActor;
+}
+
+vtkNew<vtkActor> Cube::ReadSTLFIle(std::string pathToStlFile)
+{
+    vtkNew<vtkSTLReader> reader;
+    reader->SetFileName(pathToStlFile.c_str()); // Replace with your STL file path
+
+    vtkNew<vtkPolyDataMapper> mapper;
+    mapper->SetInputConnection(reader->GetOutputPort());
+
+    vtkNew<vtkActor> actor;
+    actor->SetMapper(mapper);
+    return actor;
+}
+
+std::vector<double> Cube::GetActorPosition(vtkNew<vtkActor>& actor)
+{
+    // Get the actor's transformation matrix
+    vtkSmartPointer<vtkMatrix4x4> actorMatrix = vtkSmartPointer<vtkMatrix4x4>::New();
+    actor->GetMatrix(actorMatrix);
+    double actorPosition[3];
+    std::vector<double> actorPositionVec;
+    actor->GetPosition(actorPosition);
+    for (int i = 0; i < 3; i++)
+    {
+        actorPositionVec.push_back(actorPosition[i]);
+    }
+    return actorPositionVec;
+}
+
+void Cube::MoveActor(vtkNew<vtkActor>& actor, double xPos, double yPos, double zPos)
+{
+    m_transform->Translate(xPos, yPos, zPos);
+    actor->SetUserTransform(m_transform);
+}
+
+
+void Cube::TestFunc()
+{
+    
+}
+
+vtkNew<vtkPolyData> Cube::GenerateCubeData()
 {
     vtkNew<vtkNamedColors> colors;
 
@@ -65,32 +113,15 @@ vtkNew<vtkActor> Cube::GenerateCube()
     cube->SetPoints(points);
     cube->SetPolys(polys);
     cube->GetPointData()->SetScalars(scalars);
-
-    // Now we'll look at it.
-    vtkNew<vtkPolyDataMapper> cubeMapper;
-    cubeMapper->SetInputData(cube);
-    cubeMapper->SetScalarRange(cube->GetScalarRange());
-    vtkNew<vtkActor> cubeActor;
-    cubeActor->SetMapper(cubeMapper);
-
-    return cubeActor;
+    return cube;
 }
 
-vtkNew<vtkActor> Cube::ReadSTLFIle(std::string pathToStlFile)
+void Cube::SetCubeInitialPos(vtkNew<vtkActor>& actor)
 {
-    vtkNew<vtkSTLReader> reader;
-    reader->SetFileName(pathToStlFile.c_str()); // Replace with your STL file path
+    double xPos = 0;
+    double yPos = 0;
+    double zPos = 0;
 
-    vtkNew<vtkPolyDataMapper> mapper;
-    mapper->SetInputConnection(reader->GetOutputPort());
-
-    vtkNew<vtkActor> actor;
-    actor->SetMapper(mapper);
-    return actor;
+    actor->SetPosition(xPos, yPos, zPos);
 }
 
-
-void Cube::TestFunc()
-{
-
-}

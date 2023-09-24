@@ -1,5 +1,5 @@
-#ifndef SOLARSYSTEMSETUP_CUBE_HPP
-#define SOLARSYSTEMSETUP_CUBE_HPP
+#ifndef GRAPHICALOBJECTS_CUBE_HPP
+#define GRAPHICALOBJECTS_CUBE_HPP
 
 #include "ObjectBase.hpp"
 
@@ -37,4 +37,4 @@ private:
 	vtkNew<vtkPolyData> GenerateCubeData();
 };
 
-#endif //SOLARSYSTEMSETUP_CUBE_HPP
+#endif //GRAPHICALOBJECTS_CUBE_HPP

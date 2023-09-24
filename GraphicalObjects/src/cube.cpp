@@ -1,4 +1,4 @@
-#include "cube.hpp"
+#include "Cube.hpp"
 
 #include <vtkCellArray.h>
 #include <vtkFloatArray.h>

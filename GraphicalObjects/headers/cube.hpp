@@ -1,6 +1,8 @@
 #ifndef SOLARSYSTEMSETUP_CUBE_HPP
 #define SOLARSYSTEMSETUP_CUBE_HPP
 
+#include "ObjectBase.hpp"
+
 #include <vtkActor.h>
 #include <vtkNew.h>
 #include <vtkTransform.h>
@@ -9,11 +11,11 @@
 
 
 #if defined (_WIN32)
-#if defined(GRAPHICALRENDERING_EXPORT)
-#define GRAPHICALRENDERING_API __declspec(dllexport)
+#if defined(GRAPHICALOBJECTS_EXPORT)
+#define GRAPHICALOBJECTS_API __declspec(dllexport)
 #else
-#define  GRAPHICALRENDERING_API __declspec(dllimport)
-#endif /* GRAPHICALRENDERING_API */
+#define  GRAPHICALOBJECTS_API __declspec(dllimport)
+#endif /* GRAPHICALOBJECTS_API */
 #define _sprintf sprintf_s
 #endif
 
@@ -22,16 +24,16 @@
 #define CUBE_API __attribute__((visibility("default")))
 #endif
 
-class GRAPHICALRENDERING_API Cube
+class GRAPHICALOBJECTS_API Cube : public ObjectBase
 {
 public:
 	Cube();
 	~Cube();
 
+	bool operator==(const Cube& other) const = default;
+
 	vtkNew<vtkActor> GenerateCube();
-	vtkNew<vtkActor> ReadSTLFIle(std::string pathToStlFile);
 	std::vector<double> GetActorPosition(vtkNew<vtkActor>& actor);
-	void MoveActor(vtkNew<vtkActor>& actor, double xPos, double yPos, double zPos);
 
 	void TestFunc();
 
@@ -39,7 +41,6 @@ private:
 	vtkNew<vtkPolyData> GenerateCubeData();
 	void SetCubeInitialPos(vtkNew<vtkActor>& actor);
 
-	vtkSmartPointer<vtkTransform> m_transform;
 };
 
 #endif //SOLARSYSTEMSETUP_CUBE_HPP

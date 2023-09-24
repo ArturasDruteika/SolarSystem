@@ -13,7 +13,6 @@
 
 Cube::Cube()
 {
-    m_transform = vtkSmartPointer<vtkTransform>::New();
 }
 
 Cube::~Cube()
@@ -32,19 +31,6 @@ vtkNew<vtkActor> Cube::GenerateCube()
     return cubeActor;
 }
 
-vtkNew<vtkActor> Cube::ReadSTLFIle(std::string pathToStlFile)
-{
-    vtkNew<vtkSTLReader> reader;
-    reader->SetFileName(pathToStlFile.c_str()); // Replace with your STL file path
-
-    vtkNew<vtkPolyDataMapper> mapper;
-    mapper->SetInputConnection(reader->GetOutputPort());
-
-    vtkNew<vtkActor> actor;
-    actor->SetMapper(mapper);
-    return actor;
-}
-
 std::vector<double> Cube::GetActorPosition(vtkNew<vtkActor>& actor)
 {
     // Get the actor's transformation matrix
@@ -59,13 +45,6 @@ std::vector<double> Cube::GetActorPosition(vtkNew<vtkActor>& actor)
     }
     return actorPositionVec;
 }
-
-void Cube::MoveActor(vtkNew<vtkActor>& actor, double xPos, double yPos, double zPos)
-{
-    m_transform->Translate(xPos, yPos, zPos);
-    actor->SetUserTransform(m_transform);
-}
-
 
 void Cube::TestFunc()
 {

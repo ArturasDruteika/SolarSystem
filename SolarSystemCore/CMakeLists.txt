@@ -23,7 +23,7 @@ set(stb_image_includes ${stb_image_path})
 file(TO_CMAKE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../../3rdParty/VTK/ vtk_path)
 find_package(VTK REQUIRED)
 if (NOT VTK_FOUND)
-    message(FATAL_ERROR "GraphicalRendering: Unable to find the VTK build folder.")
+    message(FATAL_ERROR "SolarSystemCore: Unable to find the VTK build folder.")
 endif ()
 
 # VTK
@@ -70,7 +70,7 @@ include_directories(
     ..//imgui//third_party/glm-0.9.9.6/
     ../imgui/imgui_vtk/
     ${stb_image_path}
-    ../GraphicalRendering/headers/
+    ../GraphicalObjects/headers/
     ${VTK_INCLUDES_DIR}
 )
 
@@ -79,10 +79,10 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
     spdlog::spdlog
     ${OPENGL_LIBRARIES}
     ${VTK_LIBRARIES}
-    GraphicalRendering
+    GraphicalObjects
     )
 
 add_dependencies(${PROJECT_NAME}
     imgui
-    GraphicalRendering
+    GraphicalObjects
     )

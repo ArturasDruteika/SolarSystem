@@ -1,4 +1,3 @@
-#include "cube.hpp"
 #include "VTKWindow.hpp"
 #include <vtkActor.h>
 #include <vtkRenderWindow.h>

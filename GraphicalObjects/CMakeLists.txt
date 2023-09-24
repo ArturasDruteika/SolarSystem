@@ -38,10 +38,12 @@ include_directories(
 )
 
 add_library(${PROJECT_NAME} SHARED
-    headers/cube.hpp
-    src/cube.cpp
+    headers/Cube.hpp
+    src/Cube.cpp
     headers/ObjectBase.hpp
     src/ObjectBase.cpp
+    headers/Sphere.hpp
+    src/Sphere.cpp
     )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE

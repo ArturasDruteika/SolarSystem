@@ -1,5 +1,5 @@
-#ifndef GRAPHICALRENDERING_OBJECTBASE_HPP
-#define GRAPHICALRENDERING_OBJECTBASE_HPP
+#ifndef GRAPHICALOBJECTS_OBJECTBASE_HPP
+#define GRAPHICALOBJECTS_OBJECTBASE_HPP
 
 
 #if defined (_WIN32)
@@ -13,7 +13,7 @@
 
 #if defined(__GNUC__)
 //  GCC
-#define CUBE_API __attribute__((visibility("default")))
+#define OBJECTBASE_API __attribute__((visibility("default")))
 #endif
 
 
@@ -46,4 +46,4 @@ private:
 };
 
 
-#endif //GRAPHICALRENDERING_OBJECTBASE_HPP
+#endif //GRAPHICALOBJECTS_OBJECTBASE_HPP

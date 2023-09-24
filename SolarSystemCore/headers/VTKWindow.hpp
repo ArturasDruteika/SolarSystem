@@ -3,7 +3,8 @@
 
 
 #include "VtkViewer.h"
-#include "cube.hpp"
+#include "Cube.hpp"
+#include "Sphere.hpp"
 
 
 class VTKWindow
@@ -22,6 +23,7 @@ private:
     bool m_isVtkOpen;
 
     Cube m_cube;
+    Sphere m_sphere;
     VtkViewer m_vtkViewer1;
     VtkViewer m_vtkViewerFinal;
 };

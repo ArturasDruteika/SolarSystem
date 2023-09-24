@@ -10,6 +10,7 @@
 
 VTKWindow::VTKWindow()
     : m_cube{}
+    , m_sphere{}
     , m_isVtkOpen{true}
 {
 }
@@ -61,7 +62,7 @@ void VTKWindow::RunMainWindow()
 
         m_vtkViewerFinal.render();
 
-        m_cube.MoveActor(0.00001 * double(i), 0.000001 * double(i), 0.000001 * double(i));
+        m_sphere.MoveActor(0.00001 * double(i), 0.000001 * double(i), 0.000001 * double(i));
         i++;
 
         ImGui::End();
@@ -73,7 +74,8 @@ void VTKWindow::RunMainWindow()
 void VTKWindow::InitializeVtkActors()
 {
     m_cube.GenerateCube();
-    m_vtkViewer1.addActor(m_cube.GetObjectActor());
+    m_sphere.GenerateSphere();
+    m_vtkViewer1.addActor(m_sphere.GetObjectActor());
     m_vtkViewerFinal.getRenderer()->SetBackground(0, 0, 0); // Black background
-    m_vtkViewerFinal.addActor(m_cube.GetObjectActor());
+    m_vtkViewerFinal.addActor(m_sphere.GetObjectActor());
 }

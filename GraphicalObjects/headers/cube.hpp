@@ -30,17 +30,11 @@ public:
 	Cube();
 	~Cube();
 
-	bool operator==(const Cube& other) const = default;
-
-	vtkNew<vtkActor> GenerateCube();
-	std::vector<double> GetActorPosition(vtkNew<vtkActor>& actor);
-
-	void TestFunc();
+	// TODO: make GenerateCube() have arguments of shape paratmeters like xyz
+	void GenerateCube();
 
 private:
 	vtkNew<vtkPolyData> GenerateCubeData();
-	void SetCubeInitialPos(vtkNew<vtkActor>& actor);
-
 };
 
 #endif //SOLARSYSTEMSETUP_CUBE_HPP

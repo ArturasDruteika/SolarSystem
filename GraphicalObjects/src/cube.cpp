@@ -19,36 +19,14 @@ Cube::~Cube()
 {
 }
 
-vtkNew<vtkActor> Cube::GenerateCube()
+void Cube::GenerateCube()
 {
     vtkNew<vtkPolyDataMapper> cubeMapper;
     vtkNew<vtkPolyData> cube = GenerateCubeData();
     cubeMapper->SetInputData(cube);
     cubeMapper->SetScalarRange(cube->GetScalarRange());
-    vtkNew<vtkActor> cubeActor;
-    cubeActor->SetMapper(cubeMapper);
-    SetCubeInitialPos(cubeActor);
-    return cubeActor;
-}
-
-std::vector<double> Cube::GetActorPosition(vtkNew<vtkActor>& actor)
-{
-    // Get the actor's transformation matrix
-    vtkSmartPointer<vtkMatrix4x4> actorMatrix = vtkSmartPointer<vtkMatrix4x4>::New();
-    actor->GetMatrix(actorMatrix);
-    double actorPosition[3];
-    std::vector<double> actorPositionVec;
-    actor->GetPosition(actorPosition);
-    for (int i = 0; i < 3; i++)
-    {
-        actorPositionVec.push_back(actorPosition[i]);
-    }
-    return actorPositionVec;
-}
-
-void Cube::TestFunc()
-{
-    
+    SetMapper(cubeMapper);
+    SetActorInitialPos();
 }
 
 vtkNew<vtkPolyData> Cube::GenerateCubeData()
@@ -93,14 +71,5 @@ vtkNew<vtkPolyData> Cube::GenerateCubeData()
     cube->SetPolys(polys);
     cube->GetPointData()->SetScalars(scalars);
     return cube;
-}
-
-void Cube::SetCubeInitialPos(vtkNew<vtkActor>& actor)
-{
-    double xPos = 0;
-    double yPos = 0;
-    double zPos = 0;
-
-    actor->SetPosition(xPos, yPos, zPos);
 }
 

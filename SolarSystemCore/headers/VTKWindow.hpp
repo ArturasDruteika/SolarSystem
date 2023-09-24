@@ -22,7 +22,6 @@ private:
     bool m_isVtkOpen;
 
     Cube m_cube;
-    vtkNew<vtkActor> m_cubeActor;
     VtkViewer m_vtkViewer1;
     VtkViewer m_vtkViewerFinal;
 };

@@ -21,6 +21,7 @@
 #include <vtkNew.h>
 #include <vtkTransform.h>
 #include <vtkSmartPointer.h>
+#include <vtkPolyDataMapper.h>
 
 
 class GRAPHICALOBJECTS_API ObjectBase
@@ -31,10 +32,16 @@ public:
 
 	bool operator==(const ObjectBase& other) const = default;
 
-	void MoveActor(vtkNew<vtkActor>& actor, double xPos, double yPos, double zPos);
-	vtkNew<vtkActor> ReadSTLFIle(std::string pathToStlFile);
+	vtkSmartPointer<vtkActor> GetObjectActor();
+	std::vector<double> GetActorPosition(vtkSmartPointer<vtkActor>& actor);
+	void MoveActor(double xPos, double yPos, double zPos);
+	void SetMapper(vtkNew<vtkPolyDataMapper>& mapper);
+	void SetActorInitialPos();
+
+	void ReadSTLFIle(std::string pathToStlFile);
 
 private:
+	vtkSmartPointer<vtkActor> m_actor;
 	vtkSmartPointer<vtkTransform> m_transform;
 };
 

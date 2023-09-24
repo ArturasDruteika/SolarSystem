@@ -1,11 +1,11 @@
 cmake_minimum_required(VERSION 3.24)
 
-project(GraphicalRendering)
+project(GraphicalObjects)
 set(CMAKE_BUILD_PARALLEL_LEVEL)
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-add_definitions(-DGRAPHICALRENDERING_EXPORT)
+add_definitions(-DGRAPHICALOBJECTS_EXPORT)
 
 find_package(OpenGL REQUIRED)
 
@@ -21,7 +21,7 @@ endif ()
 file(TO_CMAKE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../../3rdParty/VTK/ vtk_path)
 find_package(VTK REQUIRED)
 if (NOT VTK_FOUND)
-    message(FATAL_ERROR "GraphicalRendering: Unable to find the VTK build folder.")
+    message(FATAL_ERROR "GraphicalObjects: Unable to find the VTK build folder.")
 endif ()
 
 # VTK
@@ -38,8 +38,12 @@ include_directories(
 )
 
 add_library(${PROJECT_NAME} SHARED
-    headers/cube.hpp
-    src/cube.cpp
+    headers/Cube.hpp
+    src/Cube.cpp
+    headers/ObjectBase.hpp
+    src/ObjectBase.cpp
+    headers/Sphere.hpp
+    src/Sphere.cpp
     )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
@@ -53,6 +57,6 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
 
 # vtk_module_autoinit is needed
 vtk_module_autoinit(
-    TARGETS GraphicalRendering
+    TARGETS GraphicalObjects
     MODULES ${VTK_LIBRARIES}
 )

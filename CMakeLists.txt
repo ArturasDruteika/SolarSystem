@@ -11,7 +11,7 @@ set(CMAKE_BUILD_PARALLEL_LEVEL)
 
 add_subdirectory(SolarSystem)
 add_subdirectory(SolarSystemCore)
-add_subdirectory(GraphicalRendering)
+add_subdirectory(GraphicalObjects)
 add_subdirectory(imgui)
 add_subdirectory(imgui//third_party)
 #add_subdirectory(Utils)

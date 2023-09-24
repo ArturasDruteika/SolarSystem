@@ -1,5 +1,5 @@
 #include "ContextWindow.hpp"
-#include "cube.hpp"
+#include "Cube.hpp"
 #include "spdlog/spdlog.h"
 #include "implot.h"
 

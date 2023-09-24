@@ -19,7 +19,7 @@ Sphere::~Sphere()
 {
 }
 
-void Sphere::GenerateSphere()
+void Sphere::GenerateObject()
 {
     vtkNew<vtkPolyDataMapper> sphereMapper;
     vtkNew<vtkSphereSource> sphere = GenerateSphereData();

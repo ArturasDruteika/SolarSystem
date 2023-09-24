@@ -32,12 +32,13 @@ public:
 
 	bool operator==(const ObjectBase& other) const = default;
 
+	virtual void GenerateObject() = 0;
+
 	vtkSmartPointer<vtkActor> GetObjectActor();
 	std::vector<double> GetActorPosition(vtkSmartPointer<vtkActor>& actor);
 	void MoveActor(double xPos, double yPos, double zPos);
 	void SetMapper(vtkNew<vtkPolyDataMapper>& mapper);
 	void SetActorInitialPos();
-
 	void ReadSTLFIle(std::string pathToStlFile);
 
 private:

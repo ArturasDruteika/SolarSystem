@@ -32,7 +32,7 @@ public:
 	~Sphere();
 
 	// TODO: make GenerateCube() have arguments of shape paratmeters like xyz
-	void GenerateSphere();
+	void GenerateObject() override;
 
 private:
 	vtkNew<vtkSphereSource> GenerateSphereData();

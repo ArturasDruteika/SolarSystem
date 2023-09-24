@@ -19,7 +19,7 @@ Cube::~Cube()
 {
 }
 
-void Cube::GenerateCube()
+void Cube::GenerateObject()
 {
     vtkNew<vtkPolyDataMapper> cubeMapper;
     vtkNew<vtkPolyData> cube = GenerateCubeData();

@@ -252,5 +252,5 @@ void ContextWindow::LoadFont()
     ImGuiIO& io = ImGui::GetIO();
     std::string executableDir = boost::dll::program_location().parent_path().string();
     std::string fontPath = executableDir + "//res//fonts//Roboto-Bold.ttf";
-    io.Fonts->AddFontFromFileTTF(fontPath.c_str(), 12);
+    io.Fonts->AddFontFromFileTTF(fontPath.c_str(), 14);
 }

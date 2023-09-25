@@ -6,7 +6,7 @@ ControlWindow::ControlWindow() = default;
 
 ControlWindow::~ControlWindow() = default;
 
-void ControlWindow::RunMainWindow()
+void ControlWindow::RenderMainWindow()
 {
     ImGui::Begin(
         "Simulation Window",

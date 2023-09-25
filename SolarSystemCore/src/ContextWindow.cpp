@@ -2,6 +2,7 @@
 #include "Cube.hpp"
 #include "spdlog/spdlog.h"
 #include "implot.h"
+#include "boost/dll.hpp"
 
 #ifdef __APPLE__
 #define GL_SILENCE_DEPRECATION
@@ -117,6 +118,8 @@ int ContextWindow::Init()
     // Setup Dear ImGui style
     ImGui::StyleColorsDark();
     //ImGui::StyleColorsClassic();
+
+    LoadFont();
 
     // When viewports are enabled we tweak WindowRounding/WindowBg so platform windows can look identical to regular ones.
     ImGuiStyle& style = ImGui::GetStyle();
@@ -242,4 +245,12 @@ void ContextWindow::CreateWindowIcon()
     {
         spdlog::warn("Failed to load icon from " + iconFile);
     }
+}
+
+void ContextWindow::LoadFont()
+{
+    ImGuiIO& io = ImGui::GetIO();
+    std::string executableDir = boost::dll::program_location().parent_path().string();
+    std::string fontPath = executableDir + "//res//fonts//Roboto-Bold.ttf";
+    io.Fonts->AddFontFromFileTTF(fontPath.c_str(), 12);
 }

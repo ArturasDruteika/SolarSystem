@@ -48,6 +48,7 @@ private:
     static void glfw_error_callback(int error, const char* description);
     // Load icon
     void CreateWindowIcon();
+    void LoadFont();
 
     GLFWwindow* m_window;
     ImVec4 m_backgroundColor;

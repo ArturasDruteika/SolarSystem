@@ -18,6 +18,18 @@ find_package(spdlog REQUIRED)
 file(TO_CMAKE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../../3rdParty/stb_image/ stb_image_path)
 set(stb_image_includes ${stb_image_path})
 
+# boost
+file(TO_CMAKE_PATH ../../3rdParty/boost_1_79_0/ boost_path)
+set(BOOST_DIR ${boost_path})
+set(BOOST_ROOT ${boost_path})
+set(BOOST_LIB ${boost_path}/lib/)
+set(BOOST_INCLUDE_DIR ${boost_path}/include/)
+set(Boost_USE_STATIC_LIBS   ON)
+set(Boost_USE_MULTITHREADED ON)
+set(Boost_USE_STATIC_RUNTIME OFF)
+find_package(Boost 1.79.0 COMPONENTS system filesystem serialization regex REQUIRED)
+find_package(OpenMP REQUIRED)
+
 
 # VTK
 file(TO_CMAKE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../../3rdParty/VTK/ vtk_path)
@@ -72,6 +84,7 @@ include_directories(
     ${stb_image_path}
     ../GraphicalObjects/headers/
     ${VTK_INCLUDES_DIR}
+    ${Boost_INCLUDE_DIR}
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
@@ -80,6 +93,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
     ${OPENGL_LIBRARIES}
     ${VTK_LIBRARIES}
     GraphicalObjects
+    ${Boost_LIBRARIES}
     )
 
 add_dependencies(${PROJECT_NAME}

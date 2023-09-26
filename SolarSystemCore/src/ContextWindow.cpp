@@ -37,7 +37,7 @@ static void glfw_error_callback(int error, const char* description)
 ContextWindow::ContextWindow()
     : m_window{glfwCreateWindow(MIN_VIEWPORT_WIDTH, MIN_VIEWPORT_HEIGHT, "Solar System", nullptr, nullptr)}
     , m_backgroundColor(ImVec4(0.45f, 0.55f, 0.60f, 1.00f))
-    , m_pControlWindow{nullptr}
+    , m_pObjectCreationWindow{nullptr}
     , m_vtkWindow{nullptr}
 {
 
@@ -136,8 +136,8 @@ int ContextWindow::Init()
     ImPlot::CreateContext();
 
     CreateWindowIcon();
-    // Initialize ControlWindow
-    m_pControlWindow = new ControlWindow();
+    // Initialize ObjectCreationWindow
+    m_pObjectCreationWindow = new ObjectCreationWindow();
     m_vtkWindow = new VTKWindow();
 
     return 0;
@@ -184,7 +184,7 @@ int ContextWindow::Run()
         // Dockspace
         ImGui::DockSpaceOverViewport(ImGui::GetMainViewport());
 
-        m_pControlWindow->RenderMainWindow();
+        m_pObjectCreationWindow->RenderMainWindow();
         m_vtkWindow->RenderMainWindow();
 
         // Rendering

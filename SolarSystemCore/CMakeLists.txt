@@ -58,8 +58,8 @@ endif ()
 
 
 add_library(${PROJECT_NAME} SHARED
-    headers/ControlWindow.hpp
-    src/ControlWindow.cpp
+    headers/ObjectCreationWindow.hpp
+    src/ObjectCreationWindow.cpp
     headers/ContextWindow.hpp
     src/ContextWindow.cpp
     headers/GraphicalRunner.hpp

@@ -9,11 +9,11 @@
 typedef boost::signals2::signal<void(const ObjectAttributes& objectAttributes)> CreationSignal;
 
 
-class ControlWindow
+class ObjectCreationWindow
 {
 public:
-    ControlWindow();
-    ~ControlWindow();
+    ObjectCreationWindow();
+    ~ObjectCreationWindow();
 
     void RenderMainWindow();
 

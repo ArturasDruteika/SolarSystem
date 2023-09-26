@@ -2,13 +2,7 @@
 #define SOLARSYSTEMCORE_CONTROLWINDOW_HPP
 
 
-typedef struct
-{
-    int radius;
-    int distanceFromCenter;
-    int speed;
-    int tiltDegrees;
-} ObjectAttributes;
+#include "GraphicalObjectsComponents.hpp"
 
 
 class ControlWindow

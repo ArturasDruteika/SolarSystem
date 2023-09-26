@@ -28,45 +28,16 @@ void VTKWindow::DeInit()
 {
 }
 
-void VTKWindow::RunMainWindow()
+void VTKWindow::RenderMainWindow()
 {
     static double i = 0.;
     ImGui::SetNextWindowSize(ImVec2(720, 480), ImGuiCond_FirstUseEver);
-    if (m_isVtkOpen)
-    {
-        ImGui::Begin("Vtk Viewer", &m_isVtkOpen, VtkViewer::NoScrollFlags());
 
-        auto renderer = m_vtkViewerFinal.getRenderer();
-        if (ImGui::Button("VTK Background: Black"))
-        {
-            renderer->SetBackground(0, 0, 0);
-        }
-        ImGui::SameLine();
-        if (ImGui::Button("VTK Background: Red"))
-        {
-            renderer->SetBackground(1, 0, 0);
-        }
-        ImGui::SameLine();
-        if (ImGui::Button("VTK Background: Green"))
-        {
-            renderer->SetBackground(0, 1, 0);
-        }
-        ImGui::SameLine();
-        if (ImGui::Button("VTK Background: Blue"))
-        {
-            renderer->SetBackground(0, 0, 1);
-        }
-        static float vtk2BkgAlpha = 0.2f;
-        ImGui::SliderFloat("Background Alpha", &vtk2BkgAlpha, 0.0f, 1.0f);
-        renderer->SetBackgroundAlpha(vtk2BkgAlpha);
+    ImGui::Begin("Vtk Viewer");
 
-        m_vtkViewerFinal.render();
+    m_vtkViewerFinal.render();
 
-        m_cube.MoveActor(0.00001 * double(i), 0.00001 * double(i), 0.00001 * double(i));
-        i++;
-
-        ImGui::End();
-    }
+    ImGui::End();
 
     ImGui::Render();
 }

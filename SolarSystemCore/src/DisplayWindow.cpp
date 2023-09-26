@@ -1,12 +1,12 @@
-#include "DisplayWindow.hpp"
+#include "ControlWindow.hpp"
 #include "imgui.h"
 
 
-DisplayWindow::DisplayWindow() = default;
+ControlWindow::ControlWindow() = default;
 
-DisplayWindow::~DisplayWindow() = default;
+ControlWindow::~ControlWindow() = default;
 
-void DisplayWindow::RunMainWindow()
+void ControlWindow::RunMainWindow()
 {
     ImGui::Begin(
         "Simulation Window",

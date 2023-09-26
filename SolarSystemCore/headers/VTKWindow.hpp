@@ -16,7 +16,7 @@ public:
     int Init();
     void DeInit();
 
-    void RunMainWindow();
+    void RenderMainWindow();
     void InitializeVtkActors();
 
 private:

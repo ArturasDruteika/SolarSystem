@@ -1,9 +1,5 @@
 #include "ControlWindow.hpp"
 #include "imgui.h"
-#include "boost/signals2.hpp"
-
-
-typedef boost::signals2::signal<void(const std::map<int, bool>& pinsStatus, bool isOutput)> OutputSignal;
 
 
 ControlWindow::ControlWindow()
@@ -56,7 +52,7 @@ void ControlWindow::RenderObjectDistanceSection()
 {
     ImGui::SeparatorText("Object Distance From The Center");
     ImGui::PushID("Distance");
-    ImGui::InputInt("input int", &m_objectAttributes.distanceFromCenter);
+    ImGui::InputInt("", &m_objectAttributes.distanceFromCenter);
     ImGui::PopID();
 }
 
@@ -64,7 +60,7 @@ void ControlWindow::RenderObjectSpeedSection()
 {
     ImGui::SeparatorText("Object Speed Around The Center");
     ImGui::PushID("Speed");
-    ImGui::InputInt("input int", &m_objectAttributes.speed);
+    ImGui::InputInt("", &m_objectAttributes.speed);
     ImGui::PopID();
 }
 
@@ -72,7 +68,7 @@ void ControlWindow::RenderObjectTiltSection()
 {
     ImGui::SeparatorText("Object Tilt");
     ImGui::PushID("Tilt");
-    ImGui::InputInt("input int", &m_objectAttributes.tiltDegrees);
+    ImGui::InputInt("", &m_objectAttributes.tiltDegrees);
     ImGui::PopID();
 }
 

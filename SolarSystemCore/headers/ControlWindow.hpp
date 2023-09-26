@@ -3,6 +3,10 @@
 
 
 #include "GraphicalObjectsComponents.hpp"
+#include "boost/signals2.hpp"
+
+
+typedef boost::signals2::signal<void(const ObjectAttributes& objectAttributes)> CreationSignal;
 
 
 class ControlWindow
@@ -12,6 +16,8 @@ public:
     ~ControlWindow();
 
     void RenderMainWindow();
+
+    CreationSignal OnCreateSignal;
 
 private:
     void RenderObjectRadiusSection();

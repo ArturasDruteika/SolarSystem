@@ -2,7 +2,7 @@
 #define SOLARSYSTEMCORE_CONTROLWINDOW_HPP
 
 
-#include "GraphicalObjectsComponents.hpp"
+#include "ObjectsComponents.hpp"
 #include "boost/signals2.hpp"
 
 

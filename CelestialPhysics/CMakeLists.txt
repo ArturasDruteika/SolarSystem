@@ -1,11 +1,11 @@
 cmake_minimum_required(VERSION 3.24)
 
-project(GraphicalObjects)
+project(CelestialPhysics)
 set(CMAKE_BUILD_PARALLEL_LEVEL)
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-add_definitions(-DGRAPHICALOBJECTS_EXPORT)
+add_definitions(-DCELESTIALPHYSICS_EXPORT)
 
 find_package(OpenGL REQUIRED)
 
@@ -21,7 +21,7 @@ endif ()
 file(TO_CMAKE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../../3rdParty/VTK/ vtk_path)
 find_package(VTK REQUIRED)
 if (NOT VTK_FOUND)
-    message(FATAL_ERROR "GraphicalObjects: Unable to find the VTK build folder.")
+    message(FATAL_ERROR "CelestialPhysics: Unable to find the VTK build folder.")
 endif ()
 
 # VTK
@@ -31,32 +31,30 @@ if (NOT VTK_FOUND)
     return()
 endif ()
 
+add_library(${PROJECT_NAME} SHARED
+    headers/Planet.hpp
+    src/Planet.cpp
+    headers/ObjectsComponents.hpp
+)
 
 include_directories(
     headers
+    ../GraphicalObjects/headers/
     ${VTK_INCLUDES_DIR}
 )
 
-add_library(${PROJECT_NAME} SHARED
-    headers/Cube.hpp
-    src/Cube.cpp
-    headers/ObjectBase.hpp
-    src/ObjectBase.cpp
-    headers/Sphere.hpp
-    src/Sphere.cpp
-    )
-
 target_link_libraries(${PROJECT_NAME} PRIVATE
+    GraphicalObjects
     ${OPENGL_LIBRARIES}
     ${VTK_LIBRARIES}
-    )
+)
 
-target_link_libraries(${PROJECT_NAME} PRIVATE
-    ${VTK_LIBRARIES}
-    )
+add_dependencies(${PROJECT_NAME}
+    GraphicalObjects
+)
 
 # vtk_module_autoinit is needed
 vtk_module_autoinit(
-    TARGETS GraphicalObjects
+    TARGETS CelestialPhysics
     MODULES ${VTK_LIBRARIES}
 )

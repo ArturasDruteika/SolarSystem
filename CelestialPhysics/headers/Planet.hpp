@@ -18,6 +18,7 @@
 
 
 #include "Sphere.hpp"
+#include "ObjectsComponents.hpp"
 #include <map>
 
 class CELESTIALPHYSICS_API Planet

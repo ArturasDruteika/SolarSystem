@@ -30,7 +30,10 @@ public:
 	SolarSystemModel();
 	~SolarSystemModel();
 
+	void OnNewPlanet(ObjectAttributes objectAttributes);
+
 private:
+
 	std::vector<Planet> m_planetsVec;
 };
 

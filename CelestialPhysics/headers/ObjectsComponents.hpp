@@ -19,10 +19,10 @@
 
 typedef CELESTIALPHYSICS_API struct
 {
-    int radius;
-    int distanceFromCenter;
-    int speed;
-    int tiltDegrees;
+    double radius;
+    double distanceFromCenter;
+    double speed;
+    double tiltDegrees;
 } ObjectAttributes;
 
 

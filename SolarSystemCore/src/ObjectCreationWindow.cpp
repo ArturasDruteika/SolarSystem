@@ -36,6 +36,7 @@ void ObjectCreationWindow::RenderMainWindow()
     ImGui::PushStyleVar(ImGuiStyleVar_ScrollbarRounding, 4.0f);
     ImGui::PushStyleVar(ImGuiStyleVar_TabRounding, 4.0f);
 
+    // TODO: add dynamic selection for InputDouble size
     RenderObjectRadiusSection();
     RenderObjectDistanceSection();
     RenderObjectSpeedSection();
@@ -43,7 +44,7 @@ void ObjectCreationWindow::RenderMainWindow()
     ImGui::Separator();
     RenderObjectCreationSection();
     ImGui::Separator();
-    RenderPlanetsTable();
+    RenderPlanetsTableSection();
 
     ImGui::PopStyleVar(7);
 
@@ -94,12 +95,12 @@ void ObjectCreationWindow::RenderObjectCreationSection()
 {
     if (ImGui::Button("Create"))
     {
-        OnCreateSignal(m_objectAttributes);
+        OnCreateSignal(m_planetsCount, m_objectAttributes);
         m_planetsCount++;
     }
 }
 
-void ObjectCreationWindow::RenderPlanetsTable()
+void ObjectCreationWindow::RenderPlanetsTableSection()
 {
     static ImGuiTableFlags flagsPlanetsTable = ImGuiTableFlags_Borders | ImGuiTableFlags_NoHostExtendX;
 
@@ -118,6 +119,15 @@ void ObjectCreationWindow::RenderPlanetsTable()
         ImGui::EndTable();
     }
     ImGui::PopFont();
+}
+
+void ObjectCreationWindow::RenderPlanetDeletionSection()
+{
+    /*if (ImGui::Button("Delete Planet"))
+    {
+        OnDeleteSignal(m_objectAttributes);
+        m_planetsCount++;
+    }*/
 }
 
 void ObjectCreationWindow::CreateFont(const std::string& fontPath, float fontSize)

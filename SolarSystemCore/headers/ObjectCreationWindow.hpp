@@ -8,7 +8,8 @@
 #include "imgui.h"
 
 
-typedef boost::signals2::signal<void(const ObjectAttributes& objectAttributes)> CreationSignal;
+typedef boost::signals2::signal<void(int id, const ObjectAttributes& objectAttributes)> CreationSignal;
+typedef boost::signals2::signal<void(const int id)> DeleteSignal;
 
 
 class ObjectCreationWindow
@@ -21,6 +22,7 @@ public:
     void RenderMainWindow();
 
     CreationSignal OnCreateSignal;
+    DeleteSignal OnDeleteSignal;
 
 private:
     void InitInternal();
@@ -30,7 +32,8 @@ private:
     void RenderObjectSpeedSection();
     void RenderObjectTiltSection();
     void RenderObjectCreationSection();
-    void RenderPlanetsTable();
+    void RenderPlanetsTableSection();
+    void RenderPlanetDeletionSection();
 
     void CreateFont(const std::string& fontPath, float fontSize);
 

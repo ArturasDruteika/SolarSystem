@@ -28,7 +28,8 @@ int VTKWindow::Init()
         boost::bind(
             &SolarSystemModel::OnNewPlanet,
             m_solarSystemModel,
-            boost::placeholders::_1
+            boost::placeholders::_1,
+            boost::placeholders::_2
         )
     );
 

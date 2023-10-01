@@ -35,6 +35,8 @@ add_library(${PROJECT_NAME} SHARED
     headers/Planet.hpp
     src/Planet.cpp
     headers/ObjectsComponents.hpp
+	headers/SolarSystemModel.hpp
+	src/SolarSystemModel.cpp
 )
 
 include_directories(

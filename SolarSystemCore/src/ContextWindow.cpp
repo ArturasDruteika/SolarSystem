@@ -138,7 +138,7 @@ int ContextWindow::Init()
     CreateWindowIcon();
     // Initialize ObjectCreationWindow
     m_pObjectCreationWindow = new ObjectCreationWindow();
-    m_vtkWindow = new VTKWindow();
+    m_vtkWindow = new VTKWindow(m_pObjectCreationWindow);
 
     return 0;
 }

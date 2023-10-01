@@ -12,6 +12,10 @@ ObjectCreationWindow::ObjectCreationWindow()
 
 ObjectCreationWindow::~ObjectCreationWindow() = default;
 
+void ObjectCreationWindow::Init()
+{
+}
+
 void ObjectCreationWindow::RenderMainWindow()
 {
     ImGui::Begin(

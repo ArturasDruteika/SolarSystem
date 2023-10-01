@@ -32,7 +32,7 @@ public:
 
 	// TODO: make GenerateCube() have arguments of shape paratmeters like xyz
 	void GenerateObject(double edgeLength) override;
-	 
+	
 private:
 	vtkNew<vtkPolyData> GenerateCubeData();
 };

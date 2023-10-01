@@ -16,6 +16,7 @@ public:
     ObjectCreationWindow();
     ~ObjectCreationWindow();
 
+    void Init();
     void RenderMainWindow();
 
     CreationSignal OnCreateSignal;

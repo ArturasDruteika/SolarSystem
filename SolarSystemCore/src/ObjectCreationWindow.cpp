@@ -1,8 +1,11 @@
 #include "ObjectCreationWindow.hpp"
 #include "imgui.h"
+#include <boost/dll.hpp>
 
 
 ObjectCreationWindow::ObjectCreationWindow()
+    : m_planetsCount{0}
+    , m_customFont{nullptr}
 {
     m_objectAttributes.radius = 1;
     m_objectAttributes.distanceFromCenter = 1;
@@ -14,6 +17,7 @@ ObjectCreationWindow::~ObjectCreationWindow() = default;
 
 void ObjectCreationWindow::Init()
 {
+    InitInternal();
 }
 
 void ObjectCreationWindow::RenderMainWindow()
@@ -38,10 +42,20 @@ void ObjectCreationWindow::RenderMainWindow()
     RenderObjectTiltSection();
     ImGui::Separator();
     RenderObjectCreationSection();
+    ImGui::Separator();
+    RenderPlanetsTable();
 
     ImGui::PopStyleVar(7);
 
     ImGui::End();
+}
+
+void ObjectCreationWindow::InitInternal()
+{
+    // Font part
+    std::string executableDir = boost::dll::program_location().parent_path().string();
+    std::string fontPath = executableDir + "//res//fonts//Roboto-Bold.ttf";
+    CreateFont(fontPath, 24.f);
 }
 
 void ObjectCreationWindow::RenderObjectRadiusSection()
@@ -81,5 +95,34 @@ void ObjectCreationWindow::RenderObjectCreationSection()
     if (ImGui::Button("Create"))
     {
         OnCreateSignal(m_objectAttributes);
+        m_planetsCount++;
     }
+}
+
+void ObjectCreationWindow::RenderPlanetsTable()
+{
+    static ImGuiTableFlags flagsPlanetsTable = ImGuiTableFlags_Borders | ImGuiTableFlags_NoHostExtendX;
+
+    ImGui::PushFont(m_customFont);
+    if (ImGui::BeginTable("Planet Counter", 2, flagsPlanetsTable))
+    {
+        ImGui::TableSetupColumn("Parameter", ImGuiTableColumnFlags_WidthFixed);
+        ImGui::TableSetupColumn("Value", ImGuiTableColumnFlags_WidthFixed);
+        ImGui::TableHeadersRow();
+
+        ImGui::TableNextColumn();
+        ImGui::Text("Planets");
+        ImGui::TableNextColumn();
+        ImGui::Text("%d", m_planetsCount);
+
+        ImGui::EndTable();
+    }
+    ImGui::PopFont();
+}
+
+void ObjectCreationWindow::CreateFont(const std::string& fontPath, float fontSize)
+{
+    std::string executableDir = boost::dll::program_location().parent_path().string();
+    ImGuiIO& io = ImGui::GetIO();
+    m_customFont = io.Fonts->AddFontFromFileTTF(fontPath.c_str(), fontSize);
 }

@@ -31,6 +31,7 @@ public:
 	~SolarSystemModel();
 
 	void OnNewPlanet(ObjectAttributes objectAttributes);
+	int GetPlanetsCount();
 
 private:
 

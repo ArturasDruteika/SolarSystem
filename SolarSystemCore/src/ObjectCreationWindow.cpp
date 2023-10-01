@@ -1,6 +1,7 @@
 #include "ObjectCreationWindow.hpp"
 #include "imgui.h"
 #include <boost/dll.hpp>
+#include <string>
 
 
 ObjectCreationWindow::ObjectCreationWindow()
@@ -36,7 +37,6 @@ void ObjectCreationWindow::RenderMainWindow()
     ImGui::PushStyleVar(ImGuiStyleVar_ScrollbarRounding, 4.0f);
     ImGui::PushStyleVar(ImGuiStyleVar_TabRounding, 4.0f);
 
-    // TODO: add dynamic selection for InputDouble size
     RenderObjectRadiusSection();
     RenderObjectDistanceSection();
     RenderObjectSpeedSection();
@@ -45,6 +45,7 @@ void ObjectCreationWindow::RenderMainWindow()
     RenderObjectCreationSection();
     ImGui::Separator();
     RenderPlanetsTableSection();
+    ImGui::Separator();
 
     ImGui::PopStyleVar(7);
 
@@ -61,39 +62,27 @@ void ObjectCreationWindow::InitInternal()
 
 void ObjectCreationWindow::RenderObjectRadiusSection()
 {
-    ImGui::SeparatorText("Object Radius");
-    ImGui::PushID("Radius");
-    ImGui::InputDouble("", &m_objectAttributes.radius, 1.f, 1.0f, "%.4f");
-    ImGui::PopID();
+    RenderObjectAttributeSelectionSection("Object Radius", "Radius", m_objectAttributes.radius);
 }
 
 void ObjectCreationWindow::RenderObjectDistanceSection()
 {
-    ImGui::SeparatorText("Object Distance From The Center");
-    ImGui::PushID("Distance");
-    ImGui::InputDouble("", &m_objectAttributes.distanceFromCenter, 1.f, 1.0f, "%.4f");
-    ImGui::PopID();
+    RenderObjectAttributeSelectionSection("Object Distance From The Center", "Distance", m_objectAttributes.distanceFromCenter);
 }
 
 void ObjectCreationWindow::RenderObjectSpeedSection()
 {
-    ImGui::SeparatorText("Object Speed Around The Center");
-    ImGui::PushID("Speed");
-    ImGui::InputDouble("", &m_objectAttributes.speed, 1.f, 1.0f, "%.4f");
-    ImGui::PopID();
+    RenderObjectAttributeSelectionSection("Object Speed Around The Center", "Speed", m_objectAttributes.speed);
 }
 
 void ObjectCreationWindow::RenderObjectTiltSection()
 {
-    ImGui::SeparatorText("Object Tilt");
-    ImGui::PushID("Tilt");
-    ImGui::InputDouble("", &m_objectAttributes.tiltDegrees, 1.f, 1.0f, "%.4f");
-    ImGui::PopID();
+    RenderObjectAttributeSelectionSection("Object Tilt", "Tilt", m_objectAttributes.tiltDegrees);
 }
 
 void ObjectCreationWindow::RenderObjectCreationSection()
 {
-    if (ImGui::Button("Create"))
+    if (ImGui::Button("Create", ImVec2(250, 20)))
     {
         OnCreateSignal(m_planetsCount, m_objectAttributes);
         m_planetsCount++;
@@ -121,13 +110,22 @@ void ObjectCreationWindow::RenderPlanetsTableSection()
     ImGui::PopFont();
 }
 
-void ObjectCreationWindow::RenderPlanetDeletionSection()
+void ObjectCreationWindow::RenderCreatedPlanetsInfoSection()
 {
-    /*if (ImGui::Button("Delete Planet"))
-    {
-        OnDeleteSignal(m_objectAttributes);
-        m_planetsCount++;
-    }*/
+    static int planetIDToDelete;
+    static bool unusedSelectionSection = false;
+    static std::string sectionName = "PlanetToDelete";
+}
+
+void ObjectCreationWindow::RenderObjectAttributeSelectionSection(const std::string& separatorText, const std::string& idText, double& parameterValue)
+{
+    ImGui::PushItemWidth(250);
+    ImGui::SeparatorText(separatorText.c_str());
+    ImGui::PushID(idText.c_str());
+    ImGui::InputDouble("", &parameterValue, 1.f, 1.0f, "%.4f");
+    ImGui::PopID();
+    ImGui::PopItemWidth();
+
 }
 
 void ObjectCreationWindow::CreateFont(const std::string& fontPath, float fontSize)

@@ -1,7 +1,7 @@
 #include "SolarSystemModel.hpp"
 
 SolarSystemModel::SolarSystemModel()
-	: m_planetsVec{}
+	: m_planetsMap{}
 {
 }
 
@@ -9,12 +9,12 @@ SolarSystemModel::~SolarSystemModel()
 {
 }
 
-void SolarSystemModel::OnNewPlanet(ObjectAttributes objectAttributes)
+void SolarSystemModel::OnNewPlanet(int id, ObjectAttributes objectAttributes)
 {
-	m_planetsVec.push_back(Planet(objectAttributes));
+	m_planetsMap.insert({ id, Planet(objectAttributes) });
 }
 
 int SolarSystemModel::GetPlanetsCount()
 {
-	return m_planetsVec.size();
+	return m_planetsMap.size();
 }

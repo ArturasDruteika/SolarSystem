@@ -46,12 +46,8 @@ void ObjectBase::SetMapper(vtkNew<vtkPolyDataMapper>& mapper)
     m_actor->SetMapper(mapper);
 }
 
-void ObjectBase::SetActorInitialPos()
+void ObjectBase::SetActorInitialPos(double xPos, double yPos, double zPos)
 {
-    double xPos = 0;
-    double yPos = 0;
-    double zPos = 0;
-
     m_actor->SetPosition(xPos, yPos, zPos);
 }
 

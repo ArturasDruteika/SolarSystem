@@ -3,6 +3,7 @@
 
 
 #include "ObjectsComponents.hpp"
+#include "Planet.hpp"
 #include "boost/signals2.hpp"
 
 

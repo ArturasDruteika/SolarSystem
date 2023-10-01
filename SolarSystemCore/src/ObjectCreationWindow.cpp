@@ -44,7 +44,7 @@ void ObjectCreationWindow::RenderObjectRadiusSection()
 {
     ImGui::SeparatorText("Object Radius");
     ImGui::PushID("Radius");
-    ImGui::InputInt("", &m_objectAttributes.radius);
+    ImGui::InputDouble("", &m_objectAttributes.radius, 1.f, 1.0f, "%.4f");
     ImGui::PopID();
 }
 
@@ -52,7 +52,7 @@ void ObjectCreationWindow::RenderObjectDistanceSection()
 {
     ImGui::SeparatorText("Object Distance From The Center");
     ImGui::PushID("Distance");
-    ImGui::InputInt("", &m_objectAttributes.distanceFromCenter);
+    ImGui::InputDouble("", &m_objectAttributes.distanceFromCenter, 1.f, 1.0f, "%.4f");
     ImGui::PopID();
 }
 
@@ -60,7 +60,7 @@ void ObjectCreationWindow::RenderObjectSpeedSection()
 {
     ImGui::SeparatorText("Object Speed Around The Center");
     ImGui::PushID("Speed");
-    ImGui::InputInt("", &m_objectAttributes.speed);
+    ImGui::InputDouble("", &m_objectAttributes.speed, 1.f, 1.0f, "%.4f");
     ImGui::PopID();
 }
 
@@ -68,7 +68,7 @@ void ObjectCreationWindow::RenderObjectTiltSection()
 {
     ImGui::SeparatorText("Object Tilt");
     ImGui::PushID("Tilt");
-    ImGui::InputInt("", &m_objectAttributes.tiltDegrees);
+    ImGui::InputDouble("", &m_objectAttributes.tiltDegrees, 1.f, 1.0f, "%.4f");
     ImGui::PopID();
 }
 

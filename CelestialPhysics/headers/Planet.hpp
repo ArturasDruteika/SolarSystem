@@ -19,19 +19,19 @@
 
 #include "Sphere.hpp"
 #include "ObjectsComponents.hpp"
-#include <map>
 
 class CELESTIALPHYSICS_API Planet
 {
 public:
-	Planet();
+	Planet(ObjectAttributes objectAttributes);
 	~Planet();
 
-	void OnNewPlanet(const ObjectAttributes& objectAttributes);
+	vtkSmartPointer<vtkActor> GetPlanetActor();
+	void MovePlanet(double xPos, double yPos, double zPos);
 
 private:
-	int m_planetCount;
-	std::map<int, ObjectAttributes> m_planetsMap;
+	ObjectAttributes m_planetAttributes;
+	Sphere m_sphere;
 };
 
 #endif //CELESTIALPHYSICS_PLANETS_HPP

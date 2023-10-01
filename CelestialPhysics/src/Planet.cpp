@@ -2,18 +2,23 @@
 #include "ObjectsComponents.hpp"
 
 
-Planet::Planet()
-	: m_planetCount{0}
-	, m_planetsMap{}
+Planet::Planet(ObjectAttributes objectAttributes)
+	: m_planetAttributes{ objectAttributes }
 {
+	m_sphere.GenerateObject(m_planetAttributes.radius);
+	m_sphere.SetActorInitialPos(objectAttributes.distanceFromCenter, 0.0);
 }
 
 Planet::~Planet()
 {
 }
 
-void Planet::OnNewPlanet(const ObjectAttributes& objectAttributes)
+vtkSmartPointer<vtkActor> Planet::GetPlanetActor()
 {
-	m_planetsMap.insert({m_planetCount, objectAttributes});
-	m_planetCount++;
+	return m_sphere.GetObjectActor();
+}
+
+void Planet::MovePlanet(double xPos, double yPos, double zPos)
+{
+	m_sphere.MoveActor(xPos, yPos, zPos);
 }

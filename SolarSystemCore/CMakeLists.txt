@@ -58,8 +58,8 @@ endif ()
 
 
 add_library(${PROJECT_NAME} SHARED
-    headers/ControlWindow.hpp
-    src/ControlWindow.cpp
+    headers/ObjectCreationWindow.hpp
+    src/ObjectCreationWindow.cpp
     headers/ContextWindow.hpp
     src/ContextWindow.cpp
     headers/GraphicalRunner.hpp
@@ -72,6 +72,8 @@ add_library(${PROJECT_NAME} SHARED
 
 include_directories(
     headers
+    ../GraphicalObjects/headers/
+    ../CelestialPhysics/headers/
     ..//imgui//implot//
     ..//imgui//
     ..//imgui//imgui//
@@ -82,7 +84,6 @@ include_directories(
     ..//imgui//third_party/glm-0.9.9.6/
     ../imgui/imgui_vtk/
     ${stb_image_path}
-    ../GraphicalObjects/headers/
     ${VTK_INCLUDES_DIR}
     ${Boost_INCLUDE_DIR}
 )
@@ -93,10 +94,12 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
     ${OPENGL_LIBRARIES}
     ${VTK_LIBRARIES}
     GraphicalObjects
+    CelestialPhysics
     ${Boost_LIBRARIES}
     )
 
 add_dependencies(${PROJECT_NAME}
     imgui
     GraphicalObjects
+    CelestialPhysics
     )

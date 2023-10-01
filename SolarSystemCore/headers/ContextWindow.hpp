@@ -2,7 +2,7 @@
 #define SOLARSYSTEMSETUP_CONTEXTWINDOW_HPP
 
 
-#include "ControlWindow.hpp"
+#include "ObjectCreationWindow.hpp"
 #include "VTKWindow.hpp"
 
 #include "imgui.h"
@@ -53,7 +53,7 @@ private:
     GLFWwindow* m_window;
     ImVec4 m_backgroundColor;
 
-    ControlWindow* m_pControlWindow;
+    ObjectCreationWindow* m_pObjectCreationWindow;
     VTKWindow* m_vtkWindow;
 };
 

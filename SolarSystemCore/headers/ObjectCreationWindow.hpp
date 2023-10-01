@@ -2,22 +2,24 @@
 #define SOLARSYSTEMCORE_CONTROLWINDOW_HPP
 
 
-typedef struct
-{
-    int radius;
-    int distanceFromCenter;
-    int speed;
-    int tiltDegrees;
-} ObjectAttributes;
+#include "ObjectsComponents.hpp"
+#include "Planet.hpp"
+#include "boost/signals2.hpp"
 
 
-class ControlWindow
+typedef boost::signals2::signal<void(const ObjectAttributes& objectAttributes)> CreationSignal;
+
+
+class ObjectCreationWindow
 {
 public:
-    ControlWindow();
-    ~ControlWindow();
+    ObjectCreationWindow();
+    ~ObjectCreationWindow();
 
+    void Init();
     void RenderMainWindow();
+
+    CreationSignal OnCreateSignal;
 
 private:
     void RenderObjectRadiusSection();

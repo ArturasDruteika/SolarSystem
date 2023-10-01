@@ -1,8 +1,8 @@
-#include "ControlWindow.hpp"
+#include "ObjectCreationWindow.hpp"
 #include "imgui.h"
 
 
-ControlWindow::ControlWindow()
+ObjectCreationWindow::ObjectCreationWindow()
 {
     m_objectAttributes.radius = 1;
     m_objectAttributes.distanceFromCenter = 1;
@@ -10,12 +10,16 @@ ControlWindow::ControlWindow()
     m_objectAttributes.tiltDegrees = 1;
 }
 
-ControlWindow::~ControlWindow() = default;
+ObjectCreationWindow::~ObjectCreationWindow() = default;
 
-void ControlWindow::RenderMainWindow()
+void ObjectCreationWindow::Init()
+{
+}
+
+void ObjectCreationWindow::RenderMainWindow()
 {
     ImGui::Begin(
-        "Simulation Window",
+        "Object Creation",
         nullptr,
         ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse
     );
@@ -40,31 +44,42 @@ void ControlWindow::RenderMainWindow()
     ImGui::End();
 }
 
-void ControlWindow::RenderObjectRadiusSection()
+void ObjectCreationWindow::RenderObjectRadiusSection()
 {
     ImGui::SeparatorText("Object Radius");
-    ImGui::InputInt("input int", &m_objectAttributes.radius);
+    ImGui::PushID("Radius");
+    ImGui::InputDouble("", &m_objectAttributes.radius, 1.f, 1.0f, "%.4f");
+    ImGui::PopID();
 }
 
-void ControlWindow::RenderObjectDistanceSection()
+void ObjectCreationWindow::RenderObjectDistanceSection()
 {
     ImGui::SeparatorText("Object Distance From The Center");
-    ImGui::InputInt("input int", &m_objectAttributes.distanceFromCenter);
+    ImGui::PushID("Distance");
+    ImGui::InputDouble("", &m_objectAttributes.distanceFromCenter, 1.f, 1.0f, "%.4f");
+    ImGui::PopID();
 }
 
-void ControlWindow::RenderObjectSpeedSection()
+void ObjectCreationWindow::RenderObjectSpeedSection()
 {
     ImGui::SeparatorText("Object Speed Around The Center");
-    ImGui::InputInt("input int", &m_objectAttributes.speed);
+    ImGui::PushID("Speed");
+    ImGui::InputDouble("", &m_objectAttributes.speed, 1.f, 1.0f, "%.4f");
+    ImGui::PopID();
 }
 
-void ControlWindow::RenderObjectTiltSection()
+void ObjectCreationWindow::RenderObjectTiltSection()
 {
     ImGui::SeparatorText("Object Tilt");
-    ImGui::InputInt("input int", &m_objectAttributes.tiltDegrees);
+    ImGui::PushID("Tilt");
+    ImGui::InputDouble("", &m_objectAttributes.tiltDegrees, 1.f, 1.0f, "%.4f");
+    ImGui::PopID();
 }
 
-void ControlWindow::RenderObjectCreationSection()
+void ObjectCreationWindow::RenderObjectCreationSection()
 {
-    ImGui::Button("Create");
+    if (ImGui::Button("Create"))
+    {
+        OnCreateSignal(m_objectAttributes);
+    }
 }

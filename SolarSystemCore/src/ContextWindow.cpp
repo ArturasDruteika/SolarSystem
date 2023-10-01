@@ -136,9 +136,13 @@ int ContextWindow::Init()
     ImPlot::CreateContext();
 
     CreateWindowIcon();
-    // Initialize ObjectCreationWindow
+    // Window creation
     m_pObjectCreationWindow = new ObjectCreationWindow();
     m_vtkWindow = new VTKWindow(m_pObjectCreationWindow);
+
+    // Window Initialization
+    m_pObjectCreationWindow->Init();
+    m_vtkWindow->Init();
 
     return 0;
 }

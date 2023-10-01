@@ -8,6 +8,7 @@
 #include "Planet.hpp"
 #include "ObjectCreationWindow.hpp"
 #include "ObjectsComponents.hpp"
+#include "SolarSystemModel.hpp"
 
 #include <vector>
 
@@ -28,14 +29,13 @@ private:
     void AddPlanet(ObjectAttributes objectAttributes);
 
     bool m_isVtkOpen;
-
     Cube m_cube;
     Sphere m_sphere;
     VtkViewer m_vtkViewer1;
     VtkViewer m_vtkViewerFinal;
-
     std::vector<Planet> m_planetsVec;
     ObjectCreationWindow* m_pObjectCreationWindow;
+    SolarSystemModel m_solarSystemModel;
 };
 
 

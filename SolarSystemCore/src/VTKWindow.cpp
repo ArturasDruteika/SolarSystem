@@ -14,6 +14,7 @@ VTKWindow::VTKWindow(ObjectCreationWindow* pObjectCreationWindow)
     , m_isVtkOpen{true}
     , m_planetsVec{}
     , m_pObjectCreationWindow{ pObjectCreationWindow }
+    , m_solarSystemModel{}
 {
 }
 
@@ -23,10 +24,13 @@ VTKWindow::~VTKWindow()
 
 int VTKWindow::Init()
 {
-    /*m_pObjectCreationWindow->OnCreateSignal.connect(
+    m_pObjectCreationWindow->OnCreateSignal.connect(
         boost::bind(
-            
-        )*/
+            &SolarSystemModel::OnNewPlanet,
+            m_solarSystemModel,
+            boost::placeholders::_1
+        )
+    );
 
 	return 0;
 }

@@ -2,6 +2,7 @@
 #define SOLARSYSTEMCORE_CONTROLWINDOW_HPP
 
 
+#include "ObjectsInfoWindow.hpp"
 #include "ObjectsComponents.hpp"
 #include "Planet.hpp"
 #include "boost/signals2.hpp"
@@ -16,7 +17,7 @@ typedef boost::signals2::signal<void(const int id)> DeleteSignal;
 class ObjectCreationWindow
 {
 public:
-    ObjectCreationWindow();
+    ObjectCreationWindow(ObjectsInfoWindow* pObjectsInfoWindow);
     ~ObjectCreationWindow();
 
     void Init();
@@ -43,6 +44,8 @@ private:
     std::map<int, ObjectAttributes> m_planetsAttributesMap;
     int m_planetsCount;
     ImFont* m_customFont;
+
+    ObjectsInfoWindow* m_pObjectsInfoWindow;
 };
 
 

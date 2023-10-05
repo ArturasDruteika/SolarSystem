@@ -4,10 +4,11 @@
 #include <string>
 
 
-ObjectCreationWindow::ObjectCreationWindow()
+ObjectCreationWindow::ObjectCreationWindow(ObjectsInfoWindow* pObjectsInfoWindow)
     : m_planetsAttributesMap{}
     , m_planetsCount{0}
     , m_customFont{nullptr}
+    , m_pObjectsInfoWindow{ pObjectsInfoWindow }
 {
     m_objectAttributes.radius = 1;
     m_objectAttributes.distanceFromCenter = 1;
@@ -87,6 +88,7 @@ void ObjectCreationWindow::RenderObjectCreationSection()
     {
         OnCreateSignal(m_planetsCount, m_objectAttributes);
         m_planetsAttributesMap.insert({ m_planetsCount, m_objectAttributes });
+        m_pObjectsInfoWindow->AddPlanetRecord(m_planetsCount, m_objectAttributes);
         m_planetsCount++;
     }
 }

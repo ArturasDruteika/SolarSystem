@@ -4,6 +4,7 @@
 
 #include "ObjectCreationWindow.hpp"
 #include "VTKWindow.hpp"
+#include "ObjectsInfoWindow.hpp"
 
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
@@ -29,7 +30,7 @@
 
 constexpr int MIN_VIEWPORT_WIDTH{1266};
 constexpr int MIN_VIEWPORT_HEIGHT{668};
-#define WINDOW_TITLE "Solar System"
+constexpr auto WINDOW_TITLE = "Solar System";
 
 
 class ContextWindow
@@ -54,7 +55,8 @@ private:
     ImVec4 m_backgroundColor;
 
     ObjectCreationWindow* m_pObjectCreationWindow;
-    VTKWindow* m_vtkWindow;
+    VTKWindow* m_pVTKWindow;
+    ObjectsInfoWindow* m_pObjectsInfoWindow;
 };
 
 

@@ -1,11 +1,14 @@
 #include "ObjectCreationWindow.hpp"
 #include "imgui.h"
 #include <boost/dll.hpp>
+#include <string>
 
 
-ObjectCreationWindow::ObjectCreationWindow()
-    : m_planetsCount{0}
+ObjectCreationWindow::ObjectCreationWindow(ObjectsInfoWindow* pObjectsInfoWindow)
+    : m_planetsAttributesMap{}
+    , m_planetsCount{0}
     , m_customFont{nullptr}
+    , m_pObjectsInfoWindow{ pObjectsInfoWindow }
 {
     m_objectAttributes.radius = 1;
     m_objectAttributes.distanceFromCenter = 1;
@@ -43,7 +46,8 @@ void ObjectCreationWindow::RenderMainWindow()
     ImGui::Separator();
     RenderObjectCreationSection();
     ImGui::Separator();
-    RenderPlanetsTable();
+    RenderPlanetsTableSection();
+    ImGui::Separator();
 
     ImGui::PopStyleVar(7);
 
@@ -52,6 +56,13 @@ void ObjectCreationWindow::RenderMainWindow()
 
 void ObjectCreationWindow::InitInternal()
 {
+    m_pObjectsInfoWindow->OnDeleteRecord.connect(
+        boost::bind(
+            &ObjectCreationWindow::DecrementPlanetsCount,
+            this
+        )
+    );
+
     // Font part
     std::string executableDir = boost::dll::program_location().parent_path().string();
     std::string fontPath = executableDir + "//res//fonts//Roboto-Bold.ttf";
@@ -60,46 +71,36 @@ void ObjectCreationWindow::InitInternal()
 
 void ObjectCreationWindow::RenderObjectRadiusSection()
 {
-    ImGui::SeparatorText("Object Radius");
-    ImGui::PushID("Radius");
-    ImGui::InputDouble("", &m_objectAttributes.radius, 1.f, 1.0f, "%.4f");
-    ImGui::PopID();
+    RenderObjectAttributeSelectionSection("Object Radius", "Radius", m_objectAttributes.radius);
 }
 
 void ObjectCreationWindow::RenderObjectDistanceSection()
 {
-    ImGui::SeparatorText("Object Distance From The Center");
-    ImGui::PushID("Distance");
-    ImGui::InputDouble("", &m_objectAttributes.distanceFromCenter, 1.f, 1.0f, "%.4f");
-    ImGui::PopID();
+    RenderObjectAttributeSelectionSection("Object Distance From The Center", "Distance", m_objectAttributes.distanceFromCenter);
 }
 
 void ObjectCreationWindow::RenderObjectSpeedSection()
 {
-    ImGui::SeparatorText("Object Speed Around The Center");
-    ImGui::PushID("Speed");
-    ImGui::InputDouble("", &m_objectAttributes.speed, 1.f, 1.0f, "%.4f");
-    ImGui::PopID();
+    RenderObjectAttributeSelectionSection("Object Speed Around The Center", "Speed", m_objectAttributes.speed);
 }
 
 void ObjectCreationWindow::RenderObjectTiltSection()
 {
-    ImGui::SeparatorText("Object Tilt");
-    ImGui::PushID("Tilt");
-    ImGui::InputDouble("", &m_objectAttributes.tiltDegrees, 1.f, 1.0f, "%.4f");
-    ImGui::PopID();
+    RenderObjectAttributeSelectionSection("Object Tilt", "Tilt", m_objectAttributes.tiltDegrees);
 }
 
 void ObjectCreationWindow::RenderObjectCreationSection()
 {
-    if (ImGui::Button("Create"))
+    if (ImGui::Button("Create", ImVec2(250, 20)))
     {
-        OnCreateSignal(m_objectAttributes);
+        OnCreateSignal(m_planetsCount, m_objectAttributes);
+        m_planetsAttributesMap.insert({ m_planetsCount, m_objectAttributes });
+        m_pObjectsInfoWindow->AddPlanetRecord(m_planetsCount, m_objectAttributes);
         m_planetsCount++;
     }
 }
 
-void ObjectCreationWindow::RenderPlanetsTable()
+void ObjectCreationWindow::RenderPlanetsTableSection()
 {
     static ImGuiTableFlags flagsPlanetsTable = ImGuiTableFlags_Borders | ImGuiTableFlags_NoHostExtendX;
 
@@ -120,9 +121,31 @@ void ObjectCreationWindow::RenderPlanetsTable()
     ImGui::PopFont();
 }
 
+void ObjectCreationWindow::RenderCreatedPlanetsInfoSection()
+{
+    static int planetIDToDelete;
+    static bool unusedSelectionSection = false;
+    static std::string sectionName = "PlanetToDelete";
+}
+
+void ObjectCreationWindow::RenderObjectAttributeSelectionSection(const std::string& separatorText, const std::string& idText, double& parameterValue)
+{
+    ImGui::PushItemWidth(250);
+    ImGui::SeparatorText(separatorText.c_str());
+    ImGui::PushID(idText.c_str());
+    ImGui::InputDouble("", &parameterValue, 1.f, 1.0f, "%.4f");
+    ImGui::PopID();
+    ImGui::PopItemWidth();
+}
+
 void ObjectCreationWindow::CreateFont(const std::string& fontPath, float fontSize)
 {
     std::string executableDir = boost::dll::program_location().parent_path().string();
     ImGuiIO& io = ImGui::GetIO();
     m_customFont = io.Fonts->AddFontFromFileTTF(fontPath.c_str(), fontSize);
+}
+
+void ObjectCreationWindow::DecrementPlanetsCount()
+{
+    m_planetsCount--;
 }

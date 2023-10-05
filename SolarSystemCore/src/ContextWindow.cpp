@@ -38,14 +38,17 @@ ContextWindow::ContextWindow()
     : m_window{glfwCreateWindow(MIN_VIEWPORT_WIDTH, MIN_VIEWPORT_HEIGHT, "Solar System", nullptr, nullptr)}
     , m_backgroundColor(ImVec4(0.45f, 0.55f, 0.60f, 1.00f))
     , m_pObjectCreationWindow{nullptr}
-    , m_vtkWindow{nullptr}
+    , m_pVTKWindow{nullptr}
+    , m_pObjectsInfoWindow{ nullptr }
 {
 
 }
 
 ContextWindow::~ContextWindow()
 {
-
+    delete m_pObjectCreationWindow;
+    delete m_pVTKWindow;
+    delete m_pObjectsInfoWindow;
 }
 
 int ContextWindow::Init()
@@ -137,12 +140,14 @@ int ContextWindow::Init()
 
     CreateWindowIcon();
     // Window creation
-    m_pObjectCreationWindow = new ObjectCreationWindow();
-    m_vtkWindow = new VTKWindow(m_pObjectCreationWindow);
+    m_pObjectsInfoWindow = new ObjectsInfoWindow();
+    m_pObjectCreationWindow = new ObjectCreationWindow(m_pObjectsInfoWindow);
+    m_pVTKWindow = new VTKWindow(m_pObjectCreationWindow);
 
     // Window Initialization
     m_pObjectCreationWindow->Init();
-    m_vtkWindow->Init();
+    m_pVTKWindow->Init();
+    m_pObjectsInfoWindow->Init();
 
     return 0;
 }
@@ -156,6 +161,8 @@ void ContextWindow::DeInit()
     ImGui::DestroyContext();
     glfwDestroyWindow(m_window);
     glfwTerminate();
+
+    // TODO: delete pointers to windows!!!
 }
 
 int ContextWindow::Run()
@@ -169,7 +176,7 @@ int ContextWindow::Run()
 
     // static ImGuiWindowFlags windowFlags = ImGuiWindowFlags_NoCollapse;
 
-    m_vtkWindow->InitializeVtkActors();
+    m_pVTKWindow->InitializeVtkActors();
 
     while (!glfwWindowShouldClose(m_window))
     {
@@ -189,7 +196,8 @@ int ContextWindow::Run()
         ImGui::DockSpaceOverViewport(ImGui::GetMainViewport());
 
         m_pObjectCreationWindow->RenderMainWindow();
-        m_vtkWindow->RenderMainWindow();
+        m_pVTKWindow->RenderMainWindow();
+        m_pObjectsInfoWindow->RenderMainWindow();
 
         // Rendering
         ImGui::Render();

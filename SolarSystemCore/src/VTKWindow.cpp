@@ -28,7 +28,8 @@ int VTKWindow::Init()
         boost::bind(
             &SolarSystemModel::OnNewPlanet,
             m_solarSystemModel,
-            boost::placeholders::_1
+            boost::placeholders::_1,
+            boost::placeholders::_2
         )
     );
 
@@ -41,16 +42,11 @@ void VTKWindow::DeInit()
 
 void VTKWindow::RenderMainWindow()
 {
-    static double i = 0.;
-    ImGui::SetNextWindowSize(ImVec2(720, 480), ImGuiCond_FirstUseEver);
-
     ImGui::Begin("Vtk Viewer");
 
     m_vtkViewerFinal.render();
 
     ImGui::End();
-
-    ImGui::Render();
 }
 
 void VTKWindow::InitializeVtkActors()

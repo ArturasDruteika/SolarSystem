@@ -5,7 +5,8 @@
 
 
 ObjectCreationWindow::ObjectCreationWindow()
-    : m_planetsCount{0}
+    : m_planetsAttributesMap{}
+    , m_planetsCount{0}
     , m_customFont{nullptr}
 {
     m_objectAttributes.radius = 1;
@@ -85,6 +86,7 @@ void ObjectCreationWindow::RenderObjectCreationSection()
     if (ImGui::Button("Create", ImVec2(250, 20)))
     {
         OnCreateSignal(m_planetsCount, m_objectAttributes);
+        m_planetsAttributesMap.insert({ m_planetsCount, m_objectAttributes });
         m_planetsCount++;
     }
 }
@@ -125,7 +127,6 @@ void ObjectCreationWindow::RenderObjectAttributeSelectionSection(const std::stri
     ImGui::InputDouble("", &parameterValue, 1.f, 1.0f, "%.4f");
     ImGui::PopID();
     ImGui::PopItemWidth();
-
 }
 
 void ObjectCreationWindow::CreateFont(const std::string& fontPath, float fontSize)

@@ -32,6 +32,7 @@ public:
 
 	void OnNewPlanet(int id, ObjectAttributes objectAttributes);
 	int GetPlanetsCount();
+	std::map<int, Planet> GetPlanetsMap();
 
 private:
 

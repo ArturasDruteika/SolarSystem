@@ -6,6 +6,7 @@
 #include "Planet.hpp"
 #include "boost/signals2.hpp"
 #include "imgui.h"
+#include <map>
 
 
 typedef boost::signals2::signal<void(int id, const ObjectAttributes& objectAttributes)> CreationSignal;
@@ -39,9 +40,9 @@ private:
     void CreateFont(const std::string& fontPath, float fontSize);
 
     ObjectAttributes m_objectAttributes;
+    std::map<int, ObjectAttributes> m_planetsAttributesMap;
     int m_planetsCount;
     ImFont* m_customFont;
-
 };
 
 

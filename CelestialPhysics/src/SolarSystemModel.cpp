@@ -18,3 +18,8 @@ int SolarSystemModel::GetPlanetsCount()
 {
 	return m_planetsMap.size();
 }
+
+std::map<int, Planet> SolarSystemModel::GetPlanetsMap()
+{
+	return m_planetsMap;
+}

@@ -60,10 +60,11 @@ void ObjectsInfoWindow::RenderPlanetsInfoTable()
     static ImGuiTableFlags flagsPlanetsTable = ImGuiTableFlags_Borders | ImGuiTableFlags_NoHostExtendX;
     static std::vector<std::string> tableColumnNames = {
         "Planet Number", 
-        "Radius",
-        "Distance From Earth",
-        "Speed",
-        "Tilt Degrees"
+        "Radius (Km)",
+        "Distance From Earth (Km)",
+        "Speed (Km / h)",
+        "Tilt Degrees (Deg)",
+        ""
     };
 
     ImGui::PushFont(m_customFont);
@@ -88,6 +89,11 @@ void ObjectsInfoWindow::RenderPlanetsInfoTable()
             ImGui::Text("%.5f", objectAttributes.speed);
             ImGui::TableNextColumn();
             ImGui::Text("%.5f", objectAttributes.tiltDegrees);
+            ImGui::TableNextColumn();
+            if (RenderDeleteButtonOnTable(planetId))
+            {
+                break;
+            }
         }
 
         ImGui::EndTable();
@@ -95,6 +101,51 @@ void ObjectsInfoWindow::RenderPlanetsInfoTable()
 
     ImGui::PopFont();
 }
+
+bool ObjectsInfoWindow::RenderDeleteButtonOnTable(int buttonId)
+{
+    static bool isPressed = false;
+    ImGui::PushID(std::to_string(buttonId).c_str());
+    if (ImGui::Button("Delete", ImVec2(55, 25)))
+    {
+        m_planetsAttributesMap.erase(buttonId);
+        OnDeleteRecord();
+        isPressed = true;
+    }
+    else
+    {
+        isPressed = false;
+    }
+    ImGui::PopID();
+    return isPressed;
+}
+
+//bool ObjectsInfoWindow::CheckIfDeleteRow(int id)
+//{
+//    bool isDelete = false;
+//    // Check if the right mouse button is clicked over this item
+//    if (ImGui::IsItemHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Right))
+//    {
+//        // Open a context menu for this row
+//        ImGui::OpenPopup("DeletePlanetPopup");
+//    }
+//
+//    // Render the context menu for this row
+//    if (ImGui::BeginPopup("DeletePlanetPopup"))
+//    {
+//        ImGui::PushID(std::to_string(id).c_str());
+//        if (ImGui::Selectable("Delete"))
+//        {
+//            // Add logic here to delete the planet
+//            
+//            isDelete = true;
+//        }
+//        ImGui::PopID();
+//        ImGui::EndPopup();
+//    }
+//
+//    return isDelete;
+//}
 
 void ObjectsInfoWindow::CreateFont(const std::string& fontPath, float fontSize)
 {

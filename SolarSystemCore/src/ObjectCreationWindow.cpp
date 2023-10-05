@@ -56,6 +56,13 @@ void ObjectCreationWindow::RenderMainWindow()
 
 void ObjectCreationWindow::InitInternal()
 {
+    m_pObjectsInfoWindow->OnDeleteRecord.connect(
+        boost::bind(
+            &ObjectCreationWindow::DecrementPlanetsCount,
+            this
+        )
+    );
+
     // Font part
     std::string executableDir = boost::dll::program_location().parent_path().string();
     std::string fontPath = executableDir + "//res//fonts//Roboto-Bold.ttf";
@@ -136,4 +143,9 @@ void ObjectCreationWindow::CreateFont(const std::string& fontPath, float fontSiz
     std::string executableDir = boost::dll::program_location().parent_path().string();
     ImGuiIO& io = ImGui::GetIO();
     m_customFont = io.Fonts->AddFontFromFileTTF(fontPath.c_str(), fontSize);
+}
+
+void ObjectCreationWindow::DecrementPlanetsCount()
+{
+    m_planetsCount--;
 }

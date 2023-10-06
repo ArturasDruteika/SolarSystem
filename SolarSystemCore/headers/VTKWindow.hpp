@@ -26,13 +26,14 @@ public:
     void InitializeVtkActors();
 
 private:
-    void AddPlanet(ObjectAttributes objectAttributes);
+    void AddVTKActor(const vtkSmartPointer<vtkActor>& actor);
+    void OnNewPlanet(int id, ObjectAttributes objectAttributes);
 
     bool m_isVtkOpen;
     Cube m_cube;
     Sphere m_sphere;
     VtkViewer m_vtkViewer1;
-    VtkViewer m_vtkViewerFinal;
+    VtkViewer m_vtkViewer;
     std::vector<Planet> m_planetsVec;
     ObjectCreationWindow* m_pObjectCreationWindow;
     SolarSystemModel m_solarSystemModel;

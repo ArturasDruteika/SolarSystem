@@ -26,8 +26,8 @@ int VTKWindow::Init()
 {
     m_pObjectCreationWindow->OnCreateSignal.connect(
         boost::bind(
-            &SolarSystemModel::OnNewPlanet,
-            m_solarSystemModel,
+            &VTKWindow::OnNewPlanet,
+            this,
             boost::placeholders::_1,
             boost::placeholders::_2
         )
@@ -44,7 +44,7 @@ void VTKWindow::RenderMainWindow()
 {
     ImGui::Begin("Vtk Viewer");
 
-    m_vtkViewerFinal.render();
+    m_vtkViewer.render();
 
     ImGui::End();
 }
@@ -52,13 +52,17 @@ void VTKWindow::RenderMainWindow()
 void VTKWindow::InitializeVtkActors()
 {
     m_cube.GenerateObject(1.5);
-    m_sphere.GenerateObject(2.0);
-    m_vtkViewer1.addActor(m_cube.GetObjectActor());
-    m_vtkViewerFinal.getRenderer()->SetBackground(0, 0, 0);
-    m_vtkViewerFinal.addActor(m_cube.GetObjectActor());
+    m_vtkViewer.getRenderer()->SetBackground(0, 0, 0);
+    m_vtkViewer.addActor(m_cube.GetObjectActor());
 }
 
-void VTKWindow::AddPlanet(ObjectAttributes objectAttributes)
+void VTKWindow::AddVTKActor(const vtkSmartPointer<vtkActor>& actor)
 {
-    
+    m_vtkViewer.addActor(actor);
+}
+
+void VTKWindow::OnNewPlanet(int id, ObjectAttributes objectAttributes)
+{
+    m_solarSystemModel.OnNewPlanet(id, objectAttributes);
+    AddVTKActor(m_solarSystemModel.GetPlanetsMap().at(id).GetPlanetActor());
 }

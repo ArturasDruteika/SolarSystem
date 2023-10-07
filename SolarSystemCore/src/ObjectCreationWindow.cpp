@@ -23,35 +23,9 @@ void ObjectCreationWindow::Init()
     InitInternal();
 }
 
-void ObjectCreationWindow::RenderMainWindow()
+void ObjectCreationWindow::DeInit()
 {
-    ImGui::Begin(
-        "Object Creation",
-        nullptr,
-        ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse
-    );
-
-    ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 4.0f);
-    ImGui::PushStyleVar(ImGuiStyleVar_ChildRounding, 4.0f);
-    ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 3.0f);
-    ImGui::PushStyleVar(ImGuiStyleVar_GrabRounding, 4.0f);
-    ImGui::PushStyleVar(ImGuiStyleVar_PopupRounding, 2.0f);
-    ImGui::PushStyleVar(ImGuiStyleVar_ScrollbarRounding, 4.0f);
-    ImGui::PushStyleVar(ImGuiStyleVar_TabRounding, 4.0f);
-
-    RenderObjectRadiusSection();
-    RenderObjectDistanceSection();
-    RenderObjectSpeedSection();
-    RenderObjectTiltSection();
-    ImGui::Separator();
-    RenderObjectCreationSection();
-    ImGui::Separator();
-    RenderPlanetsTableSection();
-    ImGui::Separator();
-
-    ImGui::PopStyleVar(7);
-
-    ImGui::End();
+    DeInitInternal();
 }
 
 void ObjectCreationWindow::InitInternal()
@@ -67,7 +41,26 @@ void ObjectCreationWindow::InitInternal()
     // Font part
     std::string executableDir = boost::dll::program_location().parent_path().string();
     std::string fontPath = executableDir + "//res//fonts//Roboto-Bold.ttf";
-    CreateFont(fontPath, 24.f);
+    m_customFont = CreateFont(fontPath, 24.f);
+}
+
+void ObjectCreationWindow::DeInitInternal()
+{
+    delete m_pObjectsInfoWindow;
+    delete m_customFont;
+}
+
+void ObjectCreationWindow::RenderMainWindowInternal()
+{
+    RenderObjectRadiusSection();
+    RenderObjectDistanceSection();
+    RenderObjectSpeedSection();
+    RenderObjectTiltSection();
+    ImGui::Separator();
+    RenderObjectCreationSection();
+    ImGui::Separator();
+    RenderPlanetsTableSection();
+    ImGui::Separator();
 }
 
 void ObjectCreationWindow::RenderObjectRadiusSection()
@@ -137,13 +130,6 @@ void ObjectCreationWindow::RenderObjectAttributeSelectionSection(const std::stri
     ImGui::InputDouble("", &parameterValue, 1.f, 1.0f, "%.4f");
     ImGui::PopID();
     ImGui::PopItemWidth();
-}
-
-void ObjectCreationWindow::CreateFont(const std::string& fontPath, float fontSize)
-{
-    std::string executableDir = boost::dll::program_location().parent_path().string();
-    ImGuiIO& io = ImGui::GetIO();
-    m_customFont = io.Fonts->AddFontFromFileTTF(fontPath.c_str(), fontSize);
 }
 
 void ObjectCreationWindow::OnDeletePlanet(int id)

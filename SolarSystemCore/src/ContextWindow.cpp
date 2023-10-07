@@ -144,7 +144,7 @@ int ContextWindow::Init()
     m_pObjectCreationWindow = new ObjectCreationWindow(m_pObjectsInfoWindow);
     m_pVTKWindow = new VTKWindow();
 
-    m_pVTKWindow->SetUpWindowPointer(m_pObjectCreationWindow, m_pObjectsInfoWindow);
+    m_pVTKWindow->SetUpWindowPointers(m_pObjectCreationWindow, m_pObjectsInfoWindow);
 
     // Window Initialization
     m_pObjectCreationWindow->Init();
@@ -197,9 +197,9 @@ int ContextWindow::Run()
         // Dockspace
         ImGui::DockSpaceOverViewport(ImGui::GetMainViewport());
 
-        m_pObjectCreationWindow->RenderMainWindow();
-        m_pVTKWindow->RenderMainWindow();
-        m_pObjectsInfoWindow->RenderMainWindow();
+        m_pObjectCreationWindow->RenderMainWindow("Object Creation");
+        m_pObjectsInfoWindow->RenderMainWindow("Objects Info");
+        m_pVTKWindow->RenderMainWindow("Vtk Viewer");
 
         // Rendering
         ImGui::Render();

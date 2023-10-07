@@ -24,40 +24,20 @@ VTKWindow::~VTKWindow()
 {
 }
 
-int VTKWindow::Init()
+void VTKWindow::Init()
 {
     InitInternal();
-	return 0;
 }
 
 void VTKWindow::DeInit()
 {
+    DeInitInternal();
 }
 
-void VTKWindow::SetUpWindowPointer(ObjectCreationWindow* pObjectCreationWindow, ObjectsInfoWindow* pObjectInfoWindow)
+void VTKWindow::SetUpWindowPointers(ObjectCreationWindow* pObjectCreationWindow, ObjectsInfoWindow* pObjectInfoWindow)
 {
     m_pObjectCreationWindow = pObjectCreationWindow;
     m_pObjectInfoWindow = pObjectInfoWindow;
-}
-
-void VTKWindow::RenderMainWindow()
-{
-    static int i = 0;
-    if (i == 9000) { i = 0; }
-
-    ImGui::Begin("Vtk Viewer");
-
-    for (auto& [planetID, planet] : m_planetsMap)
-    {
-        double x = m_planetsRotationCoords.at(planetID)[i].first;
-        double y = m_planetsRotationCoords.at(planetID)[i].second;
-        planet.MovePlanet(x, y, 0);
-    }
-    i++;
-
-    m_vtkViewer.render();
-
-    ImGui::End();
 }
 
 void VTKWindow::InitializeVtkActors()
@@ -85,6 +65,28 @@ void VTKWindow::InitInternal()
             boost::placeholders::_1
         )
     );
+}
+
+void VTKWindow::DeInitInternal()
+{
+    delete m_pObjectCreationWindow;
+    delete m_pObjectInfoWindow;
+}
+
+void VTKWindow::RenderMainWindowInternal()
+{
+    static int i = 0;
+    if (i == 9000) { i = 0; }
+
+    for (auto& [planetID, planet] : m_planetsMap)
+    {
+        double x = m_planetsRotationCoords.at(planetID)[i].first;
+        double y = m_planetsRotationCoords.at(planetID)[i].second;
+        planet.MovePlanet(x, y, 0);
+    }
+    i++;
+
+    m_vtkViewer.render();
 }
 
 void VTKWindow::AddVTKActor(const vtkSmartPointer<vtkActor>& actor)

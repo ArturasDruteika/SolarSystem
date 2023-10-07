@@ -5,6 +5,7 @@
 ObjectsInfoWindow::ObjectsInfoWindow()
     : m_customFont{ nullptr }
     , m_planetsAttributesMap{}
+    , m_nStyleVars{0}
 {
 }
 
@@ -19,25 +20,7 @@ void ObjectsInfoWindow::Init()
 
 void ObjectsInfoWindow::DeInit()
 {
-}
-
-void ObjectsInfoWindow::RenderMainWindow()
-{
-    ImGui::Begin("Objects Info", nullptr, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse);
-
-    ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 5.0f);
-    ImGui::PushStyleVar(ImGuiStyleVar_ChildRounding, 4.0f);
-    ImGui::PushStyleVar(ImGuiStyleVar_FrameRounding, 3.0f);
-    ImGui::PushStyleVar(ImGuiStyleVar_GrabRounding, 4.0f);
-    ImGui::PushStyleVar(ImGuiStyleVar_PopupRounding, 2.0f);
-    ImGui::PushStyleVar(ImGuiStyleVar_ScrollbarRounding, 4.0f);
-    ImGui::PushStyleVar(ImGuiStyleVar_TabRounding, 4.0f);
-
-    RenderPlanetsInfoTable();
-
-    ImGui::PopStyleVar(7);
-
-    ImGui::End();
+    DeInitInternal();
 }
 
 void ObjectsInfoWindow::AddPlanetRecord(int id, const ObjectAttributes& objectAttributes)
@@ -50,12 +33,22 @@ void ObjectsInfoWindow::InitInternal()
     // Font part
     std::string executableDir = boost::dll::program_location().parent_path().string();
     std::string fontPath = executableDir + "//res//fonts//Roboto-Bold.ttf";
-    CreateFont(fontPath, 18.f);
+    m_customFont = CreateFont(fontPath, 18.f);
+}
+
+void ObjectsInfoWindow::DeInitInternal()
+{
+    delete m_customFont;
+}
+
+void ObjectsInfoWindow::RenderMainWindowInternal()
+{
+    RenderPlanetsInfoTable();
 }
 
 void ObjectsInfoWindow::RenderPlanetsInfoTable()
 {
-    ImGui::SeparatorText("Planets table");
+    ImGui::SeparatorText("Planets Table");
 
     static ImGuiTableFlags flagsPlanetsTable = ImGuiTableFlags_Borders | ImGuiTableFlags_NoHostExtendX;
     static std::vector<std::string> tableColumnNames = {
@@ -95,10 +88,8 @@ void ObjectsInfoWindow::RenderPlanetsInfoTable()
                 break;
             }
         }
-
         ImGui::EndTable();
     }
-
     ImGui::PopFont();
 }
 
@@ -118,11 +109,4 @@ bool ObjectsInfoWindow::RenderDeleteButtonOnTable(int buttonId)
     }
     ImGui::PopID();
     return isPressed;
-}
-
-void ObjectsInfoWindow::CreateFont(const std::string& fontPath, float fontSize)
-{
-    std::string executableDir = boost::dll::program_location().parent_path().string();
-    ImGuiIO& io = ImGui::GetIO();
-    m_customFont = io.Fonts->AddFontFromFileTTF(fontPath.c_str(), fontSize);
 }

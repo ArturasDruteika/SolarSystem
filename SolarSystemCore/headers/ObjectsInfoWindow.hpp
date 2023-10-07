@@ -2,6 +2,7 @@
 #define OBJECTSINFOWINDOW_H
 
 
+#include "GraphicalWindow.hpp"
 #include "ObjectsComponents.hpp"
 #include "imgui.h"
 #include "boost/signals2.hpp"
@@ -12,27 +13,29 @@
 typedef boost::signals2::signal<void(int id)> DeletePlanetSignal;
 
 
-class ObjectsInfoWindow
+class ObjectsInfoWindow : public GraphicalWindow
 {
 public:
     ObjectsInfoWindow();
     ~ObjectsInfoWindow();
 
-    void Init();
-    void DeInit();
+    void Init() override;
+    void DeInit() override;
 
-    void RenderMainWindow();
     void AddPlanetRecord(int id, const ObjectAttributes& objectAttributes);
     DeletePlanetSignal OnDeleteRecord;
 
 private:
-    void InitInternal();
+    void InitInternal() override;
+    void DeInitInternal() override;
+    void RenderMainWindowInternal() override;
+
     void RenderPlanetsInfoTable();
     bool RenderDeleteButtonOnTable(int buttonId);
-    void CreateFont(const std::string& fontPath, float fontSize);
 
     std::map<int, ObjectAttributes> m_planetsAttributesMap;
     ImFont* m_customFont;
+    int m_nStyleVars;
 };
 
 

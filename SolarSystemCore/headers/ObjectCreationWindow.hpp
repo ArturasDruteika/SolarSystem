@@ -2,6 +2,7 @@
 #define SOLARSYSTEMCORE_CONTROLWINDOW_HPP
 
 
+#include "GraphicalWindow.hpp"
 #include "ObjectsInfoWindow.hpp"
 #include "ObjectsComponents.hpp"
 #include "Planet.hpp"
@@ -14,20 +15,22 @@ typedef boost::signals2::signal<void(int id, const ObjectAttributes& objectAttri
 typedef boost::signals2::signal<void(const int id)> DeleteSignal;
 
 
-class ObjectCreationWindow
+class ObjectCreationWindow : public GraphicalWindow
 {
 public:
     ObjectCreationWindow(ObjectsInfoWindow* pObjectsInfoWindow);
     ~ObjectCreationWindow();
 
-    void Init();
-    void RenderMainWindow();
+    void Init() override;
+    void DeInit() override;
 
     CreationSignal OnCreateSignal;
     DeleteSignal OnDeleteSignal;
 
 private:
-    void InitInternal();
+    void InitInternal() override;
+    void DeInitInternal() override;
+    void RenderMainWindowInternal() override;
 
     void RenderObjectRadiusSection();
     void RenderObjectDistanceSection();
@@ -38,7 +41,6 @@ private:
     void RenderCreatedPlanetsInfoSection();
 
     void RenderObjectAttributeSelectionSection(const std::string& separatorText, const std::string& idText, double& parameterValue);
-    void CreateFont(const std::string& fontPath, float fontSize);
     void OnDeletePlanet(int id);
 
     ObjectAttributes m_objectAttributes;

@@ -34,9 +34,10 @@ private:
     Sphere m_sphere;
     VtkViewer m_vtkViewer1;
     VtkViewer m_vtkViewer;
-    std::vector<Planet> m_planetsVec;
     ObjectCreationWindow* m_pObjectCreationWindow;
     SolarSystemModel m_solarSystemModel;
+    std::map<int, Planet> m_planetsMap;
+    std::map<int, std::vector<std::pair<double, double>>> m_planetsRotationCoords;
 };
 
 

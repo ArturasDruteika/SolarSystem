@@ -12,9 +12,10 @@ VTKWindow::VTKWindow(ObjectCreationWindow* pObjectCreationWindow)
     : m_cube{}
     , m_sphere{}
     , m_isVtkOpen{true}
-    , m_planetsVec{}
     , m_pObjectCreationWindow{ pObjectCreationWindow }
     , m_solarSystemModel{}
+    , m_planetsRotationCoords{}
+    , m_planetsMap{}
 {
 }
 
@@ -42,7 +43,18 @@ void VTKWindow::DeInit()
 
 void VTKWindow::RenderMainWindow()
 {
+    static int i = 0;
+    if (i == 9000) { i = 0; }
+
     ImGui::Begin("Vtk Viewer");
+
+    for (auto& [planetID, planet] : m_planetsMap)
+    {
+        double x = m_planetsRotationCoords.at(planetID)[i].first;
+        double y = m_planetsRotationCoords.at(planetID)[i].second;
+        planet.MovePlanet(x, y, 0);
+    }
+    i++;
 
     m_vtkViewer.render();
 
@@ -64,5 +76,7 @@ void VTKWindow::AddVTKActor(const vtkSmartPointer<vtkActor>& actor)
 void VTKWindow::OnNewPlanet(int id, ObjectAttributes objectAttributes)
 {
     m_solarSystemModel.OnNewPlanet(id, objectAttributes);
+    m_planetsRotationCoords = m_solarSystemModel.GetPlanetsRotationCoords();
     AddVTKActor(m_solarSystemModel.GetPlanetsMap().at(id).GetPlanetActor());
+    m_planetsMap = m_solarSystemModel.GetPlanetsMap();
 }

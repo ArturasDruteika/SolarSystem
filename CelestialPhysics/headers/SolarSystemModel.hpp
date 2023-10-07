@@ -22,6 +22,8 @@
 #include "ObjectsComponents.hpp"
 
 #include <map>
+#include <vector>
+#include <utility>
 
 
 class CELESTIALPHYSICS_API SolarSystemModel
@@ -33,10 +35,11 @@ public:
 	void OnNewPlanet(int id, ObjectAttributes objectAttributes);
 	int GetPlanetsCount();
 	std::map<int, Planet> GetPlanetsMap();
+	std::map<int, std::vector<std::pair<double, double>>> GetPlanetsRotationCoords();
 
 private:
-
 	std::map<int, Planet> m_planetsMap;
+	std::map<int, std::vector<std::pair<double, double>>> m_planetsRotationCoords;
 };
 
 #endif //CELESTIALPHYSICS_SOLARSYSTEMMODEL_HPP

@@ -142,7 +142,9 @@ int ContextWindow::Init()
     // Window creation
     m_pObjectsInfoWindow = new ObjectsInfoWindow();
     m_pObjectCreationWindow = new ObjectCreationWindow(m_pObjectsInfoWindow);
-    m_pVTKWindow = new VTKWindow(m_pObjectCreationWindow);
+    m_pVTKWindow = new VTKWindow();
+
+    m_pVTKWindow->SetUpWindowPointer(m_pObjectCreationWindow, m_pObjectsInfoWindow);
 
     // Window Initialization
     m_pObjectCreationWindow->Init();

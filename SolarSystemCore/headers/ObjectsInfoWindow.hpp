@@ -9,7 +9,7 @@
 #include <map>
 
 
-typedef boost::signals2::signal<void()> DeletePlanetSignal;
+typedef boost::signals2::signal<void(int id)> DeletePlanetSignal;
 
 
 class ObjectsInfoWindow

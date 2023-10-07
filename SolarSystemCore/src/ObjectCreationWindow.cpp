@@ -58,8 +58,9 @@ void ObjectCreationWindow::InitInternal()
 {
     m_pObjectsInfoWindow->OnDeleteRecord.connect(
         boost::bind(
-            &ObjectCreationWindow::DecrementPlanetsCount,
-            this
+            &ObjectCreationWindow::OnDeletePlanet,
+            this,
+            boost::placeholders::_1
         )
     );
 
@@ -145,7 +146,7 @@ void ObjectCreationWindow::CreateFont(const std::string& fontPath, float fontSiz
     m_customFont = io.Fonts->AddFontFromFileTTF(fontPath.c_str(), fontSize);
 }
 
-void ObjectCreationWindow::DecrementPlanetsCount()
+void ObjectCreationWindow::OnDeletePlanet(int id)
 {
     m_planetsCount--;
 }

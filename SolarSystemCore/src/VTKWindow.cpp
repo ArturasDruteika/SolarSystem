@@ -8,11 +8,12 @@
 #include "spdlog/spdlog.h"
 
 
-VTKWindow::VTKWindow(ObjectCreationWindow* pObjectCreationWindow)
+VTKWindow::VTKWindow()
     : m_cube{}
     , m_sphere{}
     , m_isVtkOpen{true}
-    , m_pObjectCreationWindow{ pObjectCreationWindow }
+    , m_pObjectCreationWindow{nullptr}
+    , m_pObjectInfoWindow{nullptr}
     , m_solarSystemModel{}
     , m_planetsRotationCoords{}
     , m_planetsMap{}
@@ -25,20 +26,18 @@ VTKWindow::~VTKWindow()
 
 int VTKWindow::Init()
 {
-    m_pObjectCreationWindow->OnCreateSignal.connect(
-        boost::bind(
-            &VTKWindow::OnNewPlanet,
-            this,
-            boost::placeholders::_1,
-            boost::placeholders::_2
-        )
-    );
-
+    InitInternal();
 	return 0;
 }
 
 void VTKWindow::DeInit()
 {
+}
+
+void VTKWindow::SetUpWindowPointer(ObjectCreationWindow* pObjectCreationWindow, ObjectsInfoWindow* pObjectInfoWindow)
+{
+    m_pObjectCreationWindow = pObjectCreationWindow;
+    m_pObjectInfoWindow = pObjectInfoWindow;
 }
 
 void VTKWindow::RenderMainWindow()
@@ -68,15 +67,50 @@ void VTKWindow::InitializeVtkActors()
     m_vtkViewer.addActor(m_cube.GetObjectActor());
 }
 
+void VTKWindow::InitInternal()
+{
+    m_pObjectCreationWindow->OnCreateSignal.connect(
+        boost::bind(
+            &VTKWindow::OnNewPlanet,
+            this,
+            boost::placeholders::_1,
+            boost::placeholders::_2
+        )
+    );
+
+    m_pObjectInfoWindow->OnDeleteRecord.connect(
+        boost::bind(
+            &VTKWindow::OnDeletePlanet,
+            this,
+            boost::placeholders::_1
+        )
+    );
+}
+
 void VTKWindow::AddVTKActor(const vtkSmartPointer<vtkActor>& actor)
 {
     m_vtkViewer.addActor(actor);
+}
+
+void VTKWindow::RemoveVTKActor(const vtkSmartPointer<vtkActor>& actor)
+{
+    m_vtkViewer.removeActor(actor);
 }
 
 void VTKWindow::OnNewPlanet(int id, ObjectAttributes objectAttributes)
 {
     m_solarSystemModel.OnNewPlanet(id, objectAttributes);
     m_planetsRotationCoords = m_solarSystemModel.GetPlanetsRotationCoords();
+    m_planetsMap = m_solarSystemModel.GetPlanetsMap();
+
     AddVTKActor(m_solarSystemModel.GetPlanetsMap().at(id).GetPlanetActor());
+}
+
+void VTKWindow::OnDeletePlanet(int planetID)
+{
+    RemoveVTKActor(m_solarSystemModel.GetPlanetsMap().at(planetID).GetPlanetActor());
+
+    m_solarSystemModel.OnDeletePlanet(planetID);
+    m_planetsRotationCoords = m_solarSystemModel.GetPlanetsRotationCoords();
     m_planetsMap = m_solarSystemModel.GetPlanetsMap();
 }

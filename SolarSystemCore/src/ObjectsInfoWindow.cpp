@@ -109,7 +109,7 @@ bool ObjectsInfoWindow::RenderDeleteButtonOnTable(int buttonId)
     if (ImGui::Button("Delete", ImVec2(55, 25)))
     {
         m_planetsAttributesMap.erase(buttonId);
-        OnDeleteRecord();
+        OnDeleteRecord(buttonId);
         isPressed = true;
     }
     else

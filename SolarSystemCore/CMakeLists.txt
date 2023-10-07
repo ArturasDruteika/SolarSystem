@@ -70,6 +70,8 @@ add_library(${PROJECT_NAME} SHARED
 	src/VTKWindow.cpp
 	headers/ObjectsInfoWindow.hpp
 	src/ObjectsInfoWindow.cpp
+	headers/GraphicalWindow.hpp
+	src/GraphicalWindow.cpp
     )
 
 include_directories(

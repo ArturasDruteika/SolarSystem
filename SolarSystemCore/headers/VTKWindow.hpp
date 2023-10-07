@@ -2,6 +2,7 @@
 #define VTKWINDOW_HPP
 
 
+#include "GraphicalWindow.hpp"
 #include "VtkViewer.h"
 #include "Cube.hpp"
 #include "Sphere.hpp"
@@ -14,21 +15,23 @@
 #include <vector>
 
 
-class VTKWindow
+class VTKWindow : public GraphicalWindow
 {
 public:
     VTKWindow();
     ~VTKWindow();
 
-    int Init();
-    void DeInit();
-    void SetUpWindowPointer(ObjectCreationWindow* pObjectCreationWindow, ObjectsInfoWindow* pObjectInfoWindow);
+    void Init() override;
+    void DeInit() override;
 
-    void RenderMainWindow();
+    void SetUpWindowPointers(ObjectCreationWindow* pObjectCreationWindow, ObjectsInfoWindow* pObjectInfoWindow);
     void InitializeVtkActors();
 
 private:
-    void InitInternal();
+    void InitInternal() override;
+    void DeInitInternal() override;
+    void RenderMainWindowInternal() override;
+
     void AddVTKActor(const vtkSmartPointer<vtkActor>& actor);
     void RemoveVTKActor(const vtkSmartPointer<vtkActor>& actor);
     void OnNewPlanet(int id, ObjectAttributes objectAttributes);

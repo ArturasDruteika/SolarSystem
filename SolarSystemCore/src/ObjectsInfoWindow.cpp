@@ -120,33 +120,6 @@ bool ObjectsInfoWindow::RenderDeleteButtonOnTable(int buttonId)
     return isPressed;
 }
 
-//bool ObjectsInfoWindow::CheckIfDeleteRow(int id)
-//{
-//    bool isDelete = false;
-//    // Check if the right mouse button is clicked over this item
-//    if (ImGui::IsItemHovered() && ImGui::IsMouseClicked(ImGuiMouseButton_Right))
-//    {
-//        // Open a context menu for this row
-//        ImGui::OpenPopup("DeletePlanetPopup");
-//    }
-//
-//    // Render the context menu for this row
-//    if (ImGui::BeginPopup("DeletePlanetPopup"))
-//    {
-//        ImGui::PushID(std::to_string(id).c_str());
-//        if (ImGui::Selectable("Delete"))
-//        {
-//            // Add logic here to delete the planet
-//            
-//            isDelete = true;
-//        }
-//        ImGui::PopID();
-//        ImGui::EndPopup();
-//    }
-//
-//    return isDelete;
-//}
-
 void ObjectsInfoWindow::CreateFont(const std::string& fontPath, float fontSize)
 {
     std::string executableDir = boost::dll::program_location().parent_path().string();

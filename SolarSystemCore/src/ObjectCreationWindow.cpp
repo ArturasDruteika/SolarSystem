@@ -71,22 +71,22 @@ void ObjectCreationWindow::InitInternal()
 
 void ObjectCreationWindow::RenderObjectRadiusSection()
 {
-    RenderObjectAttributeSelectionSection("Object Radius", "Radius", m_objectAttributes.radius);
+    RenderObjectAttributeSelectionSection("Object's Radius", "Radius", m_objectAttributes.radius);
 }
 
 void ObjectCreationWindow::RenderObjectDistanceSection()
 {
-    RenderObjectAttributeSelectionSection("Object Distance From The Center", "Distance", m_objectAttributes.distanceFromCenter);
+    RenderObjectAttributeSelectionSection("Object's Distance From The Center", "Distance", m_objectAttributes.distanceFromCenter);
 }
 
 void ObjectCreationWindow::RenderObjectSpeedSection()
 {
-    RenderObjectAttributeSelectionSection("Object Speed Around The Center", "Speed", m_objectAttributes.speed);
+    RenderObjectAttributeSelectionSection("Object's Speed Around The Center", "Speed", m_objectAttributes.speed);
 }
 
 void ObjectCreationWindow::RenderObjectTiltSection()
 {
-    RenderObjectAttributeSelectionSection("Object Tilt", "Tilt", m_objectAttributes.tiltDegrees);
+    RenderObjectAttributeSelectionSection("Object's Tilt", "Tilt", m_objectAttributes.tiltDegrees);
 }
 
 void ObjectCreationWindow::RenderObjectCreationSection()

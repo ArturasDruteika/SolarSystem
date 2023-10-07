@@ -29,7 +29,6 @@ private:
     void InitInternal();
     void RenderPlanetsInfoTable();
     bool RenderDeleteButtonOnTable(int buttonId);
-    //bool CheckIfDeleteRow(int id);
     void CreateFont(const std::string& fontPath, float fontSize);
 
     std::map<int, ObjectAttributes> m_planetsAttributesMap;

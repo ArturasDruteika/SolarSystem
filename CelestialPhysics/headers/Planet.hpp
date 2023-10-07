@@ -26,12 +26,15 @@ public:
 	Planet(ObjectAttributes objectAttributes);
 	~Planet();
 
+	ObjectAttributes GetPlanetAttributes();
 	vtkSmartPointer<vtkActor> GetPlanetActor();
 	void MovePlanet(double xPos, double yPos, double zPos);
+	std::vector<std::pair<double, double>> GenerateCircleXYPointsVec(double distanceFromCenter, double resolution=9000);
 
 private:
 	ObjectAttributes m_planetAttributes;
 	Sphere m_sphere;
+	std::vector<std::pair<double, double>> xyCircularCoords;
 };
 
 #endif //CELESTIALPHYSICS_PLANETS_HPP

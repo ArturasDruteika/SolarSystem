@@ -39,7 +39,7 @@ private:
 
     void RenderObjectAttributeSelectionSection(const std::string& separatorText, const std::string& idText, double& parameterValue);
     void CreateFont(const std::string& fontPath, float fontSize);
-    void DecrementPlanetsCount();
+    void OnDeletePlanet(int id);
 
     ObjectAttributes m_objectAttributes;
     std::map<int, ObjectAttributes> m_planetsAttributesMap;

@@ -21,6 +21,12 @@ void SolarSystemModel::OnNewPlanet(int id, ObjectAttributes objectAttributes)
 	);
 }
 
+void SolarSystemModel::OnDeletePlanet(int id)
+{
+	m_planetsMap.erase(id);
+	m_planetsRotationCoords.erase(id);
+}
+
 int SolarSystemModel::GetPlanetsCount()
 {
 	return m_planetsMap.size();

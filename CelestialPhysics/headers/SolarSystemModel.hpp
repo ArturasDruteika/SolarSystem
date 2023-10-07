@@ -33,6 +33,7 @@ public:
 	~SolarSystemModel();
 
 	void OnNewPlanet(int id, ObjectAttributes objectAttributes);
+	void OnDeletePlanet(int id);
 	int GetPlanetsCount();
 	std::map<int, Planet> GetPlanetsMap();
 	std::map<int, std::vector<std::pair<double, double>>> GetPlanetsRotationCoords();

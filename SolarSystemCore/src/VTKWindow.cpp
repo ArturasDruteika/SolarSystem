@@ -101,7 +101,7 @@ void VTKWindow::RemoveVTKActor(const vtkSmartPointer<vtkActor>& actor)
 
 void VTKWindow::OnNewPlanet(int id, ObjectAttributes objectAttributes)
 {
-    m_solarSystemModel.OnNewPlanet(id, objectAttributes);
+    m_solarSystemModel.AddPlanet(id, objectAttributes);
     m_planetsRotationCoords = m_solarSystemModel.GetPlanetsRotationCoords();
     m_planetsMap = m_solarSystemModel.GetPlanetsMap();
 

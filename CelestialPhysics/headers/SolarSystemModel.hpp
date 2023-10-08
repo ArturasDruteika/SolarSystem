@@ -32,7 +32,7 @@ public:
 	SolarSystemModel();
 	~SolarSystemModel();
 
-	void OnNewPlanet(int id, ObjectAttributes objectAttributes);
+	void AddPlanet(int id, ObjectAttributes objectAttributes);
 	void OnDeletePlanet(int id);
 	int GetPlanetsCount();
 	std::map<int, Planet> GetPlanetsMap();

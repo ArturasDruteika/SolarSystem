@@ -9,7 +9,7 @@ SolarSystemModel::~SolarSystemModel()
 {
 }
 
-void SolarSystemModel::OnNewPlanet(int id, ObjectAttributes objectAttributes)
+void SolarSystemModel::AddPlanet(int id, ObjectAttributes objectAttributes)
 {
 	// TODO: shouldn't it be new Planet(objectAttributes)???
 	m_planetsMap.insert({ id, Planet(objectAttributes) });

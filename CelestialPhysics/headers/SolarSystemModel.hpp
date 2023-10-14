@@ -20,6 +20,7 @@
 #include "Sphere.hpp"
 #include "Planet.hpp"
 #include "ObjectsComponents.hpp"
+#include "OrbitalMechanics.hpp"
 
 #include <map>
 #include <vector>
@@ -37,10 +38,14 @@ public:
 	int GetPlanetsCount();
 	std::map<int, Planet> GetPlanetsMap();
 	std::map<int, std::vector<std::pair<double, double>>> GetPlanetsRotationCoords();
+	std::map<int, std::vector<std::vector<double>>> GetPlanetsRotationCoords(int a);
 
 private:
 	std::map<int, Planet> m_planetsMap;
 	std::map<int, std::vector<std::pair<double, double>>> m_planetsRotationCoords;
+
+	std::map<int, std::vector<std::vector<double>>> m_planetsRotationCoords2;
+	OrbitalMechanics m_orbitalMechanics;
 };
 
 #endif //CELESTIALPHYSICS_SOLARSYSTEMMODEL_HPP

@@ -2,6 +2,7 @@
 
 SolarSystemModel::SolarSystemModel()
 	: m_planetsMap{}
+	, m_planetsRotationCoords2{}
 {
 }
 
@@ -19,6 +20,10 @@ void SolarSystemModel::AddPlanet(int id, ObjectAttributes objectAttributes)
 			m_planetsMap.at(id).GenerateCircleXYPointsVec(objectAttributes.distanceFromCenter, 9000) 
 		}
 	);
+
+	std::vector<std::vector<double>> rotationCoordsVec = m_orbitalMechanics.GenerateRotationCoords(objectAttributes.radius, objectAttributes.tiltDegrees, 9000);
+	m_planetsRotationCoords2.insert({ id, rotationCoordsVec });
+
 }
 
 void SolarSystemModel::OnDeletePlanet(int id)
@@ -40,4 +45,9 @@ std::map<int, Planet> SolarSystemModel::GetPlanetsMap()
 std::map<int, std::vector<std::pair<double, double>>> SolarSystemModel::GetPlanetsRotationCoords()
 {
 	return m_planetsRotationCoords;
+}
+
+std::map<int, std::vector<std::vector<double>>> SolarSystemModel::GetPlanetsRotationCoords(int a)
+{
+	return m_planetsRotationCoords2;
 }

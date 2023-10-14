@@ -7,7 +7,8 @@ Planet::Planet(ObjectAttributes objectAttributes)
 	, xyCircularCoords{}
 {
 	m_sphere.GenerateObject(m_planetAttributes.radius);
-	m_sphere.SetActorInitialPos(objectAttributes.distanceFromCenter, 0.0);
+	//m_sphere.SetActorInitialPos(objectAttributes.distanceFromCenter, 0.0);
+	m_sphere.SetActorInitialPos();
 }
 
 Planet::~Planet()

@@ -45,7 +45,8 @@ private:
     ObjectsInfoWindow* m_pObjectInfoWindow;
     SolarSystemModel m_solarSystemModel;
     std::map<int, Planet> m_planetsMap;
-    std::map<int, std::vector<std::pair<double, double>>> m_planetsRotationCoords;
+    //std::map<int, std::vector<std::pair<double, double>>> m_planetsRotationCoords;
+    std::map<int, std::vector<std::vector<double>>> m_planetsRotationCoords;
 };
 
 

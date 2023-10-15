@@ -28,6 +28,12 @@ std::vector<std::vector<double>> OrbitalMechanics::GenerateOrbitPoints(double se
 	return orbitPoints;
 }
 
+double OrbitalMechanics::CalculateDistanceToOrigin(double x, double y, double z)
+{
+	double distance = std::sqrt(x * x + y * y + z * z);
+	return distance;
+}
+
 double OrbitalMechanics::CalculateNewTheta(int i, double incrementValue)
 {
 	return i * incrementValue;
@@ -42,7 +48,6 @@ std::vector<double> OrbitalMechanics::GetOrbitPointCoord(double radius, double t
 {
 	double x = radius * std::cos(theta);
 	double y = radius * std::sin(theta);
-	y = y * cos(fie);
 	double z = radius * std::sin(fie) * std::sin(theta);
 	return { x, y, z };
 }

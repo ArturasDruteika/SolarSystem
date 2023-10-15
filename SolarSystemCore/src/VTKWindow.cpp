@@ -120,8 +120,4 @@ void VTKWindow::OnDeletePlanet(int planetID)
     m_planetsMap = m_solarSystemModel.GetPlanetsMap();
 }
 
-double VTKWindow::CalculateDistanceToOrigin(double x, double y, double z)
-{
-    double distance = std::sqrt(x * x + y * y + z * z);
-    return distance;
-}
+

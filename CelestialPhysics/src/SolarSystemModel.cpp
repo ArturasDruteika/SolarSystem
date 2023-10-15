@@ -1,4 +1,5 @@
 #include "SolarSystemModel.hpp"
+#include "spdlog/spdlog.h"
 
 
 constexpr double M_PI = 3.14159265358979323846;
@@ -17,7 +18,7 @@ SolarSystemModel::~SolarSystemModel()
 void SolarSystemModel::AddPlanet(int id, ObjectAttributes objectAttributes)
 {
 	m_planetsMap.insert({ id, Planet(objectAttributes) });
-	std::vector<std::vector<double>> rotationCoordsVec = m_orbitalMechanics.GenerateOrbitPoints(10.0, 0.50, objectAttributes.tiltDegrees);
+	std::vector<std::vector<double>> rotationCoordsVec = m_orbitalMechanics.GenerateOrbitPoints(objectAttributes.distanceFromCenter, 0, objectAttributes.tiltDegrees);
 	m_planetsRotationCoords.insert({ id, rotationCoordsVec });
 }
 
@@ -44,8 +45,12 @@ std::map<int, std::vector<std::vector<double>>> SolarSystemModel::GetPlanetsRota
 
 void SolarSystemModel::MovePlanet(int planetID, int orbitCoordPoint)
 {
-	double x = m_planetsRotationCoords.at(planetID)[orbitCoordPoint][0] / 1000;
-	double y = m_planetsRotationCoords.at(planetID)[orbitCoordPoint][1] / 1000;
-	double z = m_planetsRotationCoords.at(planetID)[orbitCoordPoint][2] / 1000;
+	double x = m_planetsRotationCoords.at(planetID)[orbitCoordPoint][0];
+	double y = m_planetsRotationCoords.at(planetID)[orbitCoordPoint][1];
+	double z = m_planetsRotationCoords.at(planetID)[orbitCoordPoint][2];
 	m_planetsMap.at(planetID).MovePlanet(x, y, z);
+
+	double distance = m_orbitalMechanics.CalculateDistanceToOrigin(x, y, z);
+	std::string distanceStr = std::to_string(distance);
+	spdlog::info("" + distanceStr);
 }

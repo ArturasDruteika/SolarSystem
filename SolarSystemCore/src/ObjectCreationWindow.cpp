@@ -13,7 +13,7 @@ ObjectCreationWindow::ObjectCreationWindow(ObjectsInfoWindow* pObjectsInfoWindow
     m_objectAttributes.radius = 1;
     m_objectAttributes.distanceFromCenter = 1;
     m_objectAttributes.speed = 1;
-    m_objectAttributes.tiltDegrees = 1;
+    m_objectAttributes.tiltDegrees = 0;
 }
 
 ObjectCreationWindow::~ObjectCreationWindow() = default;

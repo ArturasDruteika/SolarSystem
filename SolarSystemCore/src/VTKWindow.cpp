@@ -75,17 +75,19 @@ void VTKWindow::DeInitInternal()
 
 void VTKWindow::RenderMainWindowInternal()
 {
-    static int i = 0;
-    if (i == 9000) { i = 0; }
-
-    for (auto& [planetID, planet] : m_planetsMap)
+    if (m_planetsRotationCoords.size() > 0)
     {
-        double x = m_planetsRotationCoords.at(planetID)[i][0];
-        double y = m_planetsRotationCoords.at(planetID)[i][1];
-        double z = m_planetsRotationCoords.at(planetID)[i][2];
-        planet.MovePlanet(x, y, z);
+        static int i = 0;
+        if (i == 9000) { i = 0; }
+
+        for (auto& [planetID, planet] : m_planetsMap)
+        {
+            m_solarSystemModel.MovePlanet(planetID, i);
+        }
+
+        i++;
     }
-    i++;
+    
 
     m_vtkViewer.render();
 }
@@ -116,4 +118,10 @@ void VTKWindow::OnDeletePlanet(int planetID)
     m_solarSystemModel.OnDeletePlanet(planetID);
     m_planetsRotationCoords = m_solarSystemModel.GetPlanetsRotationCoords(0);
     m_planetsMap = m_solarSystemModel.GetPlanetsMap();
+}
+
+double VTKWindow::CalculateDistanceToOrigin(double x, double y, double z)
+{
+    double distance = std::sqrt(x * x + y * y + z * z);
+    return distance;
 }

@@ -37,6 +37,8 @@ private:
     void OnNewPlanet(int id, ObjectAttributes objectAttributes);
     void OnDeletePlanet(int planetID);
 
+    double CalculateDistanceToOrigin(double x, double y, double z);
+
     bool m_isVtkOpen;
     Cube m_cube;
     Sphere m_sphere;
@@ -45,7 +47,6 @@ private:
     ObjectsInfoWindow* m_pObjectInfoWindow;
     SolarSystemModel m_solarSystemModel;
     std::map<int, Planet> m_planetsMap;
-    //std::map<int, std::vector<std::pair<double, double>>> m_planetsRotationCoords;
     std::map<int, std::vector<std::vector<double>>> m_planetsRotationCoords;
 };
 

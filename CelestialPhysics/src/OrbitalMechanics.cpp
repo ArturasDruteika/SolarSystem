@@ -1,4 +1,9 @@
 #include "OrbitalMechanics.hpp"
+#include <cmath>
+
+
+constexpr double M_PI = 3.14159265358979323846;
+
 
 OrbitalMechanics::OrbitalMechanics()
 {
@@ -8,31 +13,36 @@ OrbitalMechanics::~OrbitalMechanics()
 {
 }
 
-std::vector<std::vector<double>> OrbitalMechanics::GenerateRotationCoords(double circleRadius, double theta, int resolution)
-{
-	std::vector<std::vector<double>> circleCoords;
 
-	double angleFie = 90 - theta;
-	double angleTheta = 0;
-	double angularSpeed = 90.0 / resolution;
+std::vector<std::vector<double>> OrbitalMechanics::GenerateOrbitPoints(double semiMajorAxis, double eccentricity, double inclination, int numPoints) {
+	std::vector<std::vector<double>> orbitPoints;
 
-	double x, y, z = 0;
-	std::vector<double> pointCoords{};
+	double incrementValue = 2.0 * M_PI / numPoints;
 
-	for (int i = 0; i < resolution; i++)
-	{
-		pointCoords = GetSphereSurfarePointCoord(circleRadius, angleFie, angleTheta);
-		circleCoords.push_back(pointCoords);
-		angleTheta -= angularSpeed;
+	for (int j = 0; j < numPoints; ++j) {
+		double theta = CalculateNewTheta(j, incrementValue);
+		double r = CalculateNewRadius(semiMajorAxis, eccentricity, theta);
+		orbitPoints.push_back(GetOrbitPointCoord(r, theta, inclination));
 	}
-	return circleCoords;
+
+	return orbitPoints;
 }
 
-std::vector<double> OrbitalMechanics::GetSphereSurfarePointCoord(double radius, double fie, double theta)
+double OrbitalMechanics::CalculateNewTheta(int i, double incrementValue)
 {
-	double x = radius * cos(theta);
-	double y = radius * sin(theta);
-	double z = radius * tan(fie) * sin(theta);
-	std::vector<double> pointCoords{x, y, z};
-	return pointCoords;
+	return i * incrementValue;
+}
+
+double OrbitalMechanics::CalculateNewRadius(double semiMajorAxis, double eccentricity, double theta)
+{
+	return semiMajorAxis * (1 - eccentricity * eccentricity) / (1 + eccentricity * std::cos(theta));
+}
+
+std::vector<double> OrbitalMechanics::GetOrbitPointCoord(double radius, double theta, double fie)
+{
+	double x = radius * std::cos(theta);
+	double y = radius * std::sin(theta);
+	y = y * cos(fie);
+	double z = radius * std::sin(fie) * std::sin(theta);
+	return { x, y, z };
 }

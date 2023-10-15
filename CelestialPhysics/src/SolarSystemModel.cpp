@@ -1,8 +1,12 @@
 #include "SolarSystemModel.hpp"
 
+
+constexpr double M_PI = 3.14159265358979323846;
+
+
 SolarSystemModel::SolarSystemModel()
 	: m_planetsMap{}
-	, m_planetsRotationCoords2{}
+	, m_planetsRotationCoords{}
 {
 }
 
@@ -12,18 +16,9 @@ SolarSystemModel::~SolarSystemModel()
 
 void SolarSystemModel::AddPlanet(int id, ObjectAttributes objectAttributes)
 {
-	// TODO: shouldn't it be new Planet(objectAttributes)???
 	m_planetsMap.insert({ id, Planet(objectAttributes) });
-	m_planetsRotationCoords.insert(
-		{ 
-			id, 
-			m_planetsMap.at(id).GenerateCircleXYPointsVec(objectAttributes.distanceFromCenter, 9000) 
-		}
-	);
-
-	std::vector<std::vector<double>> rotationCoordsVec = m_orbitalMechanics.GenerateRotationCoords(objectAttributes.radius, objectAttributes.tiltDegrees, 9000);
-	m_planetsRotationCoords2.insert({ id, rotationCoordsVec });
-
+	std::vector<std::vector<double>> rotationCoordsVec = m_orbitalMechanics.GenerateOrbitPoints(10.0, 0.50, objectAttributes.tiltDegrees);
+	m_planetsRotationCoords.insert({ id, rotationCoordsVec });
 }
 
 void SolarSystemModel::OnDeletePlanet(int id)
@@ -42,12 +37,15 @@ std::map<int, Planet> SolarSystemModel::GetPlanetsMap()
 	return m_planetsMap;
 }
 
-std::map<int, std::vector<std::pair<double, double>>> SolarSystemModel::GetPlanetsRotationCoords()
+std::map<int, std::vector<std::vector<double>>> SolarSystemModel::GetPlanetsRotationCoords(int a)
 {
 	return m_planetsRotationCoords;
 }
 
-std::map<int, std::vector<std::vector<double>>> SolarSystemModel::GetPlanetsRotationCoords(int a)
+void SolarSystemModel::MovePlanet(int planetID, int orbitCoordPoint)
 {
-	return m_planetsRotationCoords2;
+	double x = m_planetsRotationCoords.at(planetID)[orbitCoordPoint][0] / 1000;
+	double y = m_planetsRotationCoords.at(planetID)[orbitCoordPoint][1] / 1000;
+	double z = m_planetsRotationCoords.at(planetID)[orbitCoordPoint][2] / 1000;
+	m_planetsMap.at(planetID).MovePlanet(x, y, z);
 }

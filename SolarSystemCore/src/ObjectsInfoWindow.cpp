@@ -81,7 +81,7 @@ void ObjectsInfoWindow::RenderPlanetsInfoTable()
             ImGui::TableNextColumn();
             ImGui::Text("%.5f", objectAttributes.speed);
             ImGui::TableNextColumn();
-            ImGui::Text("%.5f", objectAttributes.tiltDegrees);
+            ImGui::Text("%.5f", objectAttributes.tiltRadians);
             ImGui::TableNextColumn();
             if (RenderDeleteButtonOnTable(planetId))
             {

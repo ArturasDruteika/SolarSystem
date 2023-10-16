@@ -22,7 +22,7 @@ typedef CELESTIALPHYSICS_API struct
     double radius;
     double distanceFromCenter;
     double speed;
-    double tiltDegrees;
+    double tiltRadians;
 } ObjectAttributes;
 
 

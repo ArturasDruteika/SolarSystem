@@ -18,7 +18,7 @@ SolarSystemModel::~SolarSystemModel()
 void SolarSystemModel::AddPlanet(int id, ObjectAttributes objectAttributes)
 {
 	m_planetsMap.insert({ id, Planet(objectAttributes) });
-	std::vector<std::vector<double>> rotationCoordsVec = m_orbitalMechanics.GenerateOrbitPoints(objectAttributes.distanceFromCenter, 0, objectAttributes.tiltDegrees);
+	std::vector<std::vector<double>> rotationCoordsVec = m_orbitalMechanics.GenerateOrbitPoints(objectAttributes.distanceFromCenter, 0, objectAttributes.tiltRadians);
 	m_planetsRotationCoords.insert({ id, rotationCoordsVec });
 }
 
@@ -49,8 +49,4 @@ void SolarSystemModel::MovePlanet(int planetID, int orbitCoordPoint)
 	double y = m_planetsRotationCoords.at(planetID)[orbitCoordPoint][1];
 	double z = m_planetsRotationCoords.at(planetID)[orbitCoordPoint][2];
 	m_planetsMap.at(planetID).MovePlanet(x, y, z);
-
-	double distance = m_orbitalMechanics.CalculateDistanceToOrigin(x, y, z);
-	std::string distanceStr = std::to_string(distance);
-	spdlog::info("" + distanceStr);
 }

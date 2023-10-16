@@ -13,7 +13,7 @@ ObjectCreationWindow::ObjectCreationWindow(ObjectsInfoWindow* pObjectsInfoWindow
     m_objectAttributes.radius = 1;
     m_objectAttributes.distanceFromCenter = 1;
     m_objectAttributes.speed = 1;
-    m_objectAttributes.tiltDegrees = 0;
+    m_objectAttributes.tiltRadians = 0;
 }
 
 ObjectCreationWindow::~ObjectCreationWindow() = default;
@@ -80,7 +80,7 @@ void ObjectCreationWindow::RenderObjectSpeedSection()
 
 void ObjectCreationWindow::RenderObjectTiltSection()
 {
-    RenderObjectAttributeSelectionSection("Object's Tilt", "Tilt", m_objectAttributes.tiltDegrees);
+    RenderObjectAttributeSelectionSection("Object's Tilt (Radians)", "Tilt", m_objectAttributes.tiltRadians);
 }
 
 void ObjectCreationWindow::RenderObjectCreationSection()

@@ -1,14 +1,13 @@
 #include "Planet.hpp"
 #include "ObjectsComponents.hpp"
+#include <cmath>
 
 
 Planet::Planet(ObjectAttributes objectAttributes)
 	: m_planetAttributes{ objectAttributes }
 	, xyCircularCoords{}
 {
-	m_sphere.GenerateObject(m_planetAttributes.radius);
-	//m_sphere.SetActorInitialPos(objectAttributes.distanceFromCenter, 0.0);
-	m_sphere.SetActorInitialPos();
+	Init(objectAttributes);
 }
 
 Planet::~Planet()
@@ -46,4 +45,19 @@ std::vector<std::pair<double, double>> Planet::GenerateCircleXYPointsVec(double 
 		angle += rotationSpeed;
 	}
 	return circlePoints;
+}
+
+void Planet::Init(const ObjectAttributes& objectAttributes)
+{
+	m_sphere.GenerateObject(m_planetAttributes.radius);
+
+	std::pair <double, double> xzCoords = CalculateInitialPosition(objectAttributes.distanceFromCenter, objectAttributes.tiltRadians);
+	m_sphere.SetActorInitialPos(xzCoords.first, 0.0, xzCoords.second);
+}
+
+std::pair<double, double> Planet::CalculateInitialPosition(double radius, double theta)
+{
+	double xCoord = radius * cos(theta);
+	double zCoord = radius * sin(theta);
+	return std::make_pair(xCoord, zCoord);
 }

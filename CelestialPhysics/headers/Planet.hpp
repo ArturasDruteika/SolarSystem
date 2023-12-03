@@ -19,6 +19,7 @@
 
 #include "Sphere.hpp"
 #include "ObjectsComponents.hpp"
+#include <utility>
 
 class CELESTIALPHYSICS_API Planet
 {
@@ -32,6 +33,12 @@ public:
 	std::vector<std::pair<double, double>> GenerateCircleXYPointsVec(double distanceFromCenter, double resolution=9000);
 
 private:
+	void Init(const ObjectAttributes& objectAttributes);
+	// Function returns ONLY x and z coords, since at the time of creation the y coord is always 0 (ZERO)
+	// theta is the same as the tilt (the angle between the x and z axis
+	// Theta is in Radians
+	std::pair<double, double> CalculateInitialPosition(double radius, double theta);
+
 	ObjectAttributes m_planetAttributes;
 	Sphere m_sphere;
 	std::vector<std::pair<double, double>> xyCircularCoords;

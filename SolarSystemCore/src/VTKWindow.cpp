@@ -71,22 +71,24 @@ void VTKWindow::DeInitInternal()
 {
     delete m_pObjectCreationWindow;
     delete m_pObjectInfoWindow;
+    m_pObjectCreationWindow = nullptr;
+    m_pObjectInfoWindow = nullptr;
 }
 
 void VTKWindow::RenderMainWindowInternal()
 {
-    if (m_planetsRotationCoords.size() > 0)
-    {
-        static int i = 0;
-        if (i == 9000) { i = 0; }
+    //if (m_planetsRotationCoords.size() > 0)
+    //{
+    //    static int i = 0;
+    //    if (i == 9000) { i = 0; }
 
-        for (auto& [planetID, planet] : m_planetsMap)
-        {
-            m_solarSystemModel.MovePlanet(planetID, i);
-        }
+    //    for (auto& [planetID, planet] : m_planetsMap)
+    //    {
+    //        m_solarSystemModel.MovePlanet(planetID, i);
+    //    }
 
-        i++;
-    }
+    //    i++;
+    //}
     
 
     m_vtkViewer.render();

@@ -1,15 +1,6 @@
 #ifndef GRAPHICALOBJECTS_SPHERE_HPP
 #define GRAPHICALOBJECTS_SPHERE_HPP
 
-#include "ObjectBase.hpp"
-
-#include <vtkActor.h>
-#include <vtkNew.h>
-#include <vtkTransform.h>
-#include <vtkSmartPointer.h>
-#include <vtkPolyData.h>
-#include <vtkSphereSource.h>
-
 
 #if defined (_WIN32)
 #if defined(GRAPHICALOBJECTS_EXPORT)
@@ -24,6 +15,17 @@
 //  GCC
 #define CUBE_API __attribute__((visibility("default")))
 #endif
+
+
+#include "ObjectBase.hpp"
+
+#include <vtkActor.h>
+#include <vtkNew.h>
+#include <vtkTransform.h>
+#include <vtkSmartPointer.h>
+#include <vtkPolyData.h>
+#include <vtkSphereSource.h>
+
 
 class GRAPHICALOBJECTS_API Sphere : public ObjectBase
 {

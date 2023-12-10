@@ -9,7 +9,6 @@
 
 VTKWindow::VTKWindow()
     : m_cube{}
-    , m_sphere{}
     , m_isVtkOpen{true}
     , m_pObjectCreationWindow{nullptr}
     , m_pObjectInfoWindow{nullptr}
@@ -41,9 +40,11 @@ void VTKWindow::SetUpWindowPointers(ObjectCreationWindow* pObjectCreationWindow,
 
 void VTKWindow::InitializeVtkActors()
 {
-    m_cube.GenerateObject(1.5);
+    //m_cube.GenerateObject(1.5);
+    m_star.GenerateObject(2.0);
     m_vtkViewer.getRenderer()->SetBackground(0, 0, 0);
-    m_vtkViewer.addActor(m_cube.GetObjectActor());
+    //m_vtkViewer.addActor(m_cube.GetObjectActor());
+    m_vtkViewer.addActor(m_star.GetObjectActor());
 }
 
 void VTKWindow::InitInternal()

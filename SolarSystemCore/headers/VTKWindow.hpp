@@ -4,8 +4,7 @@
 
 #include "GraphicalWindow.hpp"
 #include "VtkViewer.h"
-#include "Cube.hpp"
-#include "Sphere.hpp"
+#include "Star.hpp"
 #include "Planet.hpp"
 #include "ObjectCreationWindow.hpp"
 #include "ObjectsInfoWindow.hpp"
@@ -38,8 +37,7 @@ private:
     void OnDeletePlanet(int planetID);
 
     bool m_isVtkOpen;
-    Cube m_cube;
-    Sphere m_sphere;
+    Star m_star;
     VtkViewer m_vtkViewer;
     ObjectCreationWindow* m_pObjectCreationWindow;
     ObjectsInfoWindow* m_pObjectInfoWindow;

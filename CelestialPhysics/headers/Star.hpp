@@ -22,13 +22,13 @@
 class CELESTIALPHYSICS_API Star : public Sphere
 {
 public:
-	Star();
+	Star(double starRadius);
 	~Star();
 
 	vtkSmartPointer<vtkActor> GetStarActor();
 
 private:
-	void Init();
+	void Init(double starRadius);
 
 };
 

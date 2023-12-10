@@ -4,7 +4,6 @@
 
 #include "GraphicalWindow.hpp"
 #include "VtkViewer.h"
-#include "Star.hpp"
 #include "Planet.hpp"
 #include "ObjectCreationWindow.hpp"
 #include "ObjectsInfoWindow.hpp"
@@ -37,7 +36,6 @@ private:
     void OnDeletePlanet(int planetID);
 
     bool m_isVtkOpen;
-    Star m_star;
     VtkViewer m_vtkViewer;
     ObjectCreationWindow* m_pObjectCreationWindow;
     ObjectsInfoWindow* m_pObjectInfoWindow;

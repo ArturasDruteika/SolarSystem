@@ -6,12 +6,18 @@ constexpr double M_PI = 3.14159265358979323846;
 
 
 SolarSystemModel::SolarSystemModel()
-	: m_planetsMap{}
+	: m_starsMap{}
+	, m_planetsMap{}
 {
 }
 
 SolarSystemModel::~SolarSystemModel()
 {
+}
+
+void SolarSystemModel::AddStar(int id, double starRadius)
+{
+	m_starsMap.insert({ id, Star(starRadius) });
 }
 
 void SolarSystemModel::AddPlanet(int id, ObjectAttributes objectAttributes)
@@ -27,6 +33,11 @@ void SolarSystemModel::OnDeletePlanet(int id)
 int SolarSystemModel::GetPlanetsCount()
 {
 	return m_planetsMap.size();
+}
+
+std::map<int, Star> SolarSystemModel::GetStarsMap()
+{
+	return m_starsMap;
 }
 
 std::map<int, Planet> SolarSystemModel::GetPlanetsMap()

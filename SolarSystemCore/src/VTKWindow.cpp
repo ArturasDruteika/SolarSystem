@@ -8,8 +8,7 @@
 
 
 VTKWindow::VTKWindow()
-    : m_cube{}
-    , m_isVtkOpen{true}
+    : m_isVtkOpen{true}
     , m_pObjectCreationWindow{nullptr}
     , m_pObjectInfoWindow{nullptr}
     , m_solarSystemModel{}
@@ -40,11 +39,9 @@ void VTKWindow::SetUpWindowPointers(ObjectCreationWindow* pObjectCreationWindow,
 
 void VTKWindow::InitializeVtkActors()
 {
-    //m_cube.GenerateObject(1.5);
-    m_star.GenerateObject(2.0);
+    m_solarSystemModel.AddStar(0, 2.0);
     m_vtkViewer.getRenderer()->SetBackground(0, 0, 0);
-    //m_vtkViewer.addActor(m_cube.GetObjectActor());
-    m_vtkViewer.addActor(m_star.GetObjectActor());
+    m_vtkViewer.addActor(m_solarSystemModel.GetStarsMap().at(0).GetObjectActor());
 }
 
 void VTKWindow::InitInternal()

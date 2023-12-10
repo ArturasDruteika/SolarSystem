@@ -1,9 +1,9 @@
 #include "Star.hpp"
 #include "ColorsVTK.hpp"
 
-Star::Star()
+Star::Star(double starRadius)
 {
-	Init();
+	Init(starRadius);
 }
 
 Star::~Star()
@@ -15,9 +15,9 @@ vtkSmartPointer<vtkActor> Star::GetStarActor()
 	return GetObjectActor();
 }
 
-void Star::Init()
+void Star::Init(double starRadius)
 {
-	GenerateObject(1.0);
+	GenerateObject(starRadius);
 	SetColor(ColorsVTK::YELLOW);
 	SetActorInitialPos();
 }

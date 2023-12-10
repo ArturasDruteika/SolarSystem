@@ -39,6 +39,8 @@ endif ()
 add_library(${PROJECT_NAME} SHARED
     headers/Planet.hpp
     src/Planet.cpp
+	headers/Star.hpp
+    src/Star.cpp
     headers/ObjectsComponents.hpp
 	headers/SolarSystemModel.hpp
 	src/SolarSystemModel.cpp

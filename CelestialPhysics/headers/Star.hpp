@@ -28,6 +28,7 @@ public:
 	vtkSmartPointer<vtkActor> GetStarActor();
 
 private:
+	void Init();
 
 };
 

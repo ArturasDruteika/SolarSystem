@@ -20,6 +20,11 @@ vtkSmartPointer<vtkActor> ObjectBase::GetObjectActor()
     return m_actor;
 }
 
+vtkSmartPointer<vtkAxesActor> ObjectBase::GetArrowActor()
+{
+    return m_axes;
+}
+
 std::vector<double> ObjectBase::GetActorPosition(vtkSmartPointer<vtkActor>& actor)
 {
     // Get the actor's transformation matrix
@@ -44,6 +49,11 @@ void ObjectBase::MoveActor(double xPos, double yPos, double zPos)
 void ObjectBase::SetMapper(vtkNew<vtkPolyDataMapper>& mapper)
 {
     m_actor->SetMapper(mapper);
+}
+
+void ObjectBase::SetArrowActor(vtkNew<vtkAxesActor>& axes)
+{
+    m_axes = axes;
 }
 
 void ObjectBase::SetActorInitialPos(double xPos, double yPos, double zPos)

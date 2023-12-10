@@ -6,6 +6,8 @@
 #include <vtkSmartPointer.h>
 #include <vtkTransform.h>
 #include "spdlog/spdlog.h"
+#include <vtkAxesActor.h>
+#include <vtkOrientationMarkerWidget.h>
 
 
 VTKWindow::VTKWindow()
@@ -18,6 +20,7 @@ VTKWindow::VTKWindow()
     , m_planetsRotationCoords{}
     , m_planetsMap{}
 {
+    m_camOrientManipulator = vtkSmartPointer<vtkCameraOrientationWidget>::New();
 }
 
 VTKWindow::~VTKWindow()
@@ -44,7 +47,15 @@ void VTKWindow::InitializeVtkActors()
 {
     m_cube.GenerateObject(1.5);
     m_vtkViewer.getRenderer()->SetBackground(0, 0, 0);
+
+    if (!m_vtkViewer.getRenderer()) 
+    {
+        std::cerr << "Error: Renderer is not initialized." << std::endl;
+        // Handle the error or return from the function
+    }
+
     m_vtkViewer.addActor(m_cube.GetObjectActor());
+    m_xyzArrows.AddOrientationArrowsOnRenderer(m_vtkViewer.getRenderer(), m_camOrientManipulator);
 }
 
 void VTKWindow::InitInternal()
@@ -77,18 +88,20 @@ void VTKWindow::DeInitInternal()
 
 void VTKWindow::RenderMainWindowInternal()
 {
-    //if (m_planetsRotationCoords.size() > 0)
-    //{
-    //    static int i = 0;
-    //    if (i == 9000) { i = 0; }
+    /*if (m_planetsRotationCoords.size() > 0)
+    {
+        static int i = 0;
+        if (i == 9000) { i = 0; }
 
-    //    for (auto& [planetID, planet] : m_planetsMap)
-    //    {
-    //        m_solarSystemModel.MovePlanet(planetID, i);
-    //    }
+        for (auto& [planetID, planet] : m_planetsMap)
+        {
+            m_solarSystemModel.MovePlanet(planetID, i);
+        }
 
-    //    i++;
-    //}
+        spdlog::info("a {};", i);
+
+        i++;
+    }*/
     
 
     m_vtkViewer.render();

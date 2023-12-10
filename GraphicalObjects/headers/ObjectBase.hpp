@@ -22,6 +22,8 @@
 #include <vtkTransform.h>
 #include <vtkSmartPointer.h>
 #include <vtkPolyDataMapper.h>
+#include <vtkAxesActor.h>
+
 
 
 class GRAPHICALOBJECTS_API ObjectBase
@@ -35,14 +37,17 @@ public:
 	virtual void GenerateObject(double) = 0;
 
 	vtkSmartPointer<vtkActor> GetObjectActor();
+	vtkSmartPointer<vtkAxesActor> GetArrowActor();
 	std::vector<double> GetActorPosition(vtkSmartPointer<vtkActor>& actor);
 	void MoveActor(double xPos, double yPos, double zPos);
 	void SetMapper(vtkNew<vtkPolyDataMapper>& mapper);
+	void SetArrowActor(vtkNew<vtkAxesActor>& axes);
 	void SetActorInitialPos(double xPos=0.0, double yPos=0.0, double zPos=0.0);
 	void ReadSTLFIle(std::string pathToStlFile);
 
 private:
 	vtkSmartPointer<vtkActor> m_actor;
+	vtkSmartPointer<vtkAxesActor> m_axes;
 	vtkSmartPointer<vtkTransform> m_transform;
 };
 

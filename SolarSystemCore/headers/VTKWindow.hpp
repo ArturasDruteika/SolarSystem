@@ -7,11 +7,13 @@
 #include "Cube.hpp"
 #include "Sphere.hpp"
 #include "Planet.hpp"
+#include "XYZArrows.hpp"
 #include "ObjectCreationWindow.hpp"
 #include "ObjectsInfoWindow.hpp"
 #include "ObjectsComponents.hpp"
 #include "SolarSystemModel.hpp"
-
+#include "vtkSmartPointer.h"
+#include <vtkOrientationMarkerWidget.h>
 #include <vector>
 
 
@@ -40,7 +42,9 @@ private:
     bool m_isVtkOpen;
     Cube m_cube;
     Sphere m_sphere;
+    XYZArrows m_xyzArrows;
     VtkViewer m_vtkViewer;
+    vtkSmartPointer<vtkCameraOrientationWidget> m_camOrientManipulator;
     ObjectCreationWindow* m_pObjectCreationWindow;
     ObjectsInfoWindow* m_pObjectInfoWindow;
     SolarSystemModel m_solarSystemModel;

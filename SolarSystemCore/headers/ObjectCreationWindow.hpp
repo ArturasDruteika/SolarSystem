@@ -40,6 +40,7 @@ private:
     void RenderPlanetsTableSection();
     void RenderCreatedPlanetsInfoSection();
 
+    void SetInitialValues();
     void RenderObjectAttributeSelectionSection(const std::string& separatorText, const std::string& idText, double& parameterValue);
     void OnDeletePlanet(int id);
 

@@ -10,10 +10,7 @@ ObjectCreationWindow::ObjectCreationWindow(ObjectsInfoWindow* pObjectsInfoWindow
     , m_customFont{nullptr}
     , m_pObjectsInfoWindow{ pObjectsInfoWindow }
 {
-    m_objectAttributes.radius = 1;
-    m_objectAttributes.distanceFromCenter = 1;
-    m_objectAttributes.speed = 1;
-    m_objectAttributes.tiltRadians = 0;
+    SetInitialValues();
 }
 
 ObjectCreationWindow::~ObjectCreationWindow() = default;
@@ -120,6 +117,14 @@ void ObjectCreationWindow::RenderCreatedPlanetsInfoSection()
     static int planetIDToDelete;
     static bool unusedSelectionSection = false;
     static std::string sectionName = "PlanetToDelete";
+}
+
+void ObjectCreationWindow::SetInitialValues()
+{
+    m_objectAttributes.radius = 0.5;
+    m_objectAttributes.distanceFromCenter = 10.0;
+    m_objectAttributes.speed = 1;
+    m_objectAttributes.tiltRadians = 0;
 }
 
 void ObjectCreationWindow::RenderObjectAttributeSelectionSection(const std::string& separatorText, const std::string& idText, double& parameterValue)

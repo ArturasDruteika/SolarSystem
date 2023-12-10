@@ -21,7 +21,7 @@
 #include "ObjectsComponents.hpp"
 #include <utility>
 
-class CELESTIALPHYSICS_API Planet
+class CELESTIALPHYSICS_API Planet : public Sphere
 {
 public:
 	Planet(ObjectAttributes objectAttributes);
@@ -30,7 +30,6 @@ public:
 	ObjectAttributes GetPlanetAttributes();
 	vtkSmartPointer<vtkActor> GetPlanetActor();
 	void MovePlanet(double xPos, double yPos, double zPos);
-	std::vector<std::pair<double, double>> GenerateCircleXYPointsVec(double distanceFromCenter, double resolution=9000);
 
 private:
 	void Init(const ObjectAttributes& objectAttributes);
@@ -40,7 +39,6 @@ private:
 	std::pair<double, double> CalculateInitialPosition(double radius, double theta);
 
 	ObjectAttributes m_planetAttributes;
-	Sphere m_sphere;
 	std::vector<std::pair<double, double>> xyCircularCoords;
 };
 

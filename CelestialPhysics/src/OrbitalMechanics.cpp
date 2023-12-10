@@ -13,21 +13,6 @@ OrbitalMechanics::~OrbitalMechanics()
 {
 }
 
-
-std::vector<std::vector<double>> OrbitalMechanics::GenerateOrbitPoints(double semiMajorAxis, double eccentricity, double inclination, int numPoints) {
-	std::vector<std::vector<double>> orbitPoints;
-
-	double incrementValue = 2.0 * M_PI / numPoints;
-
-	for (int j = 0; j < numPoints; ++j) {
-		double theta = CalculateNewTheta(j, incrementValue);
-		double r = CalculateNewRadius(semiMajorAxis, eccentricity, theta);
-		orbitPoints.push_back(GetOrbitPointCoord(r, theta, inclination));
-	}
-
-	return orbitPoints;
-}
-
 double OrbitalMechanics::CalculateDistanceToOrigin(double x, double y, double z)
 {
 	double distance = std::sqrt(x * x + y * y + z * z);

@@ -11,8 +11,6 @@ public:
 	OrbitalMechanics();
 	~OrbitalMechanics();
 
-	std::vector<std::vector<double>> GenerateOrbitPoints(double semiMajorAxis, double eccentricity, double inclination, int numPoints = 9000);
-
 	double CalculateDistanceToOrigin(double x, double y, double z);
 
 private:

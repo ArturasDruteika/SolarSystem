@@ -37,13 +37,13 @@ public:
 	void OnDeletePlanet(int id);
 	int GetPlanetsCount();
 	std::map<int, Planet> GetPlanetsMap();
-	std::map<int, std::vector<std::vector<double>>> GetPlanetsRotationCoords(int a);
-	void MovePlanet(int planetID, int orbitCoordPoint);
+	void MovePlanets();
 
 private:
+	void MovePlanet(int planetID);
+
 	std::map<int, Planet> m_planetsMap;
 
-	std::map<int, std::vector<std::vector<double>>> m_planetsRotationCoords;
 	OrbitalMechanics m_orbitalMechanics;
 };
 

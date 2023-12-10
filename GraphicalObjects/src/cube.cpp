@@ -31,7 +31,7 @@ void Cube::GenerateObject(double edgeLength)
 
 vtkNew<vtkPolyData> Cube::GenerateCubeData()
 {
-    vtkNew<vtkNamedColors> colors;
+    //vtkNew<vtkNamedColors> colors;
 
     // Define the half-length of the cube.
     double halfLength = 0.5;

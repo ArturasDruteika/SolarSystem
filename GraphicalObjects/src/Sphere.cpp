@@ -30,15 +30,12 @@ void Sphere::GenerateObject(double radius)
 
 vtkNew<vtkSphereSource> Sphere::GenerateSphereData(double radius)
 {
-    vtkNew<vtkNamedColors> colors;
-
     // Create a sphere
     vtkNew<vtkSphereSource> sphereSource;
     sphereSource->SetCenter(0.0, 0.0, 0.0);
     sphereSource->SetRadius(radius);
     // Make the surface smooth.
-    sphereSource->SetPhiResolution(100);
-    sphereSource->SetThetaResolution(100);
-
+    sphereSource->SetPhiResolution(20);
+    sphereSource->SetThetaResolution(20);
     return sphereSource;
 }

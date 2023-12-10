@@ -44,6 +44,7 @@ add_library(${PROJECT_NAME} SHARED
     src/ObjectBase.cpp
     headers/Sphere.hpp
     src/Sphere.cpp
+	headers/ColorsVTK.hpp
     # headers/XYZArrows.hpp
     # src/XYZArrows.cpp
     )

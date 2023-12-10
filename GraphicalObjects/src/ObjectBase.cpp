@@ -1,7 +1,8 @@
 #include "ObjectBase.hpp"
-
+#include "ColorsVTK.hpp"
 #include <vtkPolyDataMapper.h>
 #include <vtkSTLReader.h>
+#include <vtkProperty.h>
 
 
 
@@ -68,4 +69,11 @@ void ObjectBase::ReadSTLFIle(std::string pathToStlFile)
     vtkNew<vtkPolyDataMapper> mapper;
     mapper->SetInputConnection(reader->GetOutputPort());
     m_actor->SetMapper(mapper);
+
+}
+
+void ObjectBase::SetColor(const vtkColor4d& color)
+{
+    m_actor->GetProperty()->SetColor(color.GetRed(), color.GetGreen(), color.GetBlue());
+    m_actor->GetProperty()->SetOpacity(color.GetAlpha());
 }

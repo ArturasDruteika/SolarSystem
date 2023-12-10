@@ -23,7 +23,7 @@
 #include <vtkSmartPointer.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkAxesActor.h>
-
+#include <vtkColor.h>
 
 
 class GRAPHICALOBJECTS_API ObjectBase
@@ -44,6 +44,7 @@ public:
 	void SetArrowActor(vtkNew<vtkAxesActor>& axes);
 	void SetActorInitialPos(double xPos=0.0, double yPos=0.0, double zPos=0.0);
 	void ReadSTLFIle(std::string pathToStlFile);
+	void SetColor(const vtkColor4d& color);
 
 private:
 	vtkSmartPointer<vtkActor> m_actor;

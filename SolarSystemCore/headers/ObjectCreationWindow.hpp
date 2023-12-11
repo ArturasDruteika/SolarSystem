@@ -33,7 +33,8 @@ private:
     void RenderMainWindowInternal() override;
 
     void RenderObjectRadiusSection();
-    void RenderObjectDistanceSection();
+    void RenderSemiMajorAxisSection();
+    void RenderSemiMinorAxisSection();
     void RenderObjectSpeedSection();
     void RenderObjectTiltSection();
     void RenderObjectCreationSection();

@@ -11,6 +11,10 @@
 #include <vtkActor.h>
 
 
+constexpr int PHI_RESOLUTION = 15;
+constexpr int THETA_RESOLUTION = 15;
+
+
 Sphere::Sphere()
 {
 }
@@ -35,7 +39,7 @@ vtkNew<vtkSphereSource> Sphere::GenerateSphereData(double radius)
     sphereSource->SetCenter(0.0, 0.0, 0.0);
     sphereSource->SetRadius(radius);
     // Make the surface smooth.
-    sphereSource->SetPhiResolution(20);
-    sphereSource->SetThetaResolution(20);
+    sphereSource->SetPhiResolution(PHI_RESOLUTION);
+    sphereSource->SetThetaResolution(THETA_RESOLUTION);
     return sphereSource;
 }

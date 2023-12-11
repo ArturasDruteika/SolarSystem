@@ -35,7 +35,7 @@ void Planet::Init(const ObjectAttributes& objectAttributes)
 	GenerateObject(m_planetAttributes.radius);
 	SetColor(ColorsVTK::BLUE);
 
-	std::pair <double, double> xzCoords = CalculateInitialPosition(objectAttributes.distanceFromCenter, objectAttributes.tiltRadians);
+	std::pair <double, double> xzCoords = CalculateInitialPosition(objectAttributes.semiMajorAxis, objectAttributes.tiltRadians);
 	SetActorInitialPos(xzCoords.first, 0.0, xzCoords.second);
 }
 

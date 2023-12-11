@@ -50,7 +50,8 @@ void ObjectCreationWindow::DeInitInternal()
 void ObjectCreationWindow::RenderMainWindowInternal()
 {
     RenderObjectRadiusSection();
-    RenderObjectDistanceSection();
+    RenderSemiMajorAxisSection();
+    RenderSemiMinorAxisSection();
     RenderObjectSpeedSection();
     RenderObjectTiltSection();
     ImGui::Separator();
@@ -65,9 +66,14 @@ void ObjectCreationWindow::RenderObjectRadiusSection()
     RenderObjectAttributeSelectionSection("Object's Radius", "Radius", m_objectAttributes.radius);
 }
 
-void ObjectCreationWindow::RenderObjectDistanceSection()
+void ObjectCreationWindow::RenderSemiMajorAxisSection()
 {
-    RenderObjectAttributeSelectionSection("Object's Distance From The Center", "Distance", m_objectAttributes.distanceFromCenter);
+    RenderObjectAttributeSelectionSection("Semi-major axis (km)", "Semi-major", m_objectAttributes.semiMajorAxis);
+}
+
+void ObjectCreationWindow::RenderSemiMinorAxisSection()
+{
+    RenderObjectAttributeSelectionSection("Semi-minor axis (km)", "Semi-minor", m_objectAttributes.semiMinorAxis);
 }
 
 void ObjectCreationWindow::RenderObjectSpeedSection()
@@ -122,7 +128,8 @@ void ObjectCreationWindow::RenderCreatedPlanetsInfoSection()
 void ObjectCreationWindow::SetInitialValues()
 {
     m_objectAttributes.radius = 0.5;
-    m_objectAttributes.distanceFromCenter = 10.0;
+    m_objectAttributes.semiMajorAxis = 10.0;
+    m_objectAttributes.semiMinorAxis = 8.0;
     m_objectAttributes.speed = 1;
     m_objectAttributes.tiltRadians = 0;
 }

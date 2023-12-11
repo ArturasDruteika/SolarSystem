@@ -54,7 +54,8 @@ void ObjectsInfoWindow::RenderPlanetsInfoTable()
     static std::vector<std::string> tableColumnNames = {
         "Planet Number", 
         "Radius (Km)",
-        "Distance From Earth (Km)",
+        "Semi-major axis (Km)",
+        "Semi-minor axis (Km)",
         "Speed (Km / h)",
         "Tilt Degrees (Deg)",
         ""
@@ -77,7 +78,9 @@ void ObjectsInfoWindow::RenderPlanetsInfoTable()
             ImGui::TableNextColumn();
             ImGui::Text("%.5f", objectAttributes.radius);
             ImGui::TableNextColumn();
-            ImGui::Text("%.5f", objectAttributes.distanceFromCenter);
+            ImGui::Text("%.5f", objectAttributes.semiMajorAxis);
+            ImGui::TableNextColumn();
+            ImGui::Text("%.5f", objectAttributes.semiMinorAxis);
             ImGui::TableNextColumn();
             ImGui::Text("%.5f", objectAttributes.speed);
             ImGui::TableNextColumn();

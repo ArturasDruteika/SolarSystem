@@ -8,9 +8,9 @@
 
 
 VTKWindow::VTKWindow()
-    : m_isVtkOpen{true}
-    , m_pObjectCreationWindow{nullptr}
-    , m_pObjectInfoWindow{nullptr}
+    : m_isVtkOpen{ true }
+    , m_pObjectCreationWindow{ nullptr }
+    , m_pObjectInfoWindow{ nullptr }
     , m_solarSystemModel{}
     , m_planetsRotationCoords{}
     , m_planetsMap{}
@@ -74,6 +74,7 @@ void VTKWindow::DeInitInternal()
 
 void VTKWindow::RenderMainWindowInternal()
 {
+    m_solarSystemModel.RotatePlanetAroundAxis();
     m_vtkViewer.render();
 }
 

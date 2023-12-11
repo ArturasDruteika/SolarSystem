@@ -25,6 +25,11 @@ void SolarSystemModel::AddPlanet(int id, ObjectAttributes objectAttributes)
 	m_planetsMap.insert({ id, Planet(objectAttributes) });
 }
 
+void SolarSystemModel::OnDeleteStar(int id)
+{
+	m_starsMap.erase(id);
+}
+
 void SolarSystemModel::OnDeletePlanet(int id)
 {
 	m_planetsMap.erase(id);
@@ -53,7 +58,20 @@ void SolarSystemModel::MovePlanets()
 	}
 }
 
+void SolarSystemModel::RotatePlanetAroundAxis()
+{
+	for (auto& [id, planet] : m_planetsMap)
+	{
+		RotatePlanetAroundAxis(id);
+	}
+}
+
 void SolarSystemModel::MovePlanet(int planetID)
 {
 
+}
+
+void SolarSystemModel::RotatePlanetAroundAxis(int planetId, double rotationAngle)
+{
+	m_planetsMap.at(planetId).RotateActor(rotationAngle);
 }

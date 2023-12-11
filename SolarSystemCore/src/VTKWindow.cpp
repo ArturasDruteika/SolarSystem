@@ -74,22 +74,6 @@ void VTKWindow::DeInitInternal()
 
 void VTKWindow::RenderMainWindowInternal()
 {
-    /*if (m_planetsRotationCoords.size() > 0)
-    {
-        static int i = 0;
-        if (i == 9000) { i = 0; }
-
-        for (auto& [planetID, planet] : m_planetsMap)
-        {
-            m_solarSystemModel.MovePlanet(planetID, i);
-        }
-
-        spdlog::info("a {};", i);
-
-        i++;
-    }*/
-    
-
     m_vtkViewer.render();
 }
 

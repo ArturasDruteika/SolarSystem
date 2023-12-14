@@ -2,6 +2,7 @@
 #define CELESTIALPHYSICS_ORBITALMECHANICS_HPP
 
 
+#include "OrbitalPoint.hpp"
 #include <vector>
 
 
@@ -12,6 +13,7 @@ public:
 	~OrbitalMechanics();
 
 	double CalculateDistanceToOrigin(double x, double y, double z);
+	static std::vector<Point3D> CalculateOrbitPoints(double semiMajorAxis, double semiMinorAxis, double inclination, int numPoints);
 
 private:
 	double CalculateNewTheta(int i, double incrementValue);

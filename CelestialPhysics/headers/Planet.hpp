@@ -19,7 +19,9 @@
 
 #include "Sphere.hpp"
 #include "ObjectsComponents.hpp"
+#include "OrbitalPoint.hpp"
 #include <utility>
+
 
 class CELESTIALPHYSICS_API Planet : public Sphere
 {
@@ -30,6 +32,7 @@ public:
 	ObjectAttributes GetPlanetAttributes();
 	vtkSmartPointer<vtkActor> GetPlanetActor();
 	void MovePlanet(double xPos, double yPos, double zPos);
+	std::vector<Point3D> GetOrbitalPts();
 
 private:
 	void Init(const ObjectAttributes& objectAttributes);
@@ -40,6 +43,7 @@ private:
 
 	ObjectAttributes m_planetAttributes;
 	std::vector<std::pair<double, double>> xyCircularCoords;
+	std::vector<Point3D> m_orbitalPoints;
 };
 
 #endif //CELESTIALPHYSICS_PLANETS_HPP

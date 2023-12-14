@@ -47,9 +47,9 @@ private:
 	void MovePlanet(int planetID);
 	void RotatePlanetAroundAxis(int planetId, double rotationAngle = 0.1);
 
-
 	std::map<int, Star> m_starsMap;
 	std::map<int, Planet> m_planetsMap;
+	std::map<int, int> m_orbitalPointsIteratorMap;
 
 	OrbitalMechanics m_orbitalMechanics;
 };

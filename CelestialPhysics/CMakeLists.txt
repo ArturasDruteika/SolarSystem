@@ -46,6 +46,7 @@ add_library(${PROJECT_NAME} SHARED
 	src/SolarSystemModel.cpp
     headers/OrbitalMechanics.hpp
     src/OrbitalMechanics.cpp
+    headers/OrbitalPoint.hpp
 )
 
 include_directories(

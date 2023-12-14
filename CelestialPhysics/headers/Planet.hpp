@@ -19,8 +19,11 @@
 
 #include "Sphere.hpp"
 #include "ObjectsComponents.hpp"
+#include "OrbitalPoint.hpp"
+#include <utility>
 
-class CELESTIALPHYSICS_API Planet
+
+class CELESTIALPHYSICS_API Planet : public Sphere
 {
 public:
 	Planet(ObjectAttributes objectAttributes);
@@ -29,12 +32,18 @@ public:
 	ObjectAttributes GetPlanetAttributes();
 	vtkSmartPointer<vtkActor> GetPlanetActor();
 	void MovePlanet(double xPos, double yPos, double zPos);
-	std::vector<std::pair<double, double>> GenerateCircleXYPointsVec(double distanceFromCenter, double resolution=9000);
+	std::vector<Point3D> GetOrbitalPts();
 
 private:
+	void Init(const ObjectAttributes& objectAttributes);
+	// Function returns ONLY x and z coords, since at the time of creation the y coord is always 0 (ZERO)
+	// theta is the same as the tilt (the angle between the x and z axis
+	// Theta is in Radians
+	std::pair<double, double> CalculateInitialPosition(double radius, double theta);
+
 	ObjectAttributes m_planetAttributes;
-	Sphere m_sphere;
 	std::vector<std::pair<double, double>> xyCircularCoords;
+	std::vector<Point3D> m_orbitalPoints;
 };
 
 #endif //CELESTIALPHYSICS_PLANETS_HPP

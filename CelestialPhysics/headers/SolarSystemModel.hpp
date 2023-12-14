@@ -19,8 +19,9 @@
 
 #include "Sphere.hpp"
 #include "Planet.hpp"
+#include "Star.hpp"
 #include "ObjectsComponents.hpp"
-
+#include "OrbitalMechanics.hpp"
 #include <map>
 #include <vector>
 #include <utility>
@@ -32,15 +33,25 @@ public:
 	SolarSystemModel();
 	~SolarSystemModel();
 
-	void OnNewPlanet(int id, ObjectAttributes objectAttributes);
+	void AddStar(int id, double starRadius);
+	void AddPlanet(int id, ObjectAttributes objectAttributes);
+	void OnDeleteStar(int id);
 	void OnDeletePlanet(int id);
 	int GetPlanetsCount();
+	std::map<int, Star> GetStarsMap();
 	std::map<int, Planet> GetPlanetsMap();
-	std::map<int, std::vector<std::pair<double, double>>> GetPlanetsRotationCoords();
+	void MovePlanets();
+	void RotatePlanetAroundAxis();
 
 private:
+	void MovePlanet(int planetID);
+	void RotatePlanetAroundAxis(int planetId, double rotationAngle = 0.1);
+
+	std::map<int, Star> m_starsMap;
 	std::map<int, Planet> m_planetsMap;
-	std::map<int, std::vector<std::pair<double, double>>> m_planetsRotationCoords;
+	std::map<int, int> m_orbitalPointsIteratorMap;
+
+	OrbitalMechanics m_orbitalMechanics;
 };
 
 #endif //CELESTIALPHYSICS_SOLARSYSTEMMODEL_HPP

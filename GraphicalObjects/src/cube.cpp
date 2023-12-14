@@ -31,16 +31,19 @@ void Cube::GenerateObject(double edgeLength)
 
 vtkNew<vtkPolyData> Cube::GenerateCubeData()
 {
-    vtkNew<vtkNamedColors> colors;
+    // Define the half-length of the cube.
+    double halfLength = 0.5;
 
-    std::array<std::array<double, 3>, 8> pts = { {{{0, 0, 0}},
-                                                 {{1, 0, 0}},
-                                                 {{1, 1, 0}},
-                                                 {{0, 1, 0}},
-                                                 {{0, 0, 1}},
-                                                 {{1, 0, 1}},
-                                                 {{1, 1, 1}},
-                                                 {{0, 1, 1}}} };
+    std::array<std::array<double, 3>, 8> pts = {
+        {{{-halfLength, -halfLength, -halfLength}},
+         {{ halfLength, -halfLength, -halfLength}},
+         {{ halfLength,  halfLength, -halfLength}},
+         {{-halfLength,  halfLength, -halfLength}},
+         {{-halfLength, -halfLength,  halfLength}},
+         {{ halfLength, -halfLength,  halfLength}},
+         {{ halfLength,  halfLength,  halfLength}},
+         {{-halfLength,  halfLength,  halfLength}}}
+    };
     // The ordering of the corner points on each face.
     std::array<std::array<vtkIdType, 4>, 6> ordering = { {{{0, 3, 2, 1}},
                                                          {{4, 5, 6, 7}},

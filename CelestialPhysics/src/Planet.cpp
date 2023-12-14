@@ -1,13 +1,16 @@
 #include "Planet.hpp"
 #include "ObjectsComponents.hpp"
+#include "ColorsVTK.hpp"
+#include "OrbitalMechanics.hpp"
+#include <cmath>
 
 
 Planet::Planet(ObjectAttributes objectAttributes)
 	: m_planetAttributes{ objectAttributes }
 	, xyCircularCoords{}
+	, m_orbitalPoints{}
 {
-	m_sphere.GenerateObject(m_planetAttributes.radius);
-	m_sphere.SetActorInitialPos(objectAttributes.distanceFromCenter, 0.0);
+	Init(objectAttributes);
 }
 
 Planet::~Planet()
@@ -21,28 +24,32 @@ ObjectAttributes Planet::GetPlanetAttributes()
 
 vtkSmartPointer<vtkActor> Planet::GetPlanetActor()
 {
-	return m_sphere.GetObjectActor();
+	return GetObjectActor();
 }
 
 void Planet::MovePlanet(double xPos, double yPos, double zPos)
 {
-	m_sphere.MoveActor(xPos, yPos, zPos);
+	MoveActor(xPos, yPos, zPos);
 }
 
-std::vector<std::pair<double, double>> Planet::GenerateCircleXYPointsVec(double distanceFromCenter, double resolution)
+std::vector<Point3D> Planet::GetOrbitalPts()
 {
-	std::vector<std::pair<double, double>> circlePoints;
-	double angle = 0;
-	double rotationSpeed = 90.0 / resolution;
+	return m_orbitalPoints;
+}
 
-	for (int i = 0; i < resolution; i++)
-	{
-		// Calculate the position of the sphere
-		double sphereX = distanceFromCenter * cos(angle) / 100;
-		double sphereY = distanceFromCenter * sin(angle) / 100;
-		std::pair<double, double> xyCoords(sphereX, sphereY);
-		circlePoints.push_back(xyCoords);
-		angle += rotationSpeed;
-	}
-	return circlePoints;
+void Planet::Init(const ObjectAttributes& objectAttributes)
+{
+	GenerateObject(m_planetAttributes.radius);
+	SetColor(ColorsVTK::BLUE);
+
+	std::pair <double, double> xzCoords = CalculateInitialPosition(objectAttributes.semiMajorAxis, objectAttributes.tiltRadians);
+	SetActorInitialPos(xzCoords.first, 0.0, xzCoords.second);
+	m_orbitalPoints = OrbitalMechanics::CalculateOrbitPoints(objectAttributes.semiMajorAxis, objectAttributes.semiMinorAxis, 0, 10'000);
+}
+
+std::pair<double, double> Planet::CalculateInitialPosition(double radius, double theta)
+{
+	double xCoord = radius * cos(theta);
+	double zCoord = radius * sin(theta);
+	return std::make_pair(xCoord, zCoord);
 }

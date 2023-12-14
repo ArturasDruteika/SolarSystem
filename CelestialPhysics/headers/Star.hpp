@@ -1,5 +1,5 @@
-#ifndef CELESTIALPHYSICS_OBJECTSCOMPONENTS_HPP
-#define CELESTIALPHYSICS_OBJECTSCOMPONENTS_HPP
+#ifndef CELESTIALPHYSICS_STAR_HPP
+#define CELESTIALPHYSICS_STAR_HPP
 
 
 #if defined (_WIN32)
@@ -17,14 +17,19 @@
 #endif
 
 
-typedef CELESTIALPHYSICS_API struct
+#include "Sphere.hpp"
+
+class CELESTIALPHYSICS_API Star : public Sphere
 {
-    double radius;
-    double semiMajorAxis;
-    double semiMinorAxis;
-    double speed;
-    double tiltRadians;
-} ObjectAttributes;
+public:
+	Star(double starRadius);
+	~Star();
 
+	vtkSmartPointer<vtkActor> GetStarActor();
 
-#endif // CELESTIALPHYSICS_OBJECTSCOMPONENTS_HPP
+private:
+	void Init(double starRadius);
+
+};
+
+#endif //CELESTIALPHYSICS_STAR_HPP

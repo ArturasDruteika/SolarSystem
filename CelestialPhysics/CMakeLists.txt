@@ -17,6 +17,11 @@ if (APPLE)
     target_compile_definitions(${EXEC_NAME} PRIVATE GL_SILENCE_DEPRECATION)
 endif ()
 
+# spdlog
+file(TO_CMAKE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../../3rdParty/spdlog-1.x/lib/cmake/spdlog/ spdlog_path)
+set(spdlog_DIR ${spdlog_path})
+find_package(spdlog REQUIRED)
+
 # VTK
 file(TO_CMAKE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../../3rdParty/VTK/ vtk_path)
 find_package(VTK REQUIRED)
@@ -34,9 +39,14 @@ endif ()
 add_library(${PROJECT_NAME} SHARED
     headers/Planet.hpp
     src/Planet.cpp
+	headers/Star.hpp
+    src/Star.cpp
     headers/ObjectsComponents.hpp
 	headers/SolarSystemModel.hpp
 	src/SolarSystemModel.cpp
+    headers/OrbitalMechanics.hpp
+    src/OrbitalMechanics.cpp
+    headers/OrbitalPoint.hpp
 )
 
 include_directories(
@@ -47,6 +57,7 @@ include_directories(
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
     GraphicalObjects
+    spdlog::spdlog
     ${OPENGL_LIBRARIES}
     ${VTK_LIBRARIES}
 )

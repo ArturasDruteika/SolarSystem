@@ -1,7 +1,8 @@
 #include "ObjectBase.hpp"
-
+#include "ColorsVTK.hpp"
 #include <vtkPolyDataMapper.h>
 #include <vtkSTLReader.h>
+#include <vtkProperty.h>
 
 
 
@@ -37,7 +38,12 @@ std::vector<double> ObjectBase::GetActorPosition(vtkSmartPointer<vtkActor>& acto
 
 void ObjectBase::MoveActor(double xPos, double yPos, double zPos)
 {
-    m_transform->Translate(xPos, yPos, zPos);
+    m_actor->SetPosition(xPos, yPos, zPos);
+}
+
+void ObjectBase::RotateActor(double rotationDegrees)
+{
+    m_transform->RotateWXYZ(1, 1, 1, 100);
     m_actor->SetUserTransform(m_transform);
 }
 
@@ -58,4 +64,11 @@ void ObjectBase::ReadSTLFIle(std::string pathToStlFile)
     vtkNew<vtkPolyDataMapper> mapper;
     mapper->SetInputConnection(reader->GetOutputPort());
     m_actor->SetMapper(mapper);
+
+}
+
+void ObjectBase::SetColor(const vtkColor4d& color)
+{
+    m_actor->GetProperty()->SetColor(color.GetRed(), color.GetGreen(), color.GetBlue());
+    m_actor->GetProperty()->SetOpacity(color.GetAlpha());
 }

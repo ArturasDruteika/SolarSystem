@@ -39,18 +39,7 @@ if (NOT VTK_FOUND)
 endif ()
 
 # VTK
-find_package(VTK COMPONENTS
-    CommonCore
-    CommonColor
-    CommonDataModel
-    FiltersCore
-    InteractionStyle
-    RenderingCore
-    RenderingFreeType
-    RenderingGL2PSOpenGL2
-    RenderingOpenGL2
-    QUIET
-    )
+find_package(VTK QUIET)
 if (NOT VTK_FOUND)
     message(FATAL_ERROR "VTK not found!")
     return()
@@ -107,3 +96,9 @@ add_dependencies(${PROJECT_NAME}
     GraphicalObjects
     CelestialPhysics
     )
+
+# vtk_module_autoinit is needed
+vtk_module_autoinit(
+    TARGETS SolarSystemCore
+    MODULES ${VTK_LIBRARIES}
+)

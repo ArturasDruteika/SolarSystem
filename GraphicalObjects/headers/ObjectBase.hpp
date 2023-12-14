@@ -22,6 +22,8 @@
 #include <vtkTransform.h>
 #include <vtkSmartPointer.h>
 #include <vtkPolyDataMapper.h>
+#include <vtkAxesActor.h>
+#include <vtkColor.h>
 
 
 class GRAPHICALOBJECTS_API ObjectBase
@@ -37,9 +39,11 @@ public:
 	vtkSmartPointer<vtkActor> GetObjectActor();
 	std::vector<double> GetActorPosition(vtkSmartPointer<vtkActor>& actor);
 	void MoveActor(double xPos, double yPos, double zPos);
+	void RotateActor(double rotationDegrees);
 	void SetMapper(vtkNew<vtkPolyDataMapper>& mapper);
 	void SetActorInitialPos(double xPos=0.0, double yPos=0.0, double zPos=0.0);
 	void ReadSTLFIle(std::string pathToStlFile);
+	void SetColor(const vtkColor4d& color);
 
 private:
 	vtkSmartPointer<vtkActor> m_actor;

@@ -10,10 +10,7 @@ ObjectCreationWindow::ObjectCreationWindow(ObjectsInfoWindow* pObjectsInfoWindow
     , m_customFont{nullptr}
     , m_pObjectsInfoWindow{ pObjectsInfoWindow }
 {
-    m_objectAttributes.radius = 1;
-    m_objectAttributes.distanceFromCenter = 1;
-    m_objectAttributes.speed = 1;
-    m_objectAttributes.tiltDegrees = 1;
+    SetInitialValues();
 }
 
 ObjectCreationWindow::~ObjectCreationWindow() = default;
@@ -53,7 +50,8 @@ void ObjectCreationWindow::DeInitInternal()
 void ObjectCreationWindow::RenderMainWindowInternal()
 {
     RenderObjectRadiusSection();
-    RenderObjectDistanceSection();
+    RenderSemiMajorAxisSection();
+    RenderSemiMinorAxisSection();
     RenderObjectSpeedSection();
     RenderObjectTiltSection();
     ImGui::Separator();
@@ -68,9 +66,14 @@ void ObjectCreationWindow::RenderObjectRadiusSection()
     RenderObjectAttributeSelectionSection("Object's Radius", "Radius", m_objectAttributes.radius);
 }
 
-void ObjectCreationWindow::RenderObjectDistanceSection()
+void ObjectCreationWindow::RenderSemiMajorAxisSection()
 {
-    RenderObjectAttributeSelectionSection("Object's Distance From The Center", "Distance", m_objectAttributes.distanceFromCenter);
+    RenderObjectAttributeSelectionSection("Semi-major axis (km)", "Semi-major", m_objectAttributes.semiMajorAxis);
+}
+
+void ObjectCreationWindow::RenderSemiMinorAxisSection()
+{
+    RenderObjectAttributeSelectionSection("Semi-minor axis (km)", "Semi-minor", m_objectAttributes.semiMinorAxis);
 }
 
 void ObjectCreationWindow::RenderObjectSpeedSection()
@@ -80,7 +83,7 @@ void ObjectCreationWindow::RenderObjectSpeedSection()
 
 void ObjectCreationWindow::RenderObjectTiltSection()
 {
-    RenderObjectAttributeSelectionSection("Object's Tilt", "Tilt", m_objectAttributes.tiltDegrees);
+    RenderObjectAttributeSelectionSection("Object's Tilt (Radians)", "Tilt", m_objectAttributes.tiltRadians);
 }
 
 void ObjectCreationWindow::RenderObjectCreationSection()
@@ -120,6 +123,15 @@ void ObjectCreationWindow::RenderCreatedPlanetsInfoSection()
     static int planetIDToDelete;
     static bool unusedSelectionSection = false;
     static std::string sectionName = "PlanetToDelete";
+}
+
+void ObjectCreationWindow::SetInitialValues()
+{
+    m_objectAttributes.radius = 0.5;
+    m_objectAttributes.semiMajorAxis = 10.0;
+    m_objectAttributes.semiMinorAxis = 8.0;
+    m_objectAttributes.speed = 1;
+    m_objectAttributes.tiltRadians = 0;
 }
 
 void ObjectCreationWindow::RenderObjectAttributeSelectionSection(const std::string& separatorText, const std::string& idText, double& parameterValue)

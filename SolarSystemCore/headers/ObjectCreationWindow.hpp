@@ -33,13 +33,15 @@ private:
     void RenderMainWindowInternal() override;
 
     void RenderObjectRadiusSection();
-    void RenderObjectDistanceSection();
+    void RenderSemiMajorAxisSection();
+    void RenderSemiMinorAxisSection();
     void RenderObjectSpeedSection();
     void RenderObjectTiltSection();
     void RenderObjectCreationSection();
     void RenderPlanetsTableSection();
     void RenderCreatedPlanetsInfoSection();
 
+    void SetInitialValues();
     void RenderObjectAttributeSelectionSection(const std::string& separatorText, const std::string& idText, double& parameterValue);
     void OnDeletePlanet(int id);
 

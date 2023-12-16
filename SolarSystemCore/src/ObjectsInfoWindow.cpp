@@ -23,7 +23,7 @@ void ObjectsInfoWindow::DeInit()
     DeInitInternal();
 }
 
-void ObjectsInfoWindow::AddPlanetRecord(int id, const ObjectAttributes& objectAttributes)
+void ObjectsInfoWindow::AddPlanetRecord(int id, const PlanetAttributes& objectAttributes)
 {
     m_planetsAttributesMap.insert({ id, objectAttributes });
 }
@@ -84,7 +84,7 @@ void ObjectsInfoWindow::RenderPlanetsInfoTable()
             ImGui::TableNextColumn();
             ImGui::Text("%.5f", objectAttributes.speed);
             ImGui::TableNextColumn();
-            ImGui::Text("%.5f", objectAttributes.tiltRadians);
+            ImGui::Text("%.5f", objectAttributes.tilt);
             ImGui::TableNextColumn();
             if (RenderDeleteButtonOnTable(planetId))
             {

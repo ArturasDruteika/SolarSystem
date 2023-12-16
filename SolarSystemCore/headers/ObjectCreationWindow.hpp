@@ -11,7 +11,7 @@
 #include <map>
 
 
-typedef boost::signals2::signal<void(int id, const ObjectAttributes& objectAttributes)> CreationSignal;
+typedef boost::signals2::signal<void(int id, const PlanetAttributes& objectAttributes)> CreationSignal;
 typedef boost::signals2::signal<void(const int id)> DeleteSignal;
 
 
@@ -45,8 +45,8 @@ private:
     void RenderObjectAttributeSelectionSection(const std::string& separatorText, const std::string& idText, double& parameterValue);
     void OnDeletePlanet(int id);
 
-    ObjectAttributes m_objectAttributes;
-    std::map<int, ObjectAttributes> m_planetsAttributesMap;
+    PlanetAttributes m_objectAttributes;
+    std::map<int, PlanetAttributes> m_planetsAttributesMap;
     int m_planetsCount;
     ImFont* m_customFont;
 

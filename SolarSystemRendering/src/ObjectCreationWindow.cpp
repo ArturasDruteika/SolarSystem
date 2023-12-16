@@ -54,6 +54,7 @@ void ObjectCreationWindow::RenderMainWindowInternal()
     RenderSemiMinorAxisSection();
     RenderObjectSpeedSection();
     RenderObjectTiltSection();
+    RenderObjectInclinationSection();
     ImGui::Separator();
     RenderObjectCreationSection();
     ImGui::Separator();
@@ -83,7 +84,12 @@ void ObjectCreationWindow::RenderObjectSpeedSection()
 
 void ObjectCreationWindow::RenderObjectTiltSection()
 {
-    RenderObjectAttributeSelectionSection("Object's Tilt (Radians)", "Tilt", m_objectAttributes.tilt);
+    RenderObjectAttributeSelectionSection("Object's Tilt (Degrees)", "Tilt", m_objectAttributes.tilt);
+}
+
+void ObjectCreationWindow::RenderObjectInclinationSection()
+{
+    RenderObjectAttributeSelectionSection("Object's Inlcination (Degrees)", "Inclination", m_objectAttributes.inclination);
 }
 
 void ObjectCreationWindow::RenderObjectCreationSection()
@@ -132,6 +138,7 @@ void ObjectCreationWindow::SetInitialValues()
     m_objectAttributes.semiMinorAxis = 8.0;
     m_objectAttributes.speed = 1;
     m_objectAttributes.tilt = 0;
+    m_objectAttributes.inclination = 0;
 }
 
 void ObjectCreationWindow::RenderObjectAttributeSelectionSection(const std::string& separatorText, const std::string& idText, double& parameterValue)

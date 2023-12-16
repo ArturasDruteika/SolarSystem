@@ -40,12 +40,17 @@ public:
 	std::vector<double> GetActorPosition(vtkSmartPointer<vtkActor>& actor);
 	void MoveActor(double xPos, double yPos, double zPos);
 	void RotateActor(double rotationDegrees);
+	void SetScale(double xAxis = 1.0, double yAxis = 1.0, double zAxis = 1.0);
 	void SetMapper(vtkNew<vtkPolyDataMapper>& mapper);
 	void SetActorInitialPos(double xPos=0.0, double yPos=0.0, double zPos=0.0);
-	void ReadSTLFIle(std::string pathToStlFile);
+	void ReadSTLFIle(const std::string& pathToStlFile);
 	void SetColor(const vtkColor4d& color);
 
 private:
+	void SetActorToAUniformScale();
+
+	double m_scaleFactor;
+
 	vtkSmartPointer<vtkActor> m_actor;
 	vtkSmartPointer<vtkTransform> m_transform;
 };

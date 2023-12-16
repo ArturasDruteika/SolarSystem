@@ -31,6 +31,7 @@ public:
 	PlanetAttributes GetPlanetAttributes();
 	vtkSmartPointer<vtkActor> GetPlanetActor();
 	void MovePlanet(double xPos, double yPos, double zPos);
+	void RotatePlanet();
 
 private:
 	void Init(const PlanetAttributes& objectAttributes);

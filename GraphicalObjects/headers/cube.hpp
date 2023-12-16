@@ -30,7 +30,7 @@ public:
 	Cube();
 	~Cube();
 
-	// TODO: make GenerateCube() have arguments of shape paratmeters like xyz
+	// TODO: make GenerateCube() have arguments of shape parameters like xyz
 	void GenerateObject(double edgeLength) override;
 	
 private:

@@ -1,11 +1,11 @@
 cmake_minimum_required(VERSION 3.24)
 
-project(SolarSystemCore)
+project(SolarSystemRendering)
 set(CMAKE_BUILD_PARALLEL_LEVEL)
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-add_definitions(-DSOLARSYSTEMCORE_EXPORT)
+add_definitions(-DSOLARSYSTEMRENDERING_EXPORT)
 
 find_package(OpenGL REQUIRED)
 
@@ -35,7 +35,7 @@ find_package(OpenMP REQUIRED)
 file(TO_CMAKE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../../3rdParty/VTK/ vtk_path)
 find_package(VTK REQUIRED)
 if (NOT VTK_FOUND)
-    message(FATAL_ERROR "SolarSystemCore: Unable to find the VTK build folder.")
+    message(FATAL_ERROR "SolarSystemRendering: Unable to find the VTK build folder.")
 endif ()
 
 # VTK
@@ -99,6 +99,6 @@ add_dependencies(${PROJECT_NAME}
 
 # vtk_module_autoinit is needed
 vtk_module_autoinit(
-    TARGETS SolarSystemCore
+    TARGETS SolarSystemRendering
     MODULES ${VTK_LIBRARIES}
 )

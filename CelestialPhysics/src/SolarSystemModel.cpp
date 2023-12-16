@@ -61,20 +61,10 @@ std::map<int, Planet> SolarSystemModel::GetPlanetsMap()
 	return m_planetsMap;
 }
 
-void SolarSystemModel::MovePlanets()
+void SolarSystemModel::Step()
 {
-	for (auto& [id, planet] : m_planetsMap)
-	{
-		MovePlanet(id);
-	}
-}
-
-void SolarSystemModel::RotatePlanetAroundAxis()
-{
-	for (auto& [id, planet] : m_planetsMap)
-	{
-		RotatePlanetAroundAxis(id);
-	}
+	MovePlanets();
+	//RotatePlanetsAroundAxis();
 }
 
 void SolarSystemModel::MovePlanet(int planetID)
@@ -96,7 +86,24 @@ void SolarSystemModel::MovePlanet(int planetID)
 	}
 }
 
+void SolarSystemModel::MovePlanets()
+{
+	for (auto& [id, planet] : m_planetsMap)
+	{
+		MovePlanet(id);
+	}
+}
+
 void SolarSystemModel::RotatePlanetAroundAxis(int planetId, double rotationAngle)
 {
-	m_planetsMap.at(planetId).RotateActor(rotationAngle);
+	double tilt = m_planetsMap.at(planetId).GetPlanetAttributes().tilt;
+	m_planetsMap.at(planetId).RotateActor(tilt);
+}
+
+void SolarSystemModel::RotatePlanetsAroundAxis()
+{
+	for (auto& [id, planet] : m_planetsMap)
+	{
+		RotatePlanetAroundAxis(id);
+	}
 }

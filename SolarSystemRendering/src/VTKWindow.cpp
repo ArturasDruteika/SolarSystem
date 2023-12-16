@@ -74,7 +74,7 @@ void VTKWindow::DeInitInternal()
 
 void VTKWindow::RenderMainWindowInternal()
 {
-    m_solarSystemModel.MovePlanets();
+    m_solarSystemModel.Step();
     m_vtkViewer.render();
 }
 

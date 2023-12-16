@@ -3,11 +3,11 @@
 
 
 #if defined (_WIN32)
-#if defined(SOLARSYSTEMCORE_EXPORT)
-#define SOLARSYSTEMCORE_API __declspec(dllexport)
+#if defined(SOLARSYSTEMRENDERING_EXPORT)
+#define SOLARSYSTEMRENDERING_API __declspec(dllexport)
 #else
-#define  SOLARSYSTEMCORE_API __declspec(dllimport)
-#endif /* SOLARSYSTEMCORE_API */
+#define  SOLARSYSTEMRENDERING_API __declspec(dllimport)
+#endif /* SOLARSYSTEMRENDERING_API */
 #define _sprintf sprintf_s
 #endif
 
@@ -17,7 +17,7 @@
 #endif
 
 
-class SOLARSYSTEMCORE_API GraphicalRunner
+class SOLARSYSTEMRENDERING_API GraphicalRunner
 {
 public:
     GraphicalRunner();

@@ -75,7 +75,8 @@ include_directories(
     ..//imgui//third_party/glfw/include
     ..//imgui//third_party/gl3w/
     ..//imgui//third_party/glm-0.9.9.6/
-    ../imgui/imgui_vtk/
+    ..//imgui/imgui_vtk/
+    ..//Utils//headers//
     ${stb_image_path}
     ${VTK_INCLUDES_DIR}
     ${Boost_INCLUDE_DIR}
@@ -84,17 +85,19 @@ include_directories(
 target_link_libraries(${PROJECT_NAME} PRIVATE
     imgui
     spdlog::spdlog
-    ${OPENGL_LIBRARIES}
-    ${VTK_LIBRARIES}
     GraphicalObjects
     CelestialPhysics
+    Utils
     ${Boost_LIBRARIES}
+    ${OPENGL_LIBRARIES}
+    ${VTK_LIBRARIES}
     )
 
 add_dependencies(${PROJECT_NAME}
     imgui
     GraphicalObjects
     CelestialPhysics
+    Utils
     )
 
 # vtk_module_autoinit is needed

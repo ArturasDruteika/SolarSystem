@@ -45,6 +45,8 @@ private:
     void SetInitialValues();
     void RenderObjectAttributeSelectionSection(const std::string& separatorText, const std::string& idText, double& parameterValue);
     void OnDeletePlanet(int id);
+    void ReplaceDegreesToRadians(PlanetAttributes& planetAttributes);
+    PlanetAttributes ProcessPlanetAttributes(const PlanetAttributes& objectAttributes);
 
     PlanetAttributes m_objectAttributes;
     std::map<int, PlanetAttributes> m_planetsAttributesMap;

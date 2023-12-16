@@ -1,4 +1,5 @@
 #include "ObjectCreationWindow.hpp"
+#include "AnglesOperations.hpp"
 #include "imgui.h"
 #include <boost/dll.hpp>
 #include <string>
@@ -89,14 +90,15 @@ void ObjectCreationWindow::RenderObjectTiltSection()
 
 void ObjectCreationWindow::RenderObjectInclinationSection()
 {
-    RenderObjectAttributeSelectionSection("Object's Inlcination (Degrees)", "Inclination", m_objectAttributes.inclination);
+    RenderObjectAttributeSelectionSection("Object's Inclination (Degrees)", "Inclination", m_objectAttributes.inclination);
 }
 
 void ObjectCreationWindow::RenderObjectCreationSection()
 {
     if (ImGui::Button("Create", ImVec2(250, 20)))
     {
-        OnCreateSignal(m_planetsCount, m_objectAttributes);
+        PlanetAttributes planetAttributesProcessed = ProcessPlanetAttributes(m_objectAttributes);
+        OnCreateSignal(m_planetsCount, planetAttributesProcessed);
         m_planetsAttributesMap.insert({ m_planetsCount, m_objectAttributes });
         m_pObjectsInfoWindow->AddPlanetRecord(m_planetsCount, m_objectAttributes);
         m_planetsCount++;
@@ -154,4 +156,17 @@ void ObjectCreationWindow::RenderObjectAttributeSelectionSection(const std::stri
 void ObjectCreationWindow::OnDeletePlanet(int id)
 {
     m_planetsCount--;
+}
+
+void ObjectCreationWindow::ReplaceDegreesToRadians(PlanetAttributes& planetAttributes)
+{
+    planetAttributes.tilt = AnglesOperations::Deg2Rad(planetAttributes.tilt);
+    planetAttributes.inclination = AnglesOperations::Deg2Rad(planetAttributes.inclination);
+}
+
+PlanetAttributes ObjectCreationWindow::ProcessPlanetAttributes(const PlanetAttributes& objectAttributes)
+{
+    PlanetAttributes planetAttributesProcessed = objectAttributes;
+    ReplaceDegreesToRadians(planetAttributesProcessed);
+    return planetAttributesProcessed;
 }

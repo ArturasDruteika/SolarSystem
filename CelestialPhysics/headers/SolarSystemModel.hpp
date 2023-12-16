@@ -34,7 +34,7 @@ public:
 	~SolarSystemModel();
 
 	void AddStar(int id, double starRadius);
-	void AddPlanet(int id, ObjectAttributes objectAttributes);
+	void AddPlanet(int id, PlanetAttributes objectAttributes);
 	void OnDeleteStar(int id);
 	void OnDeletePlanet(int id);
 	int GetPlanetsCount();
@@ -49,6 +49,7 @@ private:
 
 	std::map<int, Star> m_starsMap;
 	std::map<int, Planet> m_planetsMap;
+	std::map<int, std::vector<Point3D>> m_orbitalPointsMap;
 	std::map<int, int> m_orbitalPointsIteratorMap;
 
 	OrbitalMechanics m_orbitalMechanics;

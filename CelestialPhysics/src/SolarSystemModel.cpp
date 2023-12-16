@@ -2,12 +2,14 @@
 #include "spdlog/spdlog.h"
 
 
-constexpr double M_PI = 3.14159265358979323846;
+constexpr double M_PI = 3.141'592'653'589'793'238'46;
+constexpr double N_ORBIT_PTS = 10'000;
 
 
 SolarSystemModel::SolarSystemModel()
 	: m_starsMap{}
 	, m_planetsMap{}
+	, m_orbitalPointsMap{}
 	, m_orbitalPointsIteratorMap{}
 {
 }
@@ -21,9 +23,16 @@ void SolarSystemModel::AddStar(int id, double starRadius)
 	m_starsMap.insert({ id, Star(starRadius) });
 }
 
-void SolarSystemModel::AddPlanet(int id, ObjectAttributes objectAttributes)
+void SolarSystemModel::AddPlanet(int id, PlanetAttributes objectAttributes)
 {
 	m_planetsMap.insert({ id, Planet(objectAttributes) });
+	std::vector<Point3D> orbitalPoints = OrbitalMechanics::CalculateOrbitPoints(
+		objectAttributes.semiMajorAxis, 
+		objectAttributes.semiMinorAxis, 
+		objectAttributes.tilt, 
+		N_ORBIT_PTS
+	);
+	m_orbitalPointsMap.insert({ id, orbitalPoints });
 	m_orbitalPointsIteratorMap.insert({ id, 0 });
 }
 
@@ -75,14 +84,13 @@ void SolarSystemModel::MovePlanet(int planetID)
 		m_orbitalPointsIteratorMap.at(planetID)++;
 		return;
 	}
-	std::vector<Point3D> orbitalPts = m_planetsMap.at(planetID).GetOrbitalPts();
+	std::vector<Point3D> orbitalPts = m_orbitalPointsMap.at(planetID);
 	double x = orbitalPts.at(m_orbitalPointsIteratorMap.at(planetID)).x;
 	double y = orbitalPts.at(m_orbitalPointsIteratorMap.at(planetID)).y;
 	double z = orbitalPts.at(m_orbitalPointsIteratorMap.at(planetID)).z;
-	spdlog::info("Point: (" + std::to_string(x) + ", " + std::to_string(y) + ", " + std::to_string(z) + ")");
 	m_planetsMap.at(planetID).MoveActor(x, y, z);
 	m_orbitalPointsIteratorMap.at(planetID)++;
-	if (m_orbitalPointsIteratorMap.at(planetID) == 10'000)
+	if (m_orbitalPointsIteratorMap.at(planetID) == N_ORBIT_PTS)
 	{
 		m_orbitalPointsIteratorMap.at(planetID) = 0;
 	}

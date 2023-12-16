@@ -19,12 +19,12 @@
 
 typedef CELESTIALPHYSICS_API struct
 {
-    double radius;
-    double semiMajorAxis;
-    double semiMinorAxis;
-    double speed;
-    double tiltRadians;
-} ObjectAttributes;
+    double radius; // km
+    double semiMajorAxis; // km
+    double semiMinorAxis; // km
+    double speed; // km / s
+    double tilt; // radians
+} PlanetAttributes;
 
 
 #endif // CELESTIALPHYSICS_OBJECTSCOMPONENTS_HPP

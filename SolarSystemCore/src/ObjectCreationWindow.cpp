@@ -83,7 +83,7 @@ void ObjectCreationWindow::RenderObjectSpeedSection()
 
 void ObjectCreationWindow::RenderObjectTiltSection()
 {
-    RenderObjectAttributeSelectionSection("Object's Tilt (Radians)", "Tilt", m_objectAttributes.tiltRadians);
+    RenderObjectAttributeSelectionSection("Object's Tilt (Radians)", "Tilt", m_objectAttributes.tilt);
 }
 
 void ObjectCreationWindow::RenderObjectCreationSection()
@@ -131,7 +131,7 @@ void ObjectCreationWindow::SetInitialValues()
     m_objectAttributes.semiMajorAxis = 10.0;
     m_objectAttributes.semiMinorAxis = 8.0;
     m_objectAttributes.speed = 1;
-    m_objectAttributes.tiltRadians = 0;
+    m_objectAttributes.tilt = 0;
 }
 
 void ObjectCreationWindow::RenderObjectAttributeSelectionSection(const std::string& separatorText, const std::string& idText, double& parameterValue)

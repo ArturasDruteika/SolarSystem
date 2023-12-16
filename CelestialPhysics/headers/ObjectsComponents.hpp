@@ -24,6 +24,7 @@ typedef CELESTIALPHYSICS_API struct
     double semiMinorAxis; // km
     double speed; // km / s
     double tilt; // radians
+    double inclination; // radians
 } PlanetAttributes;
 
 

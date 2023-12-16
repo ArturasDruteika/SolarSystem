@@ -57,7 +57,8 @@ void ObjectsInfoWindow::RenderPlanetsInfoTable()
         "Semi-major axis (Km)",
         "Semi-minor axis (Km)",
         "Speed (Km / h)",
-        "Tilt Degrees (Deg)",
+        "Tilt (Deg)",
+        "Inclination (Deg)",
         ""
     };
 
@@ -85,6 +86,8 @@ void ObjectsInfoWindow::RenderPlanetsInfoTable()
             ImGui::Text("%.5f", objectAttributes.speed);
             ImGui::TableNextColumn();
             ImGui::Text("%.5f", objectAttributes.tilt);
+            ImGui::TableNextColumn();
+            ImGui::Text("%.5f", objectAttributes.inclination);
             ImGui::TableNextColumn();
             if (RenderDeleteButtonOnTable(planetId))
             {

@@ -7,6 +7,7 @@
 
 
 ObjectBase::ObjectBase()
+    : m_scaleFactor{ 0 }
 {
     m_actor = vtkSmartPointer<vtkActor>::New();
     m_transform = vtkSmartPointer<vtkTransform>::New();
@@ -39,12 +40,18 @@ std::vector<double> ObjectBase::GetActorPosition(vtkSmartPointer<vtkActor>& acto
 void ObjectBase::MoveActor(double xPos, double yPos, double zPos)
 {
     m_actor->SetPosition(xPos, yPos, zPos);
+    m_actor->SetOrigin(xPos, yPos, zPos);
 }
 
 void ObjectBase::RotateActor(double rotationDegrees)
 {
     m_transform->RotateWXYZ(1, 1, 1, 100);
     m_actor->SetUserTransform(m_transform);
+}
+
+void ObjectBase::SetScale(double xAxis, double yAxis, double zAxis)
+{
+    m_actor->SetScale(xAxis * m_scaleFactor, yAxis * m_scaleFactor, zAxis * m_scaleFactor);
 }
 
 void ObjectBase::SetMapper(vtkNew<vtkPolyDataMapper>& mapper)
@@ -57,18 +64,26 @@ void ObjectBase::SetActorInitialPos(double xPos, double yPos, double zPos)
     m_actor->SetPosition(xPos, yPos, zPos);
 }
 
-void ObjectBase::ReadSTLFIle(std::string pathToStlFile)
+void ObjectBase::ReadSTLFIle(const std::string& pathToStlFile)
 {
     vtkNew<vtkSTLReader> reader;
     reader->SetFileName(pathToStlFile.c_str());
     vtkNew<vtkPolyDataMapper> mapper;
     mapper->SetInputConnection(reader->GetOutputPort());
     m_actor->SetMapper(mapper);
-
+    SetActorToAUniformScale();
 }
 
 void ObjectBase::SetColor(const vtkColor4d& color)
 {
     m_actor->GetProperty()->SetColor(color.GetRed(), color.GetGreen(), color.GetBlue());
     m_actor->GetProperty()->SetOpacity(color.GetAlpha());
+}
+
+void ObjectBase::SetActorToAUniformScale()
+{
+    double bounds[6];
+    m_actor->GetBounds(bounds);
+    m_scaleFactor = 1 / (bounds[5] - bounds[4]);
+    m_actor->SetScale(m_scaleFactor, m_scaleFactor, m_scaleFactor);
 }

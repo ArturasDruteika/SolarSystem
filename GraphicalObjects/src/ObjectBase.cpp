@@ -40,13 +40,13 @@ std::vector<double> ObjectBase::GetActorPosition(vtkSmartPointer<vtkActor>& acto
 void ObjectBase::MoveActor(double xPos, double yPos, double zPos)
 {
     m_actor->SetPosition(xPos, yPos, zPos);
-    m_actor->SetOrigin(xPos, yPos, zPos);
 }
 
 void ObjectBase::RotateActor(double rotationDegrees)
 {
-    m_transform->RotateWXYZ(1, 1, 1, 100);
-    m_actor->SetUserTransform(m_transform);
+    m_actor->RotateX(rotationDegrees);
+    m_actor->RotateY(rotationDegrees);
+    m_actor->RotateZ(rotationDegrees);
 }
 
 void ObjectBase::SetScale(double xAxis, double yAxis, double zAxis)

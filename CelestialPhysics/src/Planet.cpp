@@ -33,7 +33,7 @@ void Planet::MovePlanet(double xPos, double yPos, double zPos)
 
 void Planet::RotatePlanet()
 {
-	RotateActor(m_planetAttributes.tilt);
+	RotateActor(m_planetAttributes.rotationalPeriod);
 }
 
 void Planet::Init(const PlanetAttributes& objectAttributes)

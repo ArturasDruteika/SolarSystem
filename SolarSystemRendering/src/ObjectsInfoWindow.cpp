@@ -57,7 +57,7 @@ void ObjectsInfoWindow::RenderPlanetsInfoTable()
         "Semi-major axis (Km)",
         "Semi-minor axis (Km)",
         "Speed (Km / h)",
-        "Tilt (Deg)",
+        "Rotational Period (Days)",
         "Inclination (Deg)",
         ""
     };
@@ -85,7 +85,7 @@ void ObjectsInfoWindow::RenderPlanetsInfoTable()
             ImGui::TableNextColumn();
             ImGui::Text("%.5f", objectAttributes.speed);
             ImGui::TableNextColumn();
-            ImGui::Text("%.5f", objectAttributes.tilt);
+            ImGui::Text("%.5f", objectAttributes.rotationalPeriod);
             ImGui::TableNextColumn();
             ImGui::Text("%.5f", objectAttributes.inclination);
             ImGui::TableNextColumn();

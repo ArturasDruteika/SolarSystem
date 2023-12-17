@@ -35,10 +35,6 @@ public:
 
 private:
 	void Init(const PlanetAttributes& objectAttributes);
-	// Function returns ONLY x and z coords, since at the time of creation the y coord is always 0 (ZERO)
-	// theta is the same as the tilt (the angle between the x and z axis
-	// Theta is in Radians
-	std::pair<double, double> CalculateInitialPosition(double radius, double theta);
 
 	PlanetAttributes m_planetAttributes;
 	std::vector<std::pair<double, double>> xyCircularCoords;

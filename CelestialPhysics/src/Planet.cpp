@@ -33,23 +33,15 @@ void Planet::MovePlanet(double xPos, double yPos, double zPos)
 
 void Planet::RotatePlanet()
 {
-	RotateActor(0);
+	RotateActor(m_planetAttributes.tilt);
 }
 
 void Planet::Init(const PlanetAttributes& objectAttributes)
 {
 	std::string currentPath = boost::dll::program_location().parent_path().string();
 	ReadSTLFIle(currentPath + "/res/" + "spatial_body_prototype.stl");
+
 	SetScale(objectAttributes.radius, objectAttributes.radius, objectAttributes.radius);
 	SetColor(ColorsVTK::BLUE);
-
-	std::pair <double, double> xzCoords = CalculateInitialPosition(objectAttributes.semiMajorAxis, objectAttributes.tilt);
-	SetActorInitialPos(xzCoords.first, 0.0, xzCoords.second);
-}
-
-std::pair<double, double> Planet::CalculateInitialPosition(double radius, double theta)
-{
-	double xCoord = radius * cos(theta);
-	double zCoord = radius * sin(theta);
-	return std::make_pair(xCoord, zCoord);
+	SetActorInitialPos(objectAttributes.semiMajorAxis);
 }

@@ -5,9 +5,13 @@
 #include <cmath>
 
 
+constexpr double EARTH_ROTATIONS_PER_YEAR = 365.2421897;
+
+
 Planet::Planet(PlanetAttributes objectAttributes)
 	: m_planetAttributes{ objectAttributes }
 	, xyCircularCoords{}
+	, m_rotationPer1Step{ 0 }
 {
 	Init(objectAttributes);
 }
@@ -33,7 +37,7 @@ void Planet::MovePlanet(double xPos, double yPos, double zPos)
 
 void Planet::RotatePlanet()
 {
-	RotateActor(m_planetAttributes.rotationalPeriod);
+	RotateActor(m_rotationPer1Step);
 }
 
 void Planet::Init(const PlanetAttributes& objectAttributes)
@@ -44,4 +48,15 @@ void Planet::Init(const PlanetAttributes& objectAttributes)
 	SetScale(objectAttributes.radius, objectAttributes.radius, objectAttributes.radius);
 	SetColor(ColorsVTK::BLUE);
 	SetActorInitialPos(objectAttributes.semiMajorAxis);
+
+	m_rotationPer1Step = CalculateRotationPer1Step(objectAttributes.rotationalPeriod);
+}
+
+double Planet::CalculateRotationPer1Step(double rotationalPeriod)
+{
+	double rotationCoeffComperedToEarth = 1 / rotationalPeriod;
+	double rotationsPerYear = EARTH_ROTATIONS_PER_YEAR * rotationCoeffComperedToEarth;
+	double totalRotationDegreesPerYear = rotationsPerYear * 360;
+	double rotationPerStep = totalRotationDegreesPerYear / 10'000;
+	return rotationPerStep;
 }

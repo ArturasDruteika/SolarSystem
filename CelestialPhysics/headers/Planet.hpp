@@ -35,6 +35,9 @@ public:
 
 private:
 	void Init(const PlanetAttributes& objectAttributes);
+	double CalculateRotationPer1Step(double rotationalPeriod);
+
+	double m_rotationPer1Step;
 
 	PlanetAttributes m_planetAttributes;
 	std::vector<std::pair<double, double>> xyCircularCoords;

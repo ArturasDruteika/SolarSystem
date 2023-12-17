@@ -160,7 +160,6 @@ void ObjectCreationWindow::OnDeletePlanet(int id)
 
 void ObjectCreationWindow::ReplaceDegreesToRadians(PlanetAttributes& planetAttributes)
 {
-    planetAttributes.rotationalPeriod = AnglesOperations::Deg2Rad(planetAttributes.rotationalPeriod);
     planetAttributes.inclination = AnglesOperations::Deg2Rad(planetAttributes.inclination);
 }
 

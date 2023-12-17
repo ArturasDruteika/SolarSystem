@@ -40,12 +40,16 @@ public:
 	int GetPlanetsCount();
 	std::map<int, Star> GetStarsMap();
 	std::map<int, Planet> GetPlanetsMap();
-	void MovePlanets();
-	void RotatePlanetAroundAxis();
+	void Step();
 
 private:
-	void MovePlanet(int planetID);
-	void RotatePlanetAroundAxis(int planetId, double rotationAngle = 0.1);
+	void RotatePlanetAroundAxis(int planetId);
+	void RotatePlanetsAroundAxis();
+	void MovePlanet(int planetId);
+	void MovePlanet(int planetId, const std::vector<double> nextOrbitalPt);
+	void MovePlanets();
+	std::vector<double> GetNextOrbitalPosition(int planetId);
+	void UpdateOrbitalPointsIterator(int planetId);
 
 	std::map<int, Star> m_starsMap;
 	std::map<int, Planet> m_planetsMap;

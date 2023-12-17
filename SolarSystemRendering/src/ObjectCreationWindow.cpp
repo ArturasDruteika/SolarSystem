@@ -128,7 +128,7 @@ void ObjectCreationWindow::RenderPlanetsTableSection()
 
 void ObjectCreationWindow::RenderCreatedPlanetsInfoSection()
 {
-    static int planetIDToDelete;
+    static int planetIdToDelete;
     static bool unusedSelectionSection = false;
     static std::string sectionName = "PlanetToDelete";
 }

@@ -96,11 +96,11 @@ void VTKWindow::OnNewPlanet(int id, PlanetAttributes objectAttributes)
     AddVTKActor(m_solarSystemModel.GetPlanetsMap().at(id).GetPlanetActor());
 }
 
-void VTKWindow::OnDeletePlanet(int planetID)
+void VTKWindow::OnDeletePlanet(int planetId)
 {
-    RemoveVTKActor(m_solarSystemModel.GetPlanetsMap().at(planetID).GetPlanetActor());
+    RemoveVTKActor(m_solarSystemModel.GetPlanetsMap().at(planetId).GetPlanetActor());
 
-    m_solarSystemModel.OnDeletePlanet(planetID);
+    m_solarSystemModel.OnDeletePlanet(planetId);
     m_planetsMap = m_solarSystemModel.GetPlanetsMap();
 }
 

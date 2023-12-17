@@ -33,7 +33,7 @@ private:
     void AddVTKActor(const vtkSmartPointer<vtkActor>& actor);
     void RemoveVTKActor(const vtkSmartPointer<vtkActor>& actor);
     void OnNewPlanet(int id, PlanetAttributes objectAttributes);
-    void OnDeletePlanet(int planetID);
+    void OnDeletePlanet(int planetId);
 
     bool m_isVtkOpen;
     VtkViewer m_vtkViewer;

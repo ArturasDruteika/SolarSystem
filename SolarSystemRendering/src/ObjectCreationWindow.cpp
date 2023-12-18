@@ -54,8 +54,9 @@ void ObjectCreationWindow::RenderMainWindowInternal()
     RenderSemiMajorAxisSection();
     RenderSemiMinorAxisSection();
     RenderObjectSpeedSection();
-    RenderObjectTiltSection();
+    RenderObjectRotationalPeriodSection();
     RenderObjectInclinationSection();
+    RenderObjectTiltSection();
     ImGui::Separator();
     RenderObjectCreationSection();
     ImGui::Separator();
@@ -83,7 +84,7 @@ void ObjectCreationWindow::RenderObjectSpeedSection()
     RenderObjectAttributeSelectionSection("Speed Around The Center", "Speed", m_objectAttributes.speed);
 }
 
-void ObjectCreationWindow::RenderObjectTiltSection()
+void ObjectCreationWindow::RenderObjectRotationalPeriodSection()
 {
     RenderObjectAttributeSelectionSection("Rotational Period (Days)", "RotationalPeriod", m_objectAttributes.rotationalPeriod);
 }
@@ -91,6 +92,11 @@ void ObjectCreationWindow::RenderObjectTiltSection()
 void ObjectCreationWindow::RenderObjectInclinationSection()
 {
     RenderObjectAttributeSelectionSection("Inclination (Degrees)", "Inclination", m_objectAttributes.inclination);
+}
+
+void ObjectCreationWindow::RenderObjectTiltSection()
+{
+    RenderObjectAttributeSelectionSection("Tilt (Degrees)", "Tilt", m_objectAttributes.tilt);
 }
 
 void ObjectCreationWindow::RenderObjectCreationSection()
@@ -138,9 +144,10 @@ void ObjectCreationWindow::SetInitialValues()
     m_objectAttributes.radius = 0.5;
     m_objectAttributes.semiMajorAxis = 10.0;
     m_objectAttributes.semiMinorAxis = 8.0;
-    m_objectAttributes.speed = 1;
-    m_objectAttributes.rotationalPeriod = 0;
-    m_objectAttributes.inclination = 0;
+    m_objectAttributes.speed = 1.0;
+    m_objectAttributes.rotationalPeriod = 1.0;
+    m_objectAttributes.inclination = 0.0;
+    m_objectAttributes.tilt = 0.0;
 }
 
 void ObjectCreationWindow::RenderObjectAttributeSelectionSection(const std::string& separatorText, const std::string& idText, double& parameterValue)

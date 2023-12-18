@@ -36,8 +36,9 @@ private:
     void RenderSemiMajorAxisSection();
     void RenderSemiMinorAxisSection();
     void RenderObjectSpeedSection();
-    void RenderObjectTiltSection();
+    void RenderObjectRotationalPeriodSection();
     void RenderObjectInclinationSection();
+    void RenderObjectTiltSection();
     void RenderObjectCreationSection();
     void RenderPlanetsTableSection();
     void RenderCreatedPlanetsInfoSection();

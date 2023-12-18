@@ -65,7 +65,7 @@ void ObjectCreationWindow::RenderMainWindowInternal()
 
 void ObjectCreationWindow::RenderObjectRadiusSection()
 {
-    RenderObjectAttributeSelectionSection("Object's Radius", "Radius", m_objectAttributes.radius);
+    RenderObjectAttributeSelectionSection("Radius", "Radius", m_objectAttributes.radius);
 }
 
 void ObjectCreationWindow::RenderSemiMajorAxisSection()
@@ -80,17 +80,17 @@ void ObjectCreationWindow::RenderSemiMinorAxisSection()
 
 void ObjectCreationWindow::RenderObjectSpeedSection()
 {
-    RenderObjectAttributeSelectionSection("Object's Speed Around The Center", "Speed", m_objectAttributes.speed);
+    RenderObjectAttributeSelectionSection("Speed Around The Center", "Speed", m_objectAttributes.speed);
 }
 
 void ObjectCreationWindow::RenderObjectTiltSection()
 {
-    RenderObjectAttributeSelectionSection("Object's Tilt (Degrees)", "Tilt", m_objectAttributes.tilt);
+    RenderObjectAttributeSelectionSection("Rotational Period (Days)", "RotationalPeriod", m_objectAttributes.rotationalPeriod);
 }
 
 void ObjectCreationWindow::RenderObjectInclinationSection()
 {
-    RenderObjectAttributeSelectionSection("Object's Inclination (Degrees)", "Inclination", m_objectAttributes.inclination);
+    RenderObjectAttributeSelectionSection("Inclination (Degrees)", "Inclination", m_objectAttributes.inclination);
 }
 
 void ObjectCreationWindow::RenderObjectCreationSection()
@@ -139,7 +139,7 @@ void ObjectCreationWindow::SetInitialValues()
     m_objectAttributes.semiMajorAxis = 10.0;
     m_objectAttributes.semiMinorAxis = 8.0;
     m_objectAttributes.speed = 1;
-    m_objectAttributes.tilt = 0;
+    m_objectAttributes.rotationalPeriod = 0;
     m_objectAttributes.inclination = 0;
 }
 
@@ -160,7 +160,6 @@ void ObjectCreationWindow::OnDeletePlanet(int id)
 
 void ObjectCreationWindow::ReplaceDegreesToRadians(PlanetAttributes& planetAttributes)
 {
-    planetAttributes.tilt = AnglesOperations::Deg2Rad(planetAttributes.tilt);
     planetAttributes.inclination = AnglesOperations::Deg2Rad(planetAttributes.inclination);
 }
 

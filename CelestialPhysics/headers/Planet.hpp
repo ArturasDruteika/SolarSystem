@@ -25,7 +25,7 @@
 class CELESTIALPHYSICS_API Planet : public Sphere
 {
 public:
-	Planet(PlanetAttributes objectAttributes);
+	Planet(PlanetAttributes objectAttributes, int ptsInSingleOrbit);
 	~Planet();
 
 	PlanetAttributes GetPlanetAttributes();
@@ -34,7 +34,10 @@ public:
 	void RotatePlanet();
 
 private:
-	void Init(const PlanetAttributes& objectAttributes);
+	void Init(const PlanetAttributes& objectAttributes, int ptsInSingleOrbit);
+	double CalculateRotationPerStep(double rotationalPeriod, int ptsInSingleOrbit);
+
+	double m_rotationPerStep;
 
 	PlanetAttributes m_planetAttributes;
 	std::vector<std::pair<double, double>> xyCircularCoords;

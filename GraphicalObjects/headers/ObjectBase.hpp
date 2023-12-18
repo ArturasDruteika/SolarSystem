@@ -40,6 +40,9 @@ public:
 	std::vector<double> GetActorPosition(vtkSmartPointer<vtkActor>& actor);
 	void MoveActor(double xPos, double yPos, double zPos);
 	void RotateActor(double rotationDegrees);
+	void RotateX(double rotationDegrees);
+	void RotateY(double rotationDegrees);
+	void RotateZ(double rotationDegrees);
 	void SetScale(double xAxis = 1.0, double yAxis = 1.0, double zAxis = 1.0);
 	void SetMapper(vtkNew<vtkPolyDataMapper>& mapper);
 	void SetActorInitialPos(double xPos=0.0, double yPos=0.0, double zPos=0.0);

@@ -60,3 +60,7 @@ double Planet::CalculateRotationPerStep(double rotationalPeriod, int ptsInSingle
 	double rotationPerStep = totalRotationDegreesPerYear / ptsInSingleOrbit;
 	return rotationPerStep;
 }
+
+void Planet::TiltPlanet(double tilt)
+{
+}

@@ -48,6 +48,7 @@ void Planet::Init(const PlanetAttributes& objectAttributes, int ptsInSingleOrbit
 	SetScale(objectAttributes.radius, objectAttributes.radius, objectAttributes.radius);
 	SetColor(ColorsVTK::BLUE);
 	SetActorInitialPos(objectAttributes.semiMajorAxis);
+	RotateY(objectAttributes.tilt);
 
 	m_rotationPerStep = CalculateRotationPerStep(objectAttributes.rotationalPeriod, ptsInSingleOrbit);
 }

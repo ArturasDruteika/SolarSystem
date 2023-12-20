@@ -48,6 +48,7 @@ void Planet::Init(const PlanetAttributes& objectAttributes, int ptsInSingleOrbit
 	SetScale(objectAttributes.radius, objectAttributes.radius, objectAttributes.radius);
 	SetColor(ColorsVTK::BLUE);
 	SetActorInitialPos(objectAttributes.semiMajorAxis);
+	RotateY(objectAttributes.tilt);
 
 	m_rotationPerStep = CalculateRotationPerStep(objectAttributes.rotationalPeriod, ptsInSingleOrbit);
 }
@@ -59,4 +60,8 @@ double Planet::CalculateRotationPerStep(double rotationalPeriod, int ptsInSingle
 	double totalRotationDegreesPerYear = rotationsPerYear * 360;
 	double rotationPerStep = totalRotationDegreesPerYear / ptsInSingleOrbit;
 	return rotationPerStep;
+}
+
+void Planet::TiltPlanet(double tilt)
+{
 }

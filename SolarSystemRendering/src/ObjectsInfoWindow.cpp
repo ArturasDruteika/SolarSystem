@@ -59,6 +59,7 @@ void ObjectsInfoWindow::RenderPlanetsInfoTable()
         "Speed (Km / h)",
         "Rotational Period (Days)",
         "Inclination (Deg)",
+        "Tilt (Deg)",
         ""
     };
 

@@ -44,9 +44,23 @@ void ObjectBase::MoveActor(double xPos, double yPos, double zPos)
 
 void ObjectBase::RotateActor(double rotationDegrees)
 {
-    m_actor->RotateX(rotationDegrees / 3);
-    m_actor->RotateY(rotationDegrees / 3);
-    m_actor->RotateZ(rotationDegrees / 3);
+    // Currently leaving it like this, but fix it later!!!
+    m_actor->RotateZ(rotationDegrees);
+}
+
+void ObjectBase::RotateX(double rotationDegrees)
+{
+    m_actor->RotateX(rotationDegrees);
+}
+
+void ObjectBase::RotateY(double rotationDegrees)
+{
+    m_actor->RotateY(rotationDegrees);
+}
+
+void ObjectBase::RotateZ(double rotationDegrees)
+{
+    m_actor->RotateZ(rotationDegrees);
 }
 
 void ObjectBase::SetScale(double xAxis, double yAxis, double zAxis)

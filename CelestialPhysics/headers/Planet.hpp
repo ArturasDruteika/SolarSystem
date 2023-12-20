@@ -36,6 +36,7 @@ public:
 private:
 	void Init(const PlanetAttributes& objectAttributes, int ptsInSingleOrbit);
 	double CalculateRotationPerStep(double rotationalPeriod, int ptsInSingleOrbit);
+	void TiltPlanet(double tilt);
 
 	double m_rotationPerStep;
 

@@ -10,6 +10,7 @@
 #include "ObjectsComponents.hpp"
 #include "SolarSystemModel.hpp"
 #include "vtkSmartPointer.h"
+#include "vtkCamera.h"
 #include <vector>
 
 
@@ -34,8 +35,11 @@ private:
     void RemoveVTKActor(const vtkSmartPointer<vtkActor>& actor);
     void OnNewPlanet(int id, PlanetAttributes objectAttributes);
     void OnDeletePlanet(int planetId);
+    void SetUpObserverSubscribers();
+    void SetUpCamera();
 
     bool m_isVtkOpen;
+    vtkSmartPointer<vtkCamera> m_camera;
     VtkViewer m_vtkViewer;
     ObjectCreationWindow* m_pObjectCreationWindow;
     ObjectsInfoWindow* m_pObjectInfoWindow;

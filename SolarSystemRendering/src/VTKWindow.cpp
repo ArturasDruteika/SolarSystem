@@ -7,6 +7,7 @@
 #include "spdlog/spdlog.h"
 
 
+
 VTKWindow::VTKWindow()
     : m_isVtkOpen{ true }
     , m_pObjectCreationWindow{ nullptr }
@@ -46,22 +47,8 @@ void VTKWindow::InitializeVtkActors()
 
 void VTKWindow::InitInternal()
 {
-    m_pObjectCreationWindow->OnCreateSignal.connect(
-        boost::bind(
-            &VTKWindow::OnNewPlanet,
-            this,
-            boost::placeholders::_1,
-            boost::placeholders::_2
-        )
-    );
-
-    m_pObjectInfoWindow->OnDeleteRecord.connect(
-        boost::bind(
-            &VTKWindow::OnDeletePlanet,
-            this,
-            boost::placeholders::_1
-        )
-    );
+    SetUpObserverSubscribers();
+    SetUpCamera();
 }
 
 void VTKWindow::DeInitInternal()
@@ -102,6 +89,33 @@ void VTKWindow::OnDeletePlanet(int planetId)
 
     m_solarSystemModel.OnDeletePlanet(planetId);
     m_planetsMap = m_solarSystemModel.GetPlanetsMap();
+}
+
+void VTKWindow::SetUpObserverSubscribers()
+{
+    m_pObjectCreationWindow->OnCreateSignal.connect(
+        boost::bind(
+            &VTKWindow::OnNewPlanet,
+            this,
+            boost::placeholders::_1,
+            boost::placeholders::_2
+        )
+    );
+
+    m_pObjectInfoWindow->OnDeleteRecord.connect(
+        boost::bind(
+            &VTKWindow::OnDeletePlanet,
+            this,
+            boost::placeholders::_1
+        )
+    );
+}
+
+void VTKWindow::SetUpCamera()
+{
+    m_camera = vtkSmartPointer<vtkCamera>::New();
+    m_camera->Elevation(270);
+    m_vtkViewer.getRenderer()->SetActiveCamera(m_camera);
 }
 
 

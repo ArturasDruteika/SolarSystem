@@ -27,11 +27,15 @@ This application offers a simple yet engaging way to create and visualize planet
    ```
    git clone [https://github.com/ArturasDruteika/SolarSystem.git]
    ```
-2. Navigate to the application directory:
+2. Download 3rd Parties
+   ```
+   [3rd Parties](https://drive.google.com/file/d/1VkfIcD7EybN8SZfTSHQ2dNTX-UXjpk4u/view?usp=drive_link)
+   ```
+3. Navigate to the application directory:
    ```
    cd SolarSystem
    ```
-3. Compile the application using your preferred C++ compiler (e.g., Microsoft Visual C++).
+4. Compile the application using your preferred C++ compiler (e.g., Microsoft Visual C++).
 
 ### Running the Application
 - Launch the application by running the executable.

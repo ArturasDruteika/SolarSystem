@@ -51,7 +51,8 @@ void ObjectsInfoWindow::RenderPlanetsInfoTable()
     ImGui::SeparatorText("Planets Table");
 
     static ImGuiTableFlags flagsPlanetsTable = ImGuiTableFlags_Borders | ImGuiTableFlags_NoHostExtendX;
-    static std::vector<std::string> tableColumnNames = {
+    static std::vector<std::string> tableColumnNames = 
+    {
         "Planet Number", 
         "Radius (Km)",
         "Semi-major axis (Km)",

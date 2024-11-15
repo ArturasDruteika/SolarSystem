@@ -1,10 +1,9 @@
+#include "PhysicalConstants.hpp"
 #include "OrbitalMechanics.hpp"
 #include "spdlog/spdlog.h"
 #include <cmath>
 #include <string>
 
-
-constexpr double M_PI = 3.14159265358979323846;
 
 
 OrbitalMechanics::OrbitalMechanics()

@@ -9,7 +9,7 @@ constexpr double EARTH_ROTATIONS_PER_YEAR = 365.2421897;
 
 
 Planet::Planet(PlanetAttributes planetAttributes, int ptsInSingleOrbit)
-	: CosmicBody(planetAttributes.radius, planetAttributes.mass)
+	: OrbitingBody(planetAttributes.radius, planetAttributes.mass, planetAttributes.semiMajorAxis, planetAttributes.semiMinorAxis)
 	, m_planetAttributes{ planetAttributes }
 	, m_rotationPerStep{ 0 }
 	, m_speedAroundCenter{}

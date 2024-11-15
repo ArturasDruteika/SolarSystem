@@ -18,12 +18,12 @@
 
 
 #include "Sphere.hpp"
-#include "CosmicBody.hpp"
+#include "OrbitingBody.hpp"
 #include "ObjectsComponents.hpp"
 #include <utility>
 
 
-class CELESTIALPHYSICS_API Planet : public CosmicBody, public Sphere
+class CELESTIALPHYSICS_API Planet : public OrbitingBody, public Sphere
 {
 public:
 	Planet(PlanetAttributes planetAttributes, int ptsInSingleOrbit);

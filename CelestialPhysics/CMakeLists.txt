@@ -60,6 +60,7 @@ add_library(${PROJECT_NAME} SHARED
     src/OrbitalMechanics.cpp
     headers/OrbitalPoint.hpp
     headers/CosmicBody.hpp
+    src/CosmicBody.cpp
 )
 
 include_directories(

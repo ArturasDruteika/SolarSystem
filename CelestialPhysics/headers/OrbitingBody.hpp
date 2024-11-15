@@ -27,7 +27,7 @@ public:
 	double GetInclination();
 	double GetGravitationalParameter();
 	std::vector<Point3D> GetOrbitalPoints();
-	std::vector<double> GetOrbitalSpeeds()
+	std::vector<double> GetOrbitalSpeeds();
 
 
 private:

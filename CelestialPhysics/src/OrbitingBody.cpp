@@ -47,9 +47,24 @@ double OrbitingBody::GetEccentricity()
 	return m_eccentricity;
 }
 
+double OrbitingBody::GetInclination()
+{
+	return m_inclination;
+}
+
+double OrbitingBody::GetGravitationalParameter()
+{
+	return m_mu;
+}
+
 std::vector<Point3D> OrbitingBody::GetOrbitalPoints()
 {
 	return m_orbitalPoints;
+}
+
+std::vector<double> OrbitingBody::GetOrbitalSpeeds()
+{
+	return m_orbitalSpeeds;
 }
 
 void OrbitingBody::CalculateEccentricity()

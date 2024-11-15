@@ -96,6 +96,6 @@ void OrbitingBody::CalculateOrbitalSpeedVec(const Point3D& focusPt)
 	{
 		double orbitalRadius = CalculateOrbitalRadius(focusPt, orbitalPt);
 		double orbitalSpeed = CalculateOrbitalSpeed(orbitalRadius, m_semiMajorAxis, m_mu);
-		m_orbitalSpeedVec.push_back(orbitalSpeed);
+		m_orbitalSpeeds.push_back(orbitalSpeed);
 	}
 }

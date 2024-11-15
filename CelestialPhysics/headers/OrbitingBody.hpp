@@ -24,7 +24,10 @@ public:
 	double GetSemiMajorAxis();
 	double GetSemiMinorAxis();
 	double GetEccentricity();
+	double GetInclination();
+	double GetGravitationalParameter();
 	std::vector<Point3D> GetOrbitalPoints();
+	std::vector<double> GetOrbitalSpeeds()
 
 
 private:
@@ -41,7 +44,7 @@ private:
 	double m_inclination;
 	double m_mu; // gravitational parameter
 	std::vector<Point3D> m_orbitalPoints;
-	std::vector<double> m_orbitalSpeedVec;
+	std::vector<double> m_orbitalSpeeds;
 	Point3D m_focusObjPoint;
 };
 

@@ -38,10 +38,10 @@ private:
 	double CalculateRotationPerStep(double rotationalPeriod, int ptsInSingleOrbit);
 	void TiltPlanet(double tilt);
 
+	double m_speedAroundCenter;
 	double m_rotationPerStep;
 
 	PlanetAttributes m_planetAttributes;
-	std::vector<std::pair<double, double>> xyCircularCoords;
 };
 
 #endif //CELESTIALPHYSICS_PLANETS_HPP

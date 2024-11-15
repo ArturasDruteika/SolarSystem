@@ -10,8 +10,8 @@ constexpr double EARTH_ROTATIONS_PER_YEAR = 365.2421897;
 
 Planet::Planet(PlanetAttributes objectAttributes, int ptsInSingleOrbit)
 	: m_planetAttributes{ objectAttributes }
-	, xyCircularCoords{}
 	, m_rotationPerStep{ 0 }
+	, m_speedAroundCenter{}
 {
 	Init(objectAttributes, ptsInSingleOrbit);
 }

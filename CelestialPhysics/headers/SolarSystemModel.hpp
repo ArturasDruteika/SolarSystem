@@ -17,7 +17,6 @@
 #endif
 
 
-#include "Sphere.hpp"
 #include "Planet.hpp"
 #include "Star.hpp"
 #include "ObjectsComponents.hpp"
@@ -54,7 +53,6 @@ private:
 	Point3D m_starPoint;
 	std::map<int, Star> m_starsMap;
 	std::map<int, Planet> m_planetsMap;
-	std::map<int, std::vector<Point3D>> m_orbitalPointsMap;
 	std::map<int, int> m_orbitalPointsIteratorMap;
 
 	OrbitalMechanics m_orbitalMechanics;

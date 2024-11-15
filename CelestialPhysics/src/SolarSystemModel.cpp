@@ -20,7 +20,7 @@ SolarSystemModel::~SolarSystemModel()
 
 void SolarSystemModel::AddStar(int id, double starRadius)
 {
-	m_starsMap.insert({ id, Star(starRadius) });
+	m_starsMap.insert({ id, Star(starRadius, 0.0) });
 }
 
 void SolarSystemModel::AddPlanet(int id, PlanetAttributes objectAttributes)

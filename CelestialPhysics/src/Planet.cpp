@@ -8,12 +8,13 @@
 constexpr double EARTH_ROTATIONS_PER_YEAR = 365.2421897;
 
 
-Planet::Planet(PlanetAttributes objectAttributes, int ptsInSingleOrbit)
-	: m_planetAttributes{ objectAttributes }
+Planet::Planet(PlanetAttributes planetAttributes, int ptsInSingleOrbit)
+	: CosmicBody(planetAttributes.radius, planetAttributes.mass)
+	, m_planetAttributes{ planetAttributes }
 	, m_rotationPerStep{ 0 }
 	, m_speedAroundCenter{}
 {
-	Init(objectAttributes, ptsInSingleOrbit);
+	Init(planetAttributes, ptsInSingleOrbit);
 }
 
 Planet::~Planet()
@@ -40,17 +41,17 @@ void Planet::RotatePlanet()
 	RotateActor(m_rotationPerStep);
 }
 
-void Planet::Init(const PlanetAttributes& objectAttributes, int ptsInSingleOrbit)
+void Planet::Init(const PlanetAttributes& planetAttributes, int ptsInSingleOrbit)
 {
 	std::string currentPath = boost::dll::program_location().parent_path().string();
 	ReadSTLFIle(currentPath + "/res/" + "spatial_body_prototype.stl");
 
-	SetScale(objectAttributes.radius, objectAttributes.radius, objectAttributes.radius);
+	SetScale(planetAttributes.radius, planetAttributes.radius, planetAttributes.radius);
 	SetColor(ColorsVTK::BLUE);
-	SetActorInitialPos(objectAttributes.semiMajorAxis);
-	RotateY(objectAttributes.tilt);
+	SetActorInitialPos(planetAttributes.semiMajorAxis);
+	RotateY(planetAttributes.tilt);
 
-	m_rotationPerStep = CalculateRotationPerStep(objectAttributes.rotationalPeriod, ptsInSingleOrbit);
+	m_rotationPerStep = CalculateRotationPerStep(planetAttributes.rotationalPeriod, ptsInSingleOrbit);
 }
 
 double Planet::CalculateRotationPerStep(double rotationalPeriod, int ptsInSingleOrbit)

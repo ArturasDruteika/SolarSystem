@@ -80,7 +80,7 @@ void OrbitingBody::CalculateOrbitalPoints()
 {
 	m_orbitalPoints = OrbitalMechanics::CalculateOrbitPoints(
 		m_semiMajorAxis,
-		m_semiMinorAxis,
+		m_eccentricity,
 		m_inclination,
 		N_ORBIT_PTS
 	);

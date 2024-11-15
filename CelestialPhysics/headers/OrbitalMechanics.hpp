@@ -13,7 +13,7 @@ public:
 	~OrbitalMechanics();
 
 	double CalculateDistanceToOrigin(double x, double y, double z);
-	static std::vector<Point3D> CalculateOrbitPoints(double semiMajorAxis, double semiMinorAxis, double inclination, int numPoints);
+	static std::vector<Point3D> CalculateOrbitPoints(double semiMajorAxis, double eccentricity, double inclination, int numPoints);
 
 private:
 	double CalculateNewTheta(int i, double incrementValue);

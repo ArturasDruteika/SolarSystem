@@ -51,6 +51,7 @@ private:
 	std::vector<double> GetNextOrbitalPosition(int planetId);
 	void UpdateOrbitalPointsIterator(int planetId);
 
+	Point3D m_starPoint;
 	std::map<int, Star> m_starsMap;
 	std::map<int, Planet> m_planetsMap;
 	std::map<int, std::vector<Point3D>> m_orbitalPointsMap;

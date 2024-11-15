@@ -11,6 +11,7 @@ SolarSystemModel::SolarSystemModel()
 	, m_planetsMap{}
 	, m_orbitalPointsMap{}
 	, m_orbitalPointsIteratorMap{}
+	, m_starPoint{ 0, 0, 0 }
 {
 }
 
@@ -25,7 +26,7 @@ void SolarSystemModel::AddStar(int id, double starRadius)
 
 void SolarSystemModel::AddPlanet(int id, PlanetAttributes objectAttributes)
 {
-	m_planetsMap.insert({ id, Planet(objectAttributes, N_ORBIT_PTS) });
+	m_planetsMap.insert({ id, Planet(objectAttributes, m_starPoint, 10000, N_ORBIT_PTS) });
 	std::vector<Point3D> orbitalPoints = OrbitalMechanics::CalculateOrbitPoints(
 		objectAttributes.semiMajorAxis, 
 		objectAttributes.semiMinorAxis, 

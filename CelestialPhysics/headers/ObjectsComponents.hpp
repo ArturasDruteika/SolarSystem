@@ -20,6 +20,7 @@
 typedef CELESTIALPHYSICS_API struct
 {
     double radius; // km
+    double mass; // kg
     double semiMajorAxis; // km
     double semiMinorAxis; // km
     double speed; // km / s

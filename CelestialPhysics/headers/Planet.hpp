@@ -18,14 +18,15 @@
 
 
 #include "Sphere.hpp"
+#include "CosmicBody.hpp"
 #include "ObjectsComponents.hpp"
 #include <utility>
 
 
-class CELESTIALPHYSICS_API Planet : public Sphere
+class CELESTIALPHYSICS_API Planet : public CosmicBody, public Sphere
 {
 public:
-	Planet(PlanetAttributes objectAttributes, int ptsInSingleOrbit);
+	Planet(PlanetAttributes planetAttributes, int ptsInSingleOrbit);
 	~Planet();
 
 	PlanetAttributes GetPlanetAttributes();
@@ -34,7 +35,7 @@ public:
 	void RotatePlanet();
 
 private:
-	void Init(const PlanetAttributes& objectAttributes, int ptsInSingleOrbit);
+	void Init(const PlanetAttributes& planetAttributes, int ptsInSingleOrbit);
 	double CalculateRotationPerStep(double rotationalPeriod, int ptsInSingleOrbit);
 	void TiltPlanet(double tilt);
 

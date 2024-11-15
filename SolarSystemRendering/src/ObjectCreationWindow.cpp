@@ -53,7 +53,7 @@ void ObjectCreationWindow::RenderMainWindowInternal()
     RenderObjectRadiusSection();
     RenderSemiMajorAxisSection();
     RenderSemiMinorAxisSection();
-    RenderObjectSpeedSection();
+    //RenderObjectSpeedSection();
     RenderObjectRotationalPeriodSection();
     RenderObjectInclinationSection();
     RenderObjectTiltSection();
@@ -142,6 +142,7 @@ void ObjectCreationWindow::RenderCreatedPlanetsInfoSection()
 void ObjectCreationWindow::SetInitialValues()
 {
     m_objectAttributes.radius = 0.5;
+    m_objectAttributes.mass = 0.0;
     m_objectAttributes.semiMajorAxis = 10.0;
     m_objectAttributes.semiMinorAxis = 8.0;
     m_objectAttributes.speed = 1.0;

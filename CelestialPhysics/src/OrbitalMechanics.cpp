@@ -44,3 +44,32 @@ std::vector<Point3D> OrbitalMechanics::CalculateOrbitPoints(double semiMajorAxis
     }
     return points;
 }
+
+double OrbitalMechanics::CalculateEccentricity(double semiMajorAxis, double semiMinorAxis)
+{
+    if (semiMajorAxis <= 0 || semiMinorAxis <= 0 || semiMinorAxis > semiMajorAxis)
+    {
+        throw std::invalid_argument("Semi-major axis (a) must be greater than semi-minor axis (b), and both must be positive.");
+        return -1;
+    }
+    return std::sqrt(1 - (semiMinorAxis * semiMinorAxis) / (semiMajorAxis * semiMajorAxis));
+}
+
+double OrbitalMechanics::CalculateGravitationalParameter(double focusMass)
+{
+    return GRAVITATIONAL_CONSTANT * focusMass;
+}
+
+double OrbitalMechanics::CalculateOrbitalRadius(const Point3D& focusPt, const Point3D& bodyPoint)
+{
+    return std::sqrt(
+        std::pow(focusPt.x - bodyPoint.x, 2) +
+        std::pow(focusPt.y - bodyPoint.y, 2) +
+        std::pow(focusPt.z - bodyPoint.z, 2)
+    );
+}
+
+double OrbitalMechanics::CalculateOrbitalSpeed(double orbitalRadius, double semiMajorAxis, double mu)
+{
+    return std::sqrt(mu * (2.0 / orbitalRadius - 1.0 / semiMajorAxis));
+}

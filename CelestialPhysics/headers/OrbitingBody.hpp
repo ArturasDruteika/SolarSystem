@@ -31,11 +31,7 @@ public:
 
 
 private:
-	void CalculateEccentricity();
 	void CalculateOrbitalPoints();
-	void CalculateGravitationalParameter(double focusObjectMass);
-	double CalculateOrbitalRadius(const Point3D& focusPt, const Point3D& bodyPoint);
-	double CalculateOrbitalSpeed(double orbitalRadius, double semiMajorAxis, double mu);
 	void CalculateOrbitalSpeedVec(const Point3D& focusPt);
 
 	double m_semiMajorAxis;

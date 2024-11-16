@@ -22,8 +22,8 @@ OrbitingBody::OrbitingBody(
 	, m_semiMinorAxis{ semiMinorAxis }
 	, m_inclination{ inclination }
 {
-	CalculateEccentricity();
-	CalculateGravitationalParameter(focusObjectMass);
+	m_eccentricity = OrbitalMechanics::CalculateEccentricity(m_semiMajorAxis, m_semiMinorAxis);
+	m_mu = OrbitalMechanics::CalculateGravitationalParameter(focusObjectMass);
 	CalculateOrbitalPoints();
 	CalculateOrbitalSpeedVec(focusObjectPt);
 }
@@ -67,15 +67,6 @@ std::vector<double> OrbitingBody::GetOrbitalSpeeds()
 	return m_orbitalSpeeds;
 }
 
-void OrbitingBody::CalculateEccentricity()
-{
-	if (m_semiMajorAxis <= 0 || m_semiMinorAxis <= 0 || m_semiMinorAxis > m_semiMajorAxis)
-	{
-		throw std::invalid_argument("Semi-major axis (a) must be greater than semi-minor axis (b), and both must be positive.");
-	}
-	m_eccentricity = std::sqrt(1 - (m_semiMinorAxis * m_semiMinorAxis) / (m_semiMajorAxis * m_semiMajorAxis));
-}
-
 void OrbitingBody::CalculateOrbitalPoints()
 {
 	m_orbitalPoints = OrbitalMechanics::CalculateOrbitPoints(
@@ -86,31 +77,12 @@ void OrbitingBody::CalculateOrbitalPoints()
 	);
 }
 
-void OrbitingBody::CalculateGravitationalParameter(double focusObjectMass)
-{
-	m_mu = GRAVITATIONAL_CONSTANT * focusObjectMass;
-}
-
-double OrbitingBody::CalculateOrbitalRadius(const Point3D& focusPt, const Point3D& bodyPoint)
-{
-	return std::sqrt(
-		std::pow(focusPt.x - bodyPoint.x, 2) +
-		std::pow(focusPt.y - bodyPoint.y, 2) +
-		std::pow(focusPt.z - bodyPoint.z, 2)
-	);
-}
-
-double OrbitingBody::CalculateOrbitalSpeed(double orbitalRadius, double semiMajorAxis, double mu)
-{
-	return std::sqrt(mu * (2.0 / orbitalRadius - 1.0 / semiMajorAxis));
-}
-
 void OrbitingBody::CalculateOrbitalSpeedVec(const Point3D& focusPt)
 {
 	for (const Point3D& orbitalPt : m_orbitalPoints)
 	{
-		double orbitalRadius = CalculateOrbitalRadius(focusPt, orbitalPt);
-		double orbitalSpeed = CalculateOrbitalSpeed(orbitalRadius, m_semiMajorAxis, m_mu);
+		double orbitalRadius = OrbitalMechanics::CalculateOrbitalRadius(focusPt, orbitalPt);
+		double orbitalSpeed = OrbitalMechanics::CalculateOrbitalSpeed(orbitalRadius, m_semiMajorAxis, m_mu);
 		m_orbitalSpeeds.push_back(orbitalSpeed);
 	}
 }

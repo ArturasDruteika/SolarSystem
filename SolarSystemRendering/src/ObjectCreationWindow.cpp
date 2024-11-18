@@ -53,7 +53,6 @@ void ObjectCreationWindow::RenderMainWindowInternal()
     RenderObjectRadiusSection();
     RenderSemiMajorAxisSection();
     RenderSemiMinorAxisSection();
-    //RenderObjectSpeedSection();
     RenderObjectRotationalPeriodSection();
     RenderObjectInclinationSection();
     RenderObjectTiltSection();
@@ -77,11 +76,6 @@ void ObjectCreationWindow::RenderSemiMajorAxisSection()
 void ObjectCreationWindow::RenderSemiMinorAxisSection()
 {
     RenderObjectAttributeSelectionSection("Semi-minor axis (km)", "Semi-minor", m_objectAttributes.semiMinorAxis);
-}
-
-void ObjectCreationWindow::RenderObjectSpeedSection()
-{
-    RenderObjectAttributeSelectionSection("Speed Around The Center", "Speed", m_objectAttributes.speed);
 }
 
 void ObjectCreationWindow::RenderObjectRotationalPeriodSection()
@@ -145,7 +139,6 @@ void ObjectCreationWindow::SetInitialValues()
     m_objectAttributes.mass = 0.0;
     m_objectAttributes.semiMajorAxis = 10.0;
     m_objectAttributes.semiMinorAxis = 8.0;
-    m_objectAttributes.speed = 1.0;
     m_objectAttributes.rotationalPeriod = 1.0;
     m_objectAttributes.inclination = 0.0;
     m_objectAttributes.tilt = 0.0;

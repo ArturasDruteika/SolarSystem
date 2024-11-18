@@ -83,8 +83,8 @@ void ObjectsInfoWindow::RenderPlanetsInfoTable()
             ImGui::Text("%.5f", objectAttributes.semiMajorAxis);
             ImGui::TableNextColumn();
             ImGui::Text("%.5f", objectAttributes.semiMinorAxis);
-            ImGui::TableNextColumn();
-            ImGui::Text("%.5f", objectAttributes.speed);
+            //ImGui::TableNextColumn();
+            //ImGui::Text("%.5f", objectAttributes.speed);
             ImGui::TableNextColumn();
             ImGui::Text("%.5f", objectAttributes.rotationalPeriod);
             ImGui::TableNextColumn();

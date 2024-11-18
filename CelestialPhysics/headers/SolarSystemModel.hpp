@@ -39,6 +39,7 @@ public:
 	int GetPlanetsCount();
 	std::map<int, Star> GetStarsMap();
 	std::map<int, Planet> GetPlanetsMap();
+	std::map<int, Point3D> GetPlanetsNextOrbitalPositions(int orbitalPointId) const;
 	void Step();
 
 private:

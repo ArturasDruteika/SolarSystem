@@ -54,6 +54,16 @@ std::map<int, Planet> SolarSystemModel::GetPlanetsMap()
 	return m_planetsMap;
 }
 
+std::map<int, Point3D> SolarSystemModel::GetPlanetsNextOrbitalPositions(int orbitalPointId) const
+{
+	std::map<int, Point3D> planetsNextOrbitalPoints;
+	for (const auto& [id, planet] : m_planetsMap)
+	{
+		planetsNextOrbitalPoints.insert({ id, planet.GetOrbitalPoints(orbitalPointId) });
+	}
+	return planetsNextOrbitalPoints;
+}
+
 void SolarSystemModel::Step()
 {
 	RotatePlanetsAroundAxis();

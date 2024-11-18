@@ -69,7 +69,7 @@ std::vector<double> OrbitingBody::GetOrbitalSpeeds()
 
 void OrbitingBody::CalculateOrbitalPoints()
 {
-	m_orbitalPoints = OrbitalMechanics::CalculateOrbitPoints(
+	m_orbitalPoints = OrbitalMechanics::GenerateEllipticalOrbit(
 		m_semiMajorAxis,
 		m_eccentricity,
 		m_inclination,

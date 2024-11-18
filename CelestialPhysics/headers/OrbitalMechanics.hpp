@@ -13,6 +13,7 @@ public:
 	~OrbitalMechanics();
 
 	static std::vector<Point3D> CalculateOrbitPoints(double semiMajorAxis, double eccentricity, double inclination, int numPoints);
+	static std::vector<Point3D> GenerateEllipticalOrbit(double semiMajorAxis,double eccentricity,double inclination, int numPoints);
 	static double CalculateEccentricity(double semiMajorAxis, double semiMinorAxis);
 	static double CalculateGravitationalParameter(double focusMass);
 	static double CalculateOrbitalRadius(const Point3D& focusPt, const Point3D& bodyPoint);

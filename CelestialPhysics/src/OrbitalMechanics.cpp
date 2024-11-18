@@ -1,4 +1,4 @@
-#include "PhysicalConstants.hpp"
+﻿#include "PhysicalConstants.hpp"
 #include "OrbitalMechanics.hpp"
 #include "spdlog/spdlog.h"
 #include <cmath>
@@ -43,6 +43,53 @@ std::vector<Point3D> OrbitalMechanics::CalculateOrbitPoints(double semiMajorAxis
         points.push_back(point);
     }
     return points;
+}
+
+std::vector<Point3D> OrbitalMechanics::GenerateEllipticalOrbit(double semiMajorAxis, double eccentricity, double inclination, int numPoints) 
+{
+    std::vector<Point3D> orbit;
+    orbit.reserve(numPoints);
+
+    // Semi-minor axis and inclination calculations
+    double semiMinorAxis = semiMajorAxis * std::sqrt(1 - eccentricity * eccentricity);
+    double inclinationRad = inclination * M_PI / 180.0;
+
+    // Loop over evenly spaced mean anomalies
+    for (int i = 0; i < numPoints; ++i) 
+    {
+        double meanAnomaly = 2 * M_PI * i / numPoints; // Mean anomaly for this time step
+
+        // Solve Kepler's equation: M = E - e*sin(E) (using numerical approximation)
+        double eccentricAnomaly = meanAnomaly; // Initial guess
+        for (int j = 0; j < 10; ++j) // Iterate for better accuracy
+        { 
+            eccentricAnomaly -= (eccentricAnomaly - eccentricity * std::sin(eccentricAnomaly) - meanAnomaly) /
+                (1 - eccentricity * std::cos(eccentricAnomaly));
+        }
+
+        // Convert eccentric anomaly to true anomaly
+        double trueAnomaly = 2 * std::atan2(
+            std::sqrt(1 + eccentricity) * std::sin(eccentricAnomaly / 2),
+            std::sqrt(1 - eccentricity) * std::cos(eccentricAnomaly / 2)
+        );
+
+        // Orbital radius
+        double radius = (semiMajorAxis * (1 - eccentricity * eccentricity)) /
+            (1 + eccentricity * std::cos(trueAnomaly));
+
+        // Cartesian coordinates in the orbital plane
+        double x = radius * std::cos(trueAnomaly);
+        double y = radius * std::sin(trueAnomaly);
+
+        // Apply inclination
+        double z = y * std::sin(inclinationRad);
+        y = y * std::cos(inclinationRad);
+
+        // Store the point
+        orbit.push_back({ x, y, z });
+    }
+
+    return orbit;
 }
 
 double OrbitalMechanics::CalculateEccentricity(double semiMajorAxis, double semiMinorAxis)

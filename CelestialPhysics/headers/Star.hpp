@@ -18,17 +18,18 @@
 
 
 #include "Sphere.hpp"
+#include "CosmicBody.hpp"
 
-class CELESTIALPHYSICS_API Star : public Sphere
+class CELESTIALPHYSICS_API Star : public CosmicBody, public Sphere
 {
 public:
-	Star(double starRadius);
+	Star(double radius, double mass);
 	~Star();
 
 	vtkSmartPointer<vtkActor> GetStarActor();
 
 private:
-	void Init(double starRadius);
+	void Init();
 
 };
 

@@ -18,14 +18,20 @@
 
 
 #include "Sphere.hpp"
+#include "OrbitingBody.hpp"
 #include "ObjectsComponents.hpp"
 #include <utility>
 
 
-class CELESTIALPHYSICS_API Planet : public Sphere
+class CELESTIALPHYSICS_API Planet : public OrbitingBody, public Sphere
 {
 public:
-	Planet(PlanetAttributes objectAttributes, int ptsInSingleOrbit);
+	Planet(
+		PlanetAttributes planetAttributes, 
+		const Point3D& focusObjectPt,
+		double focusObjectMass, 
+		int ptsInSingleOrbit
+	);
 	~Planet();
 
 	PlanetAttributes GetPlanetAttributes();
@@ -34,14 +40,14 @@ public:
 	void RotatePlanet();
 
 private:
-	void Init(const PlanetAttributes& objectAttributes, int ptsInSingleOrbit);
+	void Init(const PlanetAttributes& planetAttributes, int ptsInSingleOrbit);
 	double CalculateRotationPerStep(double rotationalPeriod, int ptsInSingleOrbit);
 	void TiltPlanet(double tilt);
 
+	double m_speedAroundCenter;
 	double m_rotationPerStep;
 
 	PlanetAttributes m_planetAttributes;
-	std::vector<std::pair<double, double>> xyCircularCoords;
 };
 
 #endif //CELESTIALPHYSICS_PLANETS_HPP

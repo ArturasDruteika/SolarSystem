@@ -9,8 +9,8 @@ constexpr double N_ORBIT_PTS = 10'000;
 SolarSystemModel::SolarSystemModel()
 	: m_starsMap{}
 	, m_planetsMap{}
-	, m_orbitalPointsMap{}
 	, m_orbitalPointsIteratorMap{}
+	, m_starPoint{ 0, 0, 0 }
 {
 }
 
@@ -20,19 +20,12 @@ SolarSystemModel::~SolarSystemModel()
 
 void SolarSystemModel::AddStar(int id, double starRadius)
 {
-	m_starsMap.insert({ id, Star(starRadius) });
+	m_starsMap.insert({ id, Star(starRadius, 0.0) });
 }
 
 void SolarSystemModel::AddPlanet(int id, PlanetAttributes objectAttributes)
 {
-	m_planetsMap.insert({ id, Planet(objectAttributes, N_ORBIT_PTS) });
-	std::vector<Point3D> orbitalPoints = OrbitalMechanics::CalculateOrbitPoints(
-		objectAttributes.semiMajorAxis, 
-		objectAttributes.semiMinorAxis, 
-		objectAttributes.inclination, 
-		N_ORBIT_PTS
-	);
-	m_orbitalPointsMap.insert({ id, orbitalPoints });
+	m_planetsMap.insert({ id, Planet(objectAttributes, m_starPoint, 10000, N_ORBIT_PTS) });
 	m_orbitalPointsIteratorMap.insert({ id, 0 });
 }
 
@@ -103,7 +96,7 @@ void SolarSystemModel::MovePlanets()
 std::vector<double> SolarSystemModel::GetNextOrbitalPosition(int planetId)
 {
 	std::vector<double> nextOrbitalPosition;
-	std::vector<Point3D> orbitalPts = m_orbitalPointsMap.at(planetId);
+	std::vector<Point3D> orbitalPts = m_planetsMap.at(planetId).GetOrbitalPoints();
 	double x = orbitalPts.at(m_orbitalPointsIteratorMap.at(planetId)).x;
 	double y = orbitalPts.at(m_orbitalPointsIteratorMap.at(planetId)).y;
 	double z = orbitalPts.at(m_orbitalPointsIteratorMap.at(planetId)).z;

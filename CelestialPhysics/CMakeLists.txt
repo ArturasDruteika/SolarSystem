@@ -59,6 +59,11 @@ add_library(${PROJECT_NAME} SHARED
     headers/OrbitalMechanics.hpp
     src/OrbitalMechanics.cpp
     headers/OrbitalPoint.hpp
+    headers/CosmicBody.hpp
+    src/CosmicBody.cpp
+    headers/OrbitingBody.hpp
+    src/OrbitingBody.cpp
+    headers/PhysicalConstants.hpp
 )
 
 include_directories(

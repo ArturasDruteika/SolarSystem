@@ -2,19 +2,20 @@
 #define SOLARSYSTEMRENDERING_SOLARSYSTEMVTKRENDERER_HPP
 
 
-#include "Planet.hpp"
-#include "Star.hpp"
+#include "Sphere.hpp"
+#include "SolarSystemModel.hpp"
 
 
-class SolarSystemVTKRenderer
+class SolarSystemVTKInteractor
 {
 public:
-	SolarSystemVTKRenderer();
-	~SolarSystemVTKRenderer();
+	SolarSystemVTKInteractor();
+	~SolarSystemVTKInteractor();
+
+	void Step();
 
 private:
-	std::map<int, Star> m_starsMap;
-	std::map<int, Planet> m_planetsMap;
+	SolarSystemModel m_solarSystemModel;
 };
 
 

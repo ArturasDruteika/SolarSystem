@@ -61,6 +61,8 @@ add_library(${PROJECT_NAME} SHARED
 	src/ObjectsInfoWindow.cpp
 	headers/GraphicalWindow.hpp
 	src/GraphicalWindow.cpp
+    headers/SolarSystemVTKInteractor.hpp
+    src/SolarSystemVTKInteractor.cpp
     )
 
 include_directories(

@@ -52,7 +52,6 @@ std::vector<Point3D> OrbitalMechanics::GenerateEllipticalOrbit(double semiMajorA
 
     // Semi-minor axis and inclination calculations
     double semiMinorAxis = semiMajorAxis * std::sqrt(1 - eccentricity * eccentricity);
-    double inclinationRad = inclination * M_PI / 180.0;
 
     // Loop over evenly spaced mean anomalies
     for (int i = 0; i < numPoints; ++i) 
@@ -82,8 +81,8 @@ std::vector<Point3D> OrbitalMechanics::GenerateEllipticalOrbit(double semiMajorA
         double y = radius * std::sin(trueAnomaly);
 
         // Apply inclination
-        double z = y * std::sin(inclinationRad);
-        y = y * std::cos(inclinationRad);
+        double z = y * std::sin(inclination);
+        y = y * std::cos(inclination);
 
         // Store the point
         orbit.push_back({ x, y, z });

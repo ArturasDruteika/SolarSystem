@@ -1,14 +1,31 @@
 #include "OrbitingBody.hpp"
+#include "OrbitalMechanics.hpp"
+#include "PhysicalConstants.hpp"
 #include <stdexcept>
 #include <complex>
 
 
-OrbitingBody::OrbitingBody(double radius, double mass, double semiMajorAxis, double semiMinorAxis)
+constexpr double N_ORBIT_PTS = 10'000;
+
+
+OrbitingBody::OrbitingBody(
+	double radius, 
+	double mass, 
+	const Point3D& focusObjectPt,
+	double focusObjectMass, 
+	double semiMajorAxis, 
+	double semiMinorAxis, 
+	double inclination
+)
 	: CosmicBody(radius, mass)
 	, m_semiMajorAxis{ semiMajorAxis }
 	, m_semiMinorAxis{ semiMinorAxis }
+	, m_inclination{ inclination }
 {
-	CalculateEccentricity();
+	m_eccentricity = OrbitalMechanics::CalculateEccentricity(m_semiMajorAxis, m_semiMinorAxis);
+	m_mu = OrbitalMechanics::CalculateGravitationalParameter(focusObjectMass);
+	CalculateOrbitalPoints();
+	CalculateOrbitalSpeedVec(focusObjectPt);
 }
 
 OrbitingBody::~OrbitingBody()
@@ -30,11 +47,42 @@ double OrbitingBody::GetEccentricity()
 	return m_eccentricity;
 }
 
-void OrbitingBody::CalculateEccentricity()
+double OrbitingBody::GetInclination()
 {
-	if (m_semiMajorAxis <= 0 || m_semiMinorAxis <= 0 || m_semiMinorAxis > m_semiMajorAxis)
+	return m_inclination;
+}
+
+double OrbitingBody::GetGravitationalParameter()
+{
+	return m_mu;
+}
+
+std::vector<Point3D> OrbitingBody::GetOrbitalPoints()
+{
+	return m_orbitalPoints;
+}
+
+std::vector<double> OrbitingBody::GetOrbitalSpeeds()
+{
+	return m_orbitalSpeeds;
+}
+
+void OrbitingBody::CalculateOrbitalPoints()
+{
+	m_orbitalPoints = OrbitalMechanics::GenerateEllipticalOrbit(
+		m_semiMajorAxis,
+		m_eccentricity,
+		m_inclination,
+		N_ORBIT_PTS
+	);
+}
+
+void OrbitingBody::CalculateOrbitalSpeedVec(const Point3D& focusPt)
+{
+	for (const Point3D& orbitalPt : m_orbitalPoints)
 	{
-		throw std::invalid_argument("Semi-major axis (a) must be greater than semi-minor axis (b), and both must be positive.");
+		double orbitalRadius = OrbitalMechanics::CalculateOrbitalRadius(focusPt, orbitalPt);
+		double orbitalSpeed = OrbitalMechanics::CalculateOrbitalSpeed(orbitalRadius, m_semiMajorAxis, m_mu);
+		m_orbitalSpeeds.push_back(orbitalSpeed);
 	}
-	m_eccentricity = std::sqrt(1 - (m_semiMinorAxis * m_semiMinorAxis) / (m_semiMajorAxis * m_semiMajorAxis));
 }

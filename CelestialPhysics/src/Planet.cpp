@@ -1,3 +1,4 @@
+#include "PhysicalConstants.hpp"
 #include "Planet.hpp"
 #include "ObjectsComponents.hpp"
 #include "ColorsVTK.hpp"
@@ -5,11 +6,22 @@
 #include <cmath>
 
 
-constexpr double EARTH_ROTATIONS_PER_YEAR = 365.2421897;
 
-
-Planet::Planet(PlanetAttributes planetAttributes, int ptsInSingleOrbit)
-	: OrbitingBody(planetAttributes.radius, planetAttributes.mass, planetAttributes.semiMajorAxis, planetAttributes.semiMinorAxis)
+Planet::Planet(
+	PlanetAttributes planetAttributes,
+	const Point3D& focusObjectPt,
+	double focusObjectMass, 
+	int ptsInSingleOrbit
+)
+	: OrbitingBody(
+		planetAttributes.radius,
+		planetAttributes.mass, 
+		focusObjectPt,
+		focusObjectMass,
+		planetAttributes.semiMajorAxis, 
+		planetAttributes.semiMinorAxis,
+		planetAttributes.inclination
+	)
 	, m_planetAttributes{ planetAttributes }
 	, m_rotationPerStep{ 0 }
 	, m_speedAroundCenter{}

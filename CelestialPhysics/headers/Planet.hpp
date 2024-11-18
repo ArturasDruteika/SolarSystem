@@ -26,7 +26,12 @@
 class CELESTIALPHYSICS_API Planet : public OrbitingBody, public Sphere
 {
 public:
-	Planet(PlanetAttributes planetAttributes, int ptsInSingleOrbit);
+	Planet(
+		PlanetAttributes planetAttributes, 
+		const Point3D& focusObjectPt,
+		double focusObjectMass, 
+		int ptsInSingleOrbit
+	);
 	~Planet();
 
 	PlanetAttributes GetPlanetAttributes();

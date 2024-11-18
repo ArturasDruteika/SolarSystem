@@ -11,22 +11,12 @@ CosmicBody::~CosmicBody()
 {
 }
 
-double CosmicBody::GetRadius()
+double CosmicBody::GetRadius() const
 {
 	return m_radius;
 }
 
-void CosmicBody::SetRadius(double radius)
-{
-	m_radius = radius;
-}
-
-double CosmicBody::GetMass()
+double CosmicBody::GetMass() const
 {
 	return m_mass;
-}
-
-void CosmicBody::SetMass(double mass)
-{
-	m_mass = mass;
 }

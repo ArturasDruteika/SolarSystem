@@ -21,13 +21,14 @@ public:
 	);
 	~OrbitingBody();
 
-	double GetSemiMajorAxis();
-	double GetSemiMinorAxis();
-	double GetEccentricity();
-	double GetInclination();
-	double GetGravitationalParameter();
-	std::vector<Point3D> GetOrbitalPoints();
-	std::vector<double> GetOrbitalSpeeds();
+	double GetSemiMajorAxis() const;
+	double GetSemiMinorAxis() const;
+	double GetEccentricity() const;
+	double GetInclination() const;
+	double GetGravitationalParameter() const;
+	std::vector<Point3D> GetOrbitalPoints() const;
+	Point3D GetOrbitalPoints(int id) const;
+	std::vector<double> GetOrbitalSpeeds() const;
 
 
 private:

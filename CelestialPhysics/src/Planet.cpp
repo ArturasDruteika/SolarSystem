@@ -33,7 +33,7 @@ Planet::~Planet()
 {
 }
 
-PlanetAttributes Planet::GetPlanetAttributes()
+PlanetAttributes Planet::GetPlanetAttributes() const
 {
 	return m_planetAttributes;
 }

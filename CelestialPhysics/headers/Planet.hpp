@@ -34,7 +34,7 @@ public:
 	);
 	~Planet();
 
-	PlanetAttributes GetPlanetAttributes();
+	PlanetAttributes GetPlanetAttributes() const;
 	vtkSmartPointer<vtkActor> GetPlanetActor();
 	void MovePlanet(double xPos, double yPos, double zPos);
 	void RotatePlanet();

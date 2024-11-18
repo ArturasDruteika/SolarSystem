@@ -8,10 +8,8 @@ public:
 	CosmicBody(double radius, double mass);
 	~CosmicBody();
 
-	double GetRadius();
-	void SetRadius(double radius);
-	double GetMass();
-	void SetMass(double mass);
+	double GetRadius() const;
+	double GetMass() const;
 
 private:
 	double m_radius;

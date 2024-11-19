@@ -7,6 +7,18 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_definitions(-DGRAPHICALOBJECTS_EXPORT)
 
+# boost
+file(TO_CMAKE_PATH ../../3rdParty/boost_1_79_0/ boost_path)
+set(BOOST_DIR ${boost_path})
+set(BOOST_ROOT ${boost_path})
+set(BOOST_LIB ${boost_path}/lib/)
+set(BOOST_INCLUDE_DIR ${boost_path}/include/)
+set(Boost_USE_STATIC_LIBS   ON)
+set(Boost_USE_MULTITHREADED ON)
+set(Boost_USE_STATIC_RUNTIME OFF)
+find_package(Boost 1.79.0 COMPONENTS system filesystem serialization regex REQUIRED)
+find_package(OpenMP REQUIRED)
+
 find_package(OpenGL REQUIRED)
 
 # OpenGL
@@ -39,6 +51,7 @@ endif ()
 
 include_directories(
     headers
+    ${Boost_INCLUDE_DIR}
     ${VTK_INCLUDES_DIR}
 )
 
@@ -56,6 +69,7 @@ add_library(${PROJECT_NAME} SHARED
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
     spdlog::spdlog
+    ${Boost_LIBRARIES}
     ${OPENGL_LIBRARIES}
     ${VTK_LIBRARIES}
     )

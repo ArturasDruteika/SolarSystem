@@ -57,7 +57,7 @@ void ObjectsInfoWindow::RenderPlanetsInfoTable()
         "Radius (Km)",
         "Semi-major axis (Km)",
         "Semi-minor axis (Km)",
-        "Speed (Km / h)",
+        //"Speed (Km / h)",
         "Rotational Period (Days)",
         "Inclination (Deg)",
         "Tilt (Deg)"

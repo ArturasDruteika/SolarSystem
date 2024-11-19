@@ -50,10 +50,9 @@ public:
 	void SetColor(const vtkColor4d& color);
 
 private:
-	void SetActorToAUniformScale();
+	void SetActorToUniformScale();
 
 	double m_scaleFactor;
-
 	vtkSmartPointer<vtkActor> m_actor;
 	vtkSmartPointer<vtkTransform> m_transform;
 };

@@ -85,7 +85,7 @@ void ObjectBase::ReadSTLFIle(const std::string& pathToStlFile)
     vtkNew<vtkPolyDataMapper> mapper;
     mapper->SetInputConnection(reader->GetOutputPort());
     m_actor->SetMapper(mapper);
-    SetActorToAUniformScale();
+    SetActorToUniformScale();
 }
 
 void ObjectBase::SetColor(const vtkColor4d& color)
@@ -94,7 +94,7 @@ void ObjectBase::SetColor(const vtkColor4d& color)
     m_actor->GetProperty()->SetOpacity(color.GetAlpha());
 }
 
-void ObjectBase::SetActorToAUniformScale()
+void ObjectBase::SetActorToUniformScale()
 {
     double bounds[6];
     m_actor->GetBounds(bounds);

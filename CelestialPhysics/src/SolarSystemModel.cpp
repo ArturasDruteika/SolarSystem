@@ -39,17 +39,17 @@ void SolarSystemModel::OnDeletePlanet(int id)
 	m_planetsMap.erase(id);
 }
 
-int SolarSystemModel::GetPlanetsCount()
+int SolarSystemModel::GetPlanetsCount() const
 {
 	return m_planetsMap.size();
 }
 
-std::map<int, Star> SolarSystemModel::GetStarsMap()
+std::map<int, Star> SolarSystemModel::GetStarsMap() const
 {
 	return m_starsMap;
 }
 
-std::map<int, Planet> SolarSystemModel::GetPlanetsMap()
+std::map<int, Planet> SolarSystemModel::GetPlanetsMap() const
 {
 	return m_planetsMap;
 }

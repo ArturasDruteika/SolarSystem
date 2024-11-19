@@ -36,9 +36,9 @@ public:
 	void AddPlanet(int id, PlanetAttributes objectAttributes);
 	void OnDeleteStar(int id);
 	void OnDeletePlanet(int id);
-	int GetPlanetsCount();
-	std::map<int, Star> GetStarsMap();
-	std::map<int, Planet> GetPlanetsMap();
+	int GetPlanetsCount() const;
+	std::map<int, Star> GetStarsMap() const;
+	std::map<int, Planet> GetPlanetsMap() const;
 	std::map<int, Point3D> GetPlanetsNextOrbitalPositions(int orbitalPointId) const;
 	void Step();
 

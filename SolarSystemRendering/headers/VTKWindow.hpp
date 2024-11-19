@@ -8,7 +8,7 @@
 #include "ObjectCreationWindow.hpp"
 #include "ObjectsInfoWindow.hpp"
 #include "ObjectsComponents.hpp"
-#include "SolarSystemModel.hpp"
+#include "SolarSystemVTKInteractor.hpp"
 #include "vtkSmartPointer.h"
 #include "vtkCamera.h"
 #include <vector>
@@ -43,9 +43,9 @@ private:
     VtkViewer m_vtkViewer;
     ObjectCreationWindow* m_pObjectCreationWindow;
     ObjectsInfoWindow* m_pObjectInfoWindow;
-    SolarSystemModel m_solarSystemModel;
     std::map<int, Planet> m_planetsMap;
     std::map<int, std::vector<std::vector<double>>> m_planetsRotationCoords;
+    SolarSystemVTKInteractor m_solarSystemVTKInteractor;
 };
 
 

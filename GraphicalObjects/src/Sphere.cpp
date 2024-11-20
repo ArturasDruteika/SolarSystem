@@ -21,6 +21,7 @@ Sphere::Sphere(double radius, const std::vector<double>& initialPosCoord, const 
     : m_radius{ radius }
     , m_color{ color }
 {
+    GenerateDefaultSphere(initialPosCoord);
 }
 
 Sphere::~Sphere()
@@ -46,12 +47,12 @@ void Sphere::GenerateObject(double radius)
     SetActorInitialPos();
 }
 
-void Sphere::GenerateDefaultSphere(std::vector<double>& initialPosCoord)
+void Sphere::GenerateDefaultSphere(const std::vector<double>& initialPosCoord)
 {
     std::string currentPath = boost::dll::program_location().parent_path().string();
     ReadSTLFIle(currentPath + "/res/" + "spatial_body_prototype.stl");
     SetScale(m_radius, m_radius, m_radius);
-    SetColor(ColorsVTK::BLUE);
+    SetColor(m_color);
     SetActorInitialPos(initialPosCoord[0], initialPosCoord[1], initialPosCoord[2]);
     //RotateY(planetAttributes.tilt);
 }

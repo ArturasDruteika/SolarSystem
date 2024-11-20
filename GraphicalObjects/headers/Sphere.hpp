@@ -43,7 +43,7 @@ public:
 	void GenerateObject(double radius) override;
 
 private:
-	void GenerateDefaultSphere(std::vector<double>& initialPosCoord);
+	void GenerateDefaultSphere(const std::vector<double>& initialPosCoord);
 
 	double m_radius;
 	std::vector<double> m_initialPosCoord;

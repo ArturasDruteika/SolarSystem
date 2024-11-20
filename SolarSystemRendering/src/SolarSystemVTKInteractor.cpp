@@ -66,9 +66,11 @@ void SolarSystemVTKInteractor::Step()
 	}
 
 	std::map<int, Point3D> planetsNextOrbitalPoints = m_solarSystemModel.GetPlanetsNextOrbitalPositions(i);
+	std::map<int, double> planetsRotationDegrees = m_solarSystemModel.GetPlanetsRotationDegrees();
 	for (const auto& [id, point] : planetsNextOrbitalPoints)
 	{
 		m_planetSpheresMap.at(id).MoveActor(point.x, point.y, point.z);
+		m_planetSpheresMap.at(id).RotateActor(planetsRotationDegrees.at(id));
 	}
 
 	i++;

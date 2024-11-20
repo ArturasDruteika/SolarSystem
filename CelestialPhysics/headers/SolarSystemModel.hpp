@@ -40,6 +40,7 @@ public:
 	std::map<int, Star> GetStarsMap() const;
 	std::map<int, Planet> GetPlanetsMap() const;
 	std::map<int, Point3D> GetPlanetsNextOrbitalPositions(int orbitalPointId) const;
+	std::map<int, double> GetPlanetsRotationDegrees() const;
 	//void Step();
 
 private:

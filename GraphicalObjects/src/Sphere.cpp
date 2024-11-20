@@ -54,6 +54,7 @@ void Sphere::GenerateDefaultSphere(const std::vector<double>& initialPosCoord)
     SetScale(m_radius, m_radius, m_radius);
     SetColor(m_color);
     SetActorInitialPos(initialPosCoord[0], initialPosCoord[1], initialPosCoord[2]);
+    // TODO: add rotation
     //RotateY(planetAttributes.tilt);
 }
 

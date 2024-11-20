@@ -59,13 +59,17 @@ std::map<int, Sphere> SolarSystemVTKInteractor::GetPlanetsSpheresMap() const
 
 void SolarSystemVTKInteractor::Step()
 {
-	int i = 0;
+	static int i = 0;
 	if (i % 10'000 == 0)
 	{
 		i = 0;
 	}
 
 	std::map<int, Point3D> planetsNextOrbitalPoints = m_solarSystemModel.GetPlanetsNextOrbitalPositions(i);
+	for (const auto& [id, point] : planetsNextOrbitalPoints)
+	{
+		m_planetSpheresMap.at(id).MoveActor(point.x, point.y, point.z);
+	}
 
 	i++;
 }

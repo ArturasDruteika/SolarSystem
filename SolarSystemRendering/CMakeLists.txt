@@ -30,7 +30,6 @@ set(Boost_USE_STATIC_RUNTIME OFF)
 find_package(Boost 1.79.0 COMPONENTS system filesystem serialization regex REQUIRED)
 find_package(OpenMP REQUIRED)
 
-
 # VTK
 file(TO_CMAKE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../../3rdParty/VTK/ vtk_path)
 find_package(VTK REQUIRED)

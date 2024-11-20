@@ -1,7 +1,6 @@
 #include "PhysicalConstants.hpp"
 #include "Planet.hpp"
 #include "ObjectsComponents.hpp"
-#include "ColorsVTK.hpp"
 #include <boost/dll/runtime_symbol_info.hpp>
 #include <cmath>
 
@@ -24,7 +23,6 @@ Planet::Planet(
 	)
 	, m_planetAttributes{ planetAttributes }
 	, m_rotationPerStep{ 0 }
-	, m_speedAroundCenter{}
 {
 	Init(planetAttributes, ptsInSingleOrbit);
 }
@@ -33,35 +31,18 @@ Planet::~Planet()
 {
 }
 
+double Planet::GetRotationPerStep() const
+{
+	return m_rotationPerStep;
+}
+
 PlanetAttributes Planet::GetPlanetAttributes() const
 {
 	return m_planetAttributes;
 }
 
-vtkSmartPointer<vtkActor> Planet::GetPlanetActor()
-{
-	return GetObjectActor();
-}
-
-void Planet::MovePlanet(double xPos, double yPos, double zPos)
-{
-	MoveActor(xPos, yPos, zPos);
-}
-
-void Planet::RotatePlanet()
-{
-	RotateActor(m_rotationPerStep);
-}
-
 void Planet::Init(const PlanetAttributes& planetAttributes, int ptsInSingleOrbit)
 {
-	std::string currentPath = boost::dll::program_location().parent_path().string();
-	ReadSTLFIle(currentPath + "/res/" + "spatial_body_prototype.stl");
-	SetScale(planetAttributes.radius, planetAttributes.radius, planetAttributes.radius);
-	SetColor(ColorsVTK::BLUE);
-	SetActorInitialPos(planetAttributes.semiMajorAxis);
-	RotateY(planetAttributes.tilt);
-
 	m_rotationPerStep = CalculateRotationPerStep(planetAttributes.rotationalPeriod, ptsInSingleOrbit);
 }
 

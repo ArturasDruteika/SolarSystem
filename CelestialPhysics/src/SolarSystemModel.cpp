@@ -64,44 +64,30 @@ std::map<int, Point3D> SolarSystemModel::GetPlanetsNextOrbitalPositions(int orbi
 	return planetsNextOrbitalPoints;
 }
 
-void SolarSystemModel::Step()
-{
-	RotatePlanetsAroundAxis();
-	MovePlanets();
-}
+//void SolarSystemModel::Step()
+//{
+//	MovePlanets();
+//}
 
-void SolarSystemModel::RotatePlanetAroundAxis(int planetId)
-{
-	m_planetsMap.at(planetId).RotatePlanet();
-}
-
-void SolarSystemModel::RotatePlanetsAroundAxis()
-{
-	for (auto& [id, planet] : m_planetsMap)
-	{
-		RotatePlanetAroundAxis(id);
-	}
-}
-
-void SolarSystemModel::MovePlanet(int planetId)
-{
-	std::vector<double> nextOrbitalPosition = GetNextOrbitalPosition(planetId);
-	MovePlanet(planetId, nextOrbitalPosition);
-	UpdateOrbitalPointsIterator(planetId);
-}
-
-void SolarSystemModel::MovePlanet(int planetId, const std::vector<double> nextOrbitalPt)
-{
-	m_planetsMap.at(planetId).MoveActor(nextOrbitalPt[0], nextOrbitalPt[1], nextOrbitalPt[2]);
-}
-
-void SolarSystemModel::MovePlanets()
-{
-	for (auto& [id, planet] : m_planetsMap)
-	{
-		MovePlanet(id);
-	}
-}
+//void SolarSystemModel::MovePlanet(int planetId)
+//{
+//	std::vector<double> nextOrbitalPosition = GetNextOrbitalPosition(planetId);
+//	MovePlanet(planetId, nextOrbitalPosition);
+//	UpdateOrbitalPointsIterator(planetId);
+//}
+//
+//void SolarSystemModel::MovePlanet(int planetId, const std::vector<double> nextOrbitalPt)
+//{
+//	m_planetsMap.at(planetId).MoveActor(nextOrbitalPt[0], nextOrbitalPt[1], nextOrbitalPt[2]);
+//}
+//
+//void SolarSystemModel::MovePlanets()
+//{
+//	for (auto& [id, planet] : m_planetsMap)
+//	{
+//		MovePlanet(id);
+//	}
+//}
 
 std::vector<double> SolarSystemModel::GetNextOrbitalPosition(int planetId)
 {

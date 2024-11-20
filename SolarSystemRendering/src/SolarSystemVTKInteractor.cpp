@@ -2,6 +2,8 @@
 #include "OrbitalPoint.hpp"
 #include "ColorsVTK.hpp"
 
+#include "spdlog/spdlog.h"
+
 
 SolarSystemVTKInteractor::SolarSystemVTKInteractor()
 {
@@ -27,7 +29,7 @@ void SolarSystemVTKInteractor::AddPlanet(int id, PlanetAttributes planetAttribut
 	initialCoordsVec.push_back(initialCoords.x);
 	initialCoordsVec.push_back(initialCoords.y);
 	initialCoordsVec.push_back(initialCoords.z);
-	m_starSpheresMap.insert({ id, Sphere(planetAttributes.radius, initialCoordsVec, ColorsVTK::BLUE) });
+	m_planetSpheresMap.insert({ id, Sphere(planetAttributes.radius, initialCoordsVec, ColorsVTK::BLUE) });
 }
 
 void SolarSystemVTKInteractor::OnDeleteStar(int id)
@@ -57,7 +59,6 @@ std::map<int, Sphere> SolarSystemVTKInteractor::GetPlanetsSpheresMap() const
 
 void SolarSystemVTKInteractor::Step()
 {
-	//m_solarSystemModel.Step();
 	int i = 0;
 	if (i % 10'000 == 0)
 	{

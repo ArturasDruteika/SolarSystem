@@ -57,7 +57,6 @@ void Planet::Init(const PlanetAttributes& planetAttributes, int ptsInSingleOrbit
 {
 	std::string currentPath = boost::dll::program_location().parent_path().string();
 	ReadSTLFIle(currentPath + "/res/" + "spatial_body_prototype.stl");
-
 	SetScale(planetAttributes.radius, planetAttributes.radius, planetAttributes.radius);
 	SetColor(ColorsVTK::BLUE);
 	SetActorInitialPos(planetAttributes.semiMajorAxis);

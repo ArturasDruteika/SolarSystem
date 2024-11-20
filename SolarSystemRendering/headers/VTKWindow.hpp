@@ -43,7 +43,6 @@ private:
     VtkViewer m_vtkViewer;
     ObjectCreationWindow* m_pObjectCreationWindow;
     ObjectsInfoWindow* m_pObjectInfoWindow;
-    std::map<int, Planet> m_planetsMap;
     std::map<int, std::vector<std::vector<double>>> m_planetsRotationCoords;
     SolarSystemVTKInteractor m_solarSystemVTKInteractor;
 };

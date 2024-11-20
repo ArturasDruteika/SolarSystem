@@ -1,5 +1,6 @@
 #include "SolarSystemVTKInteractor.hpp"
 #include "OrbitalPoint.hpp"
+#include "ColorsVTK.hpp"
 
 
 SolarSystemVTKInteractor::SolarSystemVTKInteractor()
@@ -13,12 +14,20 @@ SolarSystemVTKInteractor::~SolarSystemVTKInteractor()
 void SolarSystemVTKInteractor::AddStar(int id, double starRadius)
 {
 	// TODO: add another param for star coordinates
+	std::vector<double> starCoords = { 0.0, 0.0, 0.0 };
 	m_solarSystemModel.AddStar(id, starRadius);
+	m_starSpheresMap.insert({ id, Sphere(starRadius, starCoords, ColorsVTK::YELLOW) });
 }
 
 void SolarSystemVTKInteractor::AddPlanet(int id, PlanetAttributes planetAttributes)
 {
 	m_solarSystemModel.AddPlanet(id, planetAttributes);
+	Point3D initialCoords = m_solarSystemModel.GetPlanetsMap().at(id).GetOrbitalPoints()[0];
+	std::vector<double> initialCoordsVec;
+	initialCoordsVec.push_back(initialCoords.x);
+	initialCoordsVec.push_back(initialCoords.y);
+	initialCoordsVec.push_back(initialCoords.z);
+	m_starSpheresMap.insert({ id, Sphere(planetAttributes.radius, initialCoordsVec, ColorsVTK::BLUE) });
 }
 
 void SolarSystemVTKInteractor::OnDeleteStar(int id)
@@ -36,19 +45,19 @@ int SolarSystemVTKInteractor::GetPlanetsCount() const
 	return m_solarSystemModel.GetPlanetsCount();
 }
 
-std::map<int, Star> SolarSystemVTKInteractor::GetStarsMap() const
+std::map<int, Sphere> SolarSystemVTKInteractor::GetStarsSpheresMap() const
 {
-	return m_solarSystemModel.GetStarsMap();
+	return m_starSpheresMap;
 }
 
-std::map<int, Planet> SolarSystemVTKInteractor::GetPlanetsMap() const
+std::map<int, Sphere> SolarSystemVTKInteractor::GetPlanetsSpheresMap() const
 {
-	return m_solarSystemModel.GetPlanetsMap();
+	return m_planetSpheresMap;
 }
 
 void SolarSystemVTKInteractor::Step()
 {
-	m_solarSystemModel.Step();
+	//m_solarSystemModel.Step();
 	int i = 0;
 	if (i % 10'000 == 0)
 	{

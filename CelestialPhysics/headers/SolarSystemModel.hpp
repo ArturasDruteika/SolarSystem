@@ -41,7 +41,8 @@ public:
 	std::map<int, Planet> GetPlanetsMap() const;
 	std::map<int, Point3D> GetPlanetsNextOrbitalPositions(int orbitalPointId) const;
 	std::map<int, double> GetPlanetsRotationDegrees() const;
-	//void Step();
+	std::map<int, int> GetPlanetsStepIterators() const;
+	void Step();
 
 private:
 	// TODO: consider implementing these functions somehow in the future

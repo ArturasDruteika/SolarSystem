@@ -74,10 +74,23 @@ std::map<int, double> SolarSystemModel::GetPlanetsRotationDegrees() const
 	return planetsRotationDegrees;
 }
 
-//void SolarSystemModel::Step()
-//{
-//	MovePlanets();
-//}
+std::map<int, int> SolarSystemModel::GetPlanetsStepIterators() const
+{
+	std::map<int, int> planetsStepIterators;
+	for (const auto& [id, planet] : m_planetsMap)
+	{
+		planetsStepIterators.insert({ id, planet.GetStepIterator() });
+	}
+	return planetsStepIterators;
+}
+
+void SolarSystemModel::Step()
+{
+	for (auto& [id, planet] : m_planetsMap)
+	{
+		planet.UpdateStepIterator();
+	}
+}
 
 //void SolarSystemModel::MovePlanet(int planetId)
 //{

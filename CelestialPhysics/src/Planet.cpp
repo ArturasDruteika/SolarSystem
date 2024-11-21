@@ -50,12 +50,11 @@ double Planet::GetStepIterator() const
 
 void Planet::UpdateStepIterator()
 {
-	m_stepIterator++;
-}
-
-void Planet::ResetStepIterator()
-{
-	m_stepIterator = 0;
+	m_stepIterator += 1;
+	if (m_stepIterator == N_ORBIT_PTS)
+	{
+		m_stepIterator = 0;
+	}
 }
 
 PlanetAttributes Planet::GetPlanetAttributes() const

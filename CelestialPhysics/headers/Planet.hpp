@@ -37,7 +37,6 @@ public:
 	double GetTilt() const;
 	double GetStepIterator() const;
 	void UpdateStepIterator();
-	void ResetStepIterator();
 	PlanetAttributes GetPlanetAttributes() const;
 
 private:

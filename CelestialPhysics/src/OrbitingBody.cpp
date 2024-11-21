@@ -5,9 +5,6 @@
 #include <complex>
 
 
-constexpr double N_ORBIT_PTS = 10'000;
-
-
 OrbitingBody::OrbitingBody(
 	double radius, 
 	double mass, 

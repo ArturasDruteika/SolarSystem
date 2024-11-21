@@ -12,9 +12,8 @@ VTKWindow::VTKWindow()
     : m_isVtkOpen{ true }
     , m_pObjectCreationWindow{ nullptr }
     , m_pObjectInfoWindow{ nullptr }
-    , m_solarSystemModel{}
+    , m_solarSystemVTKInteractor{}
     , m_planetsRotationCoords{}
-    , m_planetsMap{}
 {
 }
 
@@ -40,9 +39,9 @@ void VTKWindow::SetUpWindowPointers(ObjectCreationWindow* pObjectCreationWindow,
 
 void VTKWindow::InitializeVtkActors()
 {
-    m_solarSystemModel.AddStar(0, 2.0);
+    m_solarSystemVTKInteractor.AddStar(0, 2.0);
     m_vtkViewer.getRenderer()->SetBackground(0, 0, 0);
-    m_vtkViewer.addActor(m_solarSystemModel.GetStarsMap().at(0).GetObjectActor());
+    m_vtkViewer.addActor(m_solarSystemVTKInteractor.GetStarsSpheresMap().at(0).GetObjectActor());
 }
 
 void VTKWindow::InitInternal()
@@ -61,7 +60,7 @@ void VTKWindow::DeInitInternal()
 
 void VTKWindow::RenderMainWindowInternal()
 {
-    m_solarSystemModel.Step();
+    m_solarSystemVTKInteractor.Step();
     m_vtkViewer.render();
 }
 
@@ -77,18 +76,14 @@ void VTKWindow::RemoveVTKActor(const vtkSmartPointer<vtkActor>& actor)
 
 void VTKWindow::OnNewPlanet(int id, PlanetAttributes objectAttributes)
 {
-    m_solarSystemModel.AddPlanet(id, objectAttributes);
-    m_planetsMap = m_solarSystemModel.GetPlanetsMap();
-
-    AddVTKActor(m_solarSystemModel.GetPlanetsMap().at(id).GetPlanetActor());
+    m_solarSystemVTKInteractor.AddPlanet(id, objectAttributes);
+    AddVTKActor(m_solarSystemVTKInteractor.GetPlanetsSpheresMap().at(id).GetObjectActor());
 }
 
 void VTKWindow::OnDeletePlanet(int planetId)
 {
-    RemoveVTKActor(m_solarSystemModel.GetPlanetsMap().at(planetId).GetPlanetActor());
-
-    m_solarSystemModel.OnDeletePlanet(planetId);
-    m_planetsMap = m_solarSystemModel.GetPlanetsMap();
+    RemoveVTKActor(m_solarSystemVTKInteractor.GetPlanetsSpheresMap().at(planetId).GetObjectActor());
+    m_solarSystemVTKInteractor.OnDeletePlanet(planetId);
 }
 
 void VTKWindow::SetUpObserverSubscribers()

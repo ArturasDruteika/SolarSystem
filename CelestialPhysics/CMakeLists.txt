@@ -34,20 +34,6 @@ set(Boost_USE_STATIC_RUNTIME OFF)
 find_package(Boost 1.79.0 COMPONENTS system filesystem serialization regex REQUIRED)
 find_package(OpenMP REQUIRED)
 
-# VTK
-file(TO_CMAKE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../../3rdParty/VTK/ vtk_path)
-find_package(VTK REQUIRED)
-if (NOT VTK_FOUND)
-    message(FATAL_ERROR "CelestialPhysics: Unable to find the VTK build folder.")
-endif ()
-
-# VTK
-find_package(VTK QUIET)
-if (NOT VTK_FOUND)
-    message(FATAL_ERROR "VTK not found!")
-    return()
-endif ()
-
 add_library(${PROJECT_NAME} SHARED
     headers/Planet.hpp
     src/Planet.cpp
@@ -68,25 +54,11 @@ add_library(${PROJECT_NAME} SHARED
 
 include_directories(
     headers
-    ../GraphicalObjects/headers/
     ${Boost_INCLUDE_DIR}
-    ${VTK_INCLUDES_DIR}
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
-    GraphicalObjects
     spdlog::spdlog
     ${OPENGL_LIBRARIES}
     ${Boost_LIBRARIES}
-    ${VTK_LIBRARIES}
-)
-
-add_dependencies(${PROJECT_NAME}
-    GraphicalObjects
-)
-
-# vtk_module_autoinit is needed
-vtk_module_autoinit(
-    TARGETS CelestialPhysics
-    MODULES ${VTK_LIBRARIES}
 )

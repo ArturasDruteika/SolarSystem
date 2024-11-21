@@ -5,6 +5,7 @@
 constexpr double M_PI = 3.14159265358979323846;
 constexpr double EARTH_ROTATIONS_PER_YEAR = 365.2421897; // days
 constexpr double GRAVITATIONAL_CONSTANT = 6.67430e-11; // m^3 kg^-1 s^-2
+constexpr double N_ORBIT_PTS = 10'000;
 
 
 #endif //CELESTIALPHYSICS_PHYSICALCONSTANTS_HPP

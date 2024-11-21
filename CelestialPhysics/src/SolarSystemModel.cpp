@@ -39,59 +39,78 @@ void SolarSystemModel::OnDeletePlanet(int id)
 	m_planetsMap.erase(id);
 }
 
-int SolarSystemModel::GetPlanetsCount()
+int SolarSystemModel::GetPlanetsCount() const
 {
 	return m_planetsMap.size();
 }
 
-std::map<int, Star> SolarSystemModel::GetStarsMap()
+std::map<int, Star> SolarSystemModel::GetStarsMap() const
 {
 	return m_starsMap;
 }
 
-std::map<int, Planet> SolarSystemModel::GetPlanetsMap()
+std::map<int, Planet> SolarSystemModel::GetPlanetsMap() const
 {
 	return m_planetsMap;
 }
 
+std::map<int, Point3D> SolarSystemModel::GetPlanetsNextOrbitalPositions(int orbitalPointId) const
+{
+	std::map<int, Point3D> planetsNextOrbitalPoints;
+	for (const auto& [id, planet] : m_planetsMap)
+	{
+		planetsNextOrbitalPoints.insert({ id, planet.GetOrbitalPoints(orbitalPointId) });
+	}
+	return planetsNextOrbitalPoints;
+}
+
+std::map<int, double> SolarSystemModel::GetPlanetsRotationDegrees() const
+{
+	std::map<int, double> planetsRotationDegrees;
+	for (const auto& [id, planet] : m_planetsMap)
+	{
+		planetsRotationDegrees.insert({ id, planet.GetRotationPerStep() });
+	}
+	return planetsRotationDegrees;
+}
+
+std::map<int, int> SolarSystemModel::GetPlanetsStepIterators() const
+{
+	std::map<int, int> planetsStepIterators;
+	for (const auto& [id, planet] : m_planetsMap)
+	{
+		planetsStepIterators.insert({ id, planet.GetStepIterator() });
+	}
+	return planetsStepIterators;
+}
+
 void SolarSystemModel::Step()
 {
-	RotatePlanetsAroundAxis();
-	MovePlanets();
-}
-
-void SolarSystemModel::RotatePlanetAroundAxis(int planetId)
-{
-	m_planetsMap.at(planetId).RotatePlanet();
-}
-
-void SolarSystemModel::RotatePlanetsAroundAxis()
-{
 	for (auto& [id, planet] : m_planetsMap)
 	{
-		RotatePlanetAroundAxis(id);
+		planet.UpdateStepIterator();
 	}
 }
 
-void SolarSystemModel::MovePlanet(int planetId)
-{
-	std::vector<double> nextOrbitalPosition = GetNextOrbitalPosition(planetId);
-	MovePlanet(planetId, nextOrbitalPosition);
-	UpdateOrbitalPointsIterator(planetId);
-}
-
-void SolarSystemModel::MovePlanet(int planetId, const std::vector<double> nextOrbitalPt)
-{
-	m_planetsMap.at(planetId).MoveActor(nextOrbitalPt[0], nextOrbitalPt[1], nextOrbitalPt[2]);
-}
-
-void SolarSystemModel::MovePlanets()
-{
-	for (auto& [id, planet] : m_planetsMap)
-	{
-		MovePlanet(id);
-	}
-}
+//void SolarSystemModel::MovePlanet(int planetId)
+//{
+//	std::vector<double> nextOrbitalPosition = GetNextOrbitalPosition(planetId);
+//	MovePlanet(planetId, nextOrbitalPosition);
+//	UpdateOrbitalPointsIterator(planetId);
+//}
+//
+//void SolarSystemModel::MovePlanet(int planetId, const std::vector<double> nextOrbitalPt)
+//{
+//	m_planetsMap.at(planetId).MoveActor(nextOrbitalPt[0], nextOrbitalPt[1], nextOrbitalPt[2]);
+//}
+//
+//void SolarSystemModel::MovePlanets()
+//{
+//	for (auto& [id, planet] : m_planetsMap)
+//	{
+//		MovePlanet(id);
+//	}
+//}
 
 std::vector<double> SolarSystemModel::GetNextOrbitalPosition(int planetId)
 {

@@ -35,7 +35,6 @@ private:
     void RenderObjectRadiusSection();
     void RenderSemiMajorAxisSection();
     void RenderSemiMinorAxisSection();
-    void RenderObjectSpeedSection();
     void RenderObjectRotationalPeriodSection();
     void RenderObjectInclinationSection();
     void RenderObjectTiltSection();

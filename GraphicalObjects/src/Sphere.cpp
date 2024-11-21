@@ -1,5 +1,7 @@
 #include "Sphere.hpp"
 
+#include <boost/dll/runtime_symbol_info.hpp>
+
 #include <vtkCellArray.h>
 #include <vtkFloatArray.h>
 #include <vtkNamedColors.h>
@@ -15,12 +17,25 @@ constexpr int PHI_RESOLUTION = 15;
 constexpr int THETA_RESOLUTION = 15;
 
 
-Sphere::Sphere()
+Sphere::Sphere(double radius, const std::vector<double>& initialPosCoord, const vtkColor4d& color)
+    : m_radius{ radius }
+    , m_color{ color }
 {
+    GenerateDefaultSphere(initialPosCoord);
 }
 
 Sphere::~Sphere()
 {
+}
+
+double Sphere::GetRadius() const
+{
+    return m_radius;
+}
+
+vtkColor4d Sphere::GetColor() const
+{
+    return m_color;
 }
 
 void Sphere::GenerateObject(double radius)
@@ -30,6 +45,17 @@ void Sphere::GenerateObject(double radius)
     sphereMapper->SetInputConnection(sphere->GetOutputPort());
     SetMapper(sphereMapper);
     SetActorInitialPos();
+}
+
+void Sphere::GenerateDefaultSphere(const std::vector<double>& initialPosCoord)
+{
+    std::string currentPath = boost::dll::program_location().parent_path().string();
+    ReadSTLFIle(currentPath + "/res/" + "spatial_body_prototype.stl");
+    SetScale(m_radius, m_radius, m_radius);
+    SetColor(m_color);
+    SetActorInitialPos(initialPosCoord[0], initialPosCoord[1], initialPosCoord[2]);
+    // TODO: add rotation
+    //RotateY(planetAttributes.tilt);
 }
 
 vtkNew<vtkSphereSource> Sphere::GenerateSphereData(double radius)

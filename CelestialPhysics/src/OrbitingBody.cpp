@@ -5,9 +5,6 @@
 #include <complex>
 
 
-constexpr double N_ORBIT_PTS = 10'000;
-
-
 OrbitingBody::OrbitingBody(
 	double radius, 
 	double mass, 
@@ -32,37 +29,42 @@ OrbitingBody::~OrbitingBody()
 {
 }
 
-double OrbitingBody::GetSemiMajorAxis()
+double OrbitingBody::GetSemiMajorAxis() const
 {
 	return m_semiMajorAxis;
 }
 
-double OrbitingBody::GetSemiMinorAxis()
+double OrbitingBody::GetSemiMinorAxis() const
 {
 	return m_semiMinorAxis;
 }
 
-double OrbitingBody::GetEccentricity()
+double OrbitingBody::GetEccentricity() const
 {
 	return m_eccentricity;
 }
 
-double OrbitingBody::GetInclination()
+double OrbitingBody::GetInclination() const
 {
 	return m_inclination;
 }
 
-double OrbitingBody::GetGravitationalParameter()
+double OrbitingBody::GetGravitationalParameter() const
 {
 	return m_mu;
 }
 
-std::vector<Point3D> OrbitingBody::GetOrbitalPoints()
+std::vector<Point3D> OrbitingBody::GetOrbitalPoints() const
 {
 	return m_orbitalPoints;
 }
 
-std::vector<double> OrbitingBody::GetOrbitalSpeeds()
+Point3D OrbitingBody::GetOrbitalPoints(int id) const
+{
+	return m_orbitalPoints[id];
+}
+
+std::vector<double> OrbitingBody::GetOrbitalSpeeds() const
 {
 	return m_orbitalSpeeds;
 }

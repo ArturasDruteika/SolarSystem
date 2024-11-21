@@ -23,7 +23,6 @@ typedef CELESTIALPHYSICS_API struct
     double mass; // kg
     double semiMajorAxis; // km
     double semiMinorAxis; // km
-    double speed; // km / s
     double rotationalPeriod; // days
     double inclination; // radians (for orbit calculation) / degrees (for rendering)
     double tilt; // degrees

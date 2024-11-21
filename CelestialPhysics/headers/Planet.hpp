@@ -17,13 +17,12 @@
 #endif
 
 
-#include "Sphere.hpp"
 #include "OrbitingBody.hpp"
 #include "ObjectsComponents.hpp"
 #include <utility>
 
 
-class CELESTIALPHYSICS_API Planet : public OrbitingBody, public Sphere
+class CELESTIALPHYSICS_API Planet : public OrbitingBody
 {
 public:
 	Planet(
@@ -34,19 +33,20 @@ public:
 	);
 	~Planet();
 
-	PlanetAttributes GetPlanetAttributes();
-	vtkSmartPointer<vtkActor> GetPlanetActor();
-	void MovePlanet(double xPos, double yPos, double zPos);
-	void RotatePlanet();
+	double GetRotationPerStep() const;
+	double GetTilt() const;
+	double GetStepIterator() const;
+	void UpdateStepIterator();
+	PlanetAttributes GetPlanetAttributes() const;
 
 private:
 	void Init(const PlanetAttributes& planetAttributes, int ptsInSingleOrbit);
 	double CalculateRotationPerStep(double rotationalPeriod, int ptsInSingleOrbit);
 	void TiltPlanet(double tilt);
 
-	double m_speedAroundCenter;
 	double m_rotationPerStep;
-
+	double m_tilt;
+	int m_stepIterator;
 	PlanetAttributes m_planetAttributes;
 };
 

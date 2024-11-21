@@ -18,6 +18,7 @@
 
 
 #include "ObjectBase.hpp"
+#include "ColorsVTK.hpp"
 
 #include <vtkActor.h>
 #include <vtkNew.h>
@@ -26,17 +27,27 @@
 #include <vtkPolyData.h>
 #include <vtkSphereSource.h>
 
+#include <vector>
+
 
 class GRAPHICALOBJECTS_API Sphere : public ObjectBase
 {
 public:
-	Sphere();
+	Sphere(double radius, const std::vector<double>& initialPosCoord, const vtkColor4d& color);
 	~Sphere();
+
+	double GetRadius() const;
+	vtkColor4d GetColor() const;
 
 	// TODO: make GenerateCube() have arguments of shape paratmeters like xyz
 	void GenerateObject(double radius) override;
 
 private:
+	void GenerateDefaultSphere(const std::vector<double>& initialPosCoord);
+
+	double m_radius;
+	std::vector<double> m_initialPosCoord;
+	vtkColor4d m_color;
 	vtkNew<vtkSphereSource> GenerateSphereData(double radius);
 };
 

@@ -2,12 +2,27 @@
 #define CELESTIALPHYSICS_ORBITINGBODY_HPP
 
 
+#if defined (_WIN32)
+#if defined(CELESTIALPHYSICS_EXPORT)
+#define CELESTIALPHYSICS_API __declspec(dllexport)
+#else
+#define  CELESTIALPHYSICS_API __declspec(dllimport)
+#endif /* CELESTIALPHYSICS_API */
+#define _sprintf sprintf_s
+#endif
+
+#if defined(__GNUC__)
+//  GCC
+#define OBJECTBASE_API __attribute__((visibility("default")))
+#endif
+
+
 #include "CosmicBody.hpp"
 #include "OrbitalPoint.hpp"
 #include <vector>
 
 
-class OrbitingBody : public CosmicBody
+class CELESTIALPHYSICS_API OrbitingBody : public CosmicBody
 {
 public:
 	OrbitingBody(
@@ -21,13 +36,14 @@ public:
 	);
 	~OrbitingBody();
 
-	double GetSemiMajorAxis();
-	double GetSemiMinorAxis();
-	double GetEccentricity();
-	double GetInclination();
-	double GetGravitationalParameter();
-	std::vector<Point3D> GetOrbitalPoints();
-	std::vector<double> GetOrbitalSpeeds();
+	double GetSemiMajorAxis() const;
+	double GetSemiMinorAxis() const;
+	double GetEccentricity() const;
+	double GetInclination() const;
+	double GetGravitationalParameter() const;
+	std::vector<Point3D> GetOrbitalPoints() const;
+	Point3D GetOrbitalPoints(int id) const;
+	std::vector<double> GetOrbitalSpeeds() const;
 
 
 private:

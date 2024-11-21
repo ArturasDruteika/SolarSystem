@@ -29,7 +29,9 @@ void SolarSystemVTKInteractor::AddPlanet(int id, PlanetAttributes planetAttribut
 	initialCoordsVec.push_back(initialCoords.x);
 	initialCoordsVec.push_back(initialCoords.y);
 	initialCoordsVec.push_back(initialCoords.z);
-	m_planetSpheresMap.insert({ id, Sphere(planetAttributes.radius, initialCoordsVec, ColorsVTK::BLUE) });
+	Sphere planetSphere = Sphere(planetAttributes.radius, initialCoordsVec, ColorsVTK::BLUE);
+	planetSphere.RotateY(m_solarSystemModel.GetPlanetsMap().at(id).GetTilt());
+	m_planetSpheresMap.insert({ id, planetSphere });
 }
 
 void SolarSystemVTKInteractor::OnDeleteStar(int id)
@@ -59,19 +61,18 @@ std::map<int, Sphere> SolarSystemVTKInteractor::GetPlanetsSpheresMap() const
 
 void SolarSystemVTKInteractor::Step()
 {
-	static int i = 0;
-	if (i % 10'000 == 0)
-	{
-		i = 0;
-	}
-
-	std::map<int, Point3D> planetsNextOrbitalPoints = m_solarSystemModel.GetPlanetsNextOrbitalPositions(i);
+	std::map<int, Planet> planetMap = m_solarSystemModel.GetPlanetsMap();
 	std::map<int, double> planetsRotationDegrees = m_solarSystemModel.GetPlanetsRotationDegrees();
-	for (const auto& [id, point] : planetsNextOrbitalPoints)
+	for (auto& [id, planet] : planetMap)
 	{
-		m_planetSpheresMap.at(id).MoveActor(point.x, point.y, point.z);
+		int stepIterator = planetMap.at(id).GetStepIterator();
+		Point3D nextOrbitalPoint = planet.GetOrbitalPoints().at(stepIterator);
+		m_planetSpheresMap.at(id).MoveActor(
+			nextOrbitalPoint.x,
+			nextOrbitalPoint.y,
+			nextOrbitalPoint.z
+		);
 		m_planetSpheresMap.at(id).RotateActor(planetsRotationDegrees.at(id));
+		m_solarSystemModel.Step();
 	}
-
-	i++;
 }

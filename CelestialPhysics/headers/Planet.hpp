@@ -34,6 +34,10 @@ public:
 	~Planet();
 
 	double GetRotationPerStep() const;
+	double GetTilt() const;
+	double GetStepIterator() const;
+	void UpdateStepIterator();
+	void ResetStepIterator();
 	PlanetAttributes GetPlanetAttributes() const;
 
 private:
@@ -42,6 +46,8 @@ private:
 	void TiltPlanet(double tilt);
 
 	double m_rotationPerStep;
+	double m_tilt;
+	int m_stepIterator;
 	PlanetAttributes m_planetAttributes;
 };
 

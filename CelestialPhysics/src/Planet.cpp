@@ -23,6 +23,8 @@ Planet::Planet(
 	)
 	, m_planetAttributes{ planetAttributes }
 	, m_rotationPerStep{ 0 }
+	, m_tilt{ planetAttributes.tilt }
+	, m_stepIterator{ 0 }
 {
 	Init(planetAttributes, ptsInSingleOrbit);
 }
@@ -34,6 +36,26 @@ Planet::~Planet()
 double Planet::GetRotationPerStep() const
 {
 	return m_rotationPerStep;
+}
+
+double Planet::GetTilt() const
+{
+	return m_tilt;
+}
+
+double Planet::GetStepIterator() const
+{
+	return m_stepIterator;
+}
+
+void Planet::UpdateStepIterator()
+{
+	m_stepIterator++;
+}
+
+void Planet::ResetStepIterator()
+{
+	m_stepIterator = 0;
 }
 
 PlanetAttributes Planet::GetPlanetAttributes() const

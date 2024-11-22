@@ -9,6 +9,8 @@
 #endif
 #include <GL/gl3w.h>
 #include <GLFW/glfw3.h> // Will drag system OpenGL headers
+#include <vtkAxesActor.h>
+#include <vtkOrientationMarkerWidget.h>
 
 // [Win32] Our example includes a copy of glfw3.lib pre-compiled with VS2010 to maximize ease of testing and compatibility with old VS compilers.
 // To link with VS2010-era libraries, VS2015+ requires linking with legacy_stdio_definitions.lib, which we do using this pragma.
@@ -106,8 +108,7 @@ VtkViewer& VtkViewer::operator=(const VtkViewer& vtkViewer){
 	return *this;
 }
 
-void VtkViewer::init(){
-
+void VtkViewer::init() {
 	renderer = vtkSmartPointer<vtkRenderer>::New();
 	renderer->ResetCamera();
 	renderer->SetBackground(DEFAULT_BACKGROUND);
@@ -120,7 +121,7 @@ void VtkViewer::init(){
 	interactor->SetInteractorStyle(interactorStyle);
 	interactor->EnableRenderOff();
 
-	int viewportSize[2] = {static_cast<int>(viewportWidth), static_cast<int>(viewportHeight)};
+	int viewportSize[2] = { static_cast<int>(viewportWidth), static_cast<int>(viewportHeight) };
 
 	renderWindow = vtkSmartPointer<vtkGenericOpenGLRenderWindow>::New();
 	renderWindow->SetSize(viewportSize);
@@ -130,14 +131,21 @@ void VtkViewer::init(){
 	renderWindow->AddObserver(vtkCommand::WindowIsCurrentEvent, isCurrentCallback);
 
 	renderWindow->SwapBuffersOn();
-
 	renderWindow->SetOffScreenRendering(true);
 	renderWindow->SetFrameBlitModeToNoBlit();
-
 	renderWindow->AddRenderer(renderer);
 	renderWindow->SetInteractor(interactor);
 
-	if (!renderer || !interactorStyle || !renderWindow || !interactor){
+	// Add orientation marker
+	vtkSmartPointer<vtkAxesActor> axesActor = vtkSmartPointer<vtkAxesActor>::New();
+	m_orientationMarker = vtkSmartPointer<vtkOrientationMarkerWidget>::New();
+	m_orientationMarker->SetOrientationMarker(axesActor);
+	m_orientationMarker->SetInteractor(interactor);
+	m_orientationMarker->SetViewport(0.0, 0.8, 0.2, 1.0); // Top-left corner, 20% of the window size
+	m_orientationMarker->SetEnabled(1); // Enable the widget
+	m_orientationMarker->InteractiveOn(); // Allow interaction with the marker
+
+	if (!renderer || !interactorStyle || !renderWindow || !interactor || !m_orientationMarker) {
 		throw VtkViewerError("Couldn't initialize VtkViewer");
 	}
 }

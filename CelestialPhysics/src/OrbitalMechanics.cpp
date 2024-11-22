@@ -60,7 +60,7 @@ std::vector<Point3D> OrbitalMechanics::GenerateEllipticalOrbit(double semiMajorA
 
         // Solve Kepler's equation: M = E - e*sin(E) (using numerical approximation)
         double eccentricAnomaly = meanAnomaly; // Initial guess
-        for (int j = 0; j < 10; ++j) // Iterate for better accuracy
+        for (int j = 0; j < ECCENTRIC_ANOMALY_ITERATIONS; ++j) // Iterate for better accuracy
         { 
             eccentricAnomaly -= (eccentricAnomaly - eccentricity * std::sin(eccentricAnomaly) - meanAnomaly) /
                 (1 - eccentricity * std::cos(eccentricAnomaly));

@@ -141,7 +141,7 @@ void VtkViewer::init() {
 	m_orientationMarker = vtkSmartPointer<vtkOrientationMarkerWidget>::New();
 	m_orientationMarker->SetOrientationMarker(axesActor);
 	m_orientationMarker->SetInteractor(interactor);
-	m_orientationMarker->SetViewport(0.0, 0.8, 0.2, 1.0); // Top-left corner, 20% of the window size
+	m_orientationMarker->SetViewport(0.8, 0.8, 1.0, 1.0); // Top-left corner, 20% of the window size
 	m_orientationMarker->SetEnabled(1); // Enable the widget
 	m_orientationMarker->InteractiveOn(); // Allow interaction with the marker
 

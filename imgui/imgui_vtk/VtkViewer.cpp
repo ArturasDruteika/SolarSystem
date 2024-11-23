@@ -20,9 +20,6 @@
 #endif
 
 
-constexpr int TOP_PADDING_PX = 30;
-
-
 
 void VtkViewer::isCurrentCallbackFn(vtkObject* caller, long unsigned int eventId, void* clientData, void* callData)
 {

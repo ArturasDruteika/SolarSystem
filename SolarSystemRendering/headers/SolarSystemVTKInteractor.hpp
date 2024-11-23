@@ -27,7 +27,7 @@ private:
 	std::map<int, Sphere> m_starSpheresMap;
 	std::map<int, Sphere> m_planetSpheresMap;
 
-	SolarSystemModel m_solarSystemModel;
+	SolarSystemModel& m_solarSystemModel;
 };
 
 

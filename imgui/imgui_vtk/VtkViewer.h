@@ -12,6 +12,7 @@
 #include <vtkInteractorStyleTrackballCamera.h>
 #include <vtkRenderer.h>
 #include <vtkOrientationMarkerWidget.h>
+#include <vtkCamera.h>
 
 #define IMGUI_DEFINE_MATH_OPERATORS
 #include "imgui.h"
@@ -46,6 +47,7 @@ private:
 	vtkSmartPointer<vtkInteractorStyleTrackballCamera> m_interactorStyle;
 	vtkSmartPointer<vtkRenderer> m_renderer;
 	vtkSmartPointer<vtkOrientationMarkerWidget> m_orientationMarker;
+	vtkSmartPointer<vtkCamera> m_initialCameraState;
 private:
 	unsigned int m_viewportWidth, m_viewportHeight;
 	unsigned int m_tex;

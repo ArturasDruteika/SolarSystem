@@ -69,13 +69,7 @@ void Planet::Init(const PlanetAttributes& planetAttributes, int ptsInSingleOrbit
 
 double Planet::CalculateRotationPerStep(double rotationalPeriod, int ptsInSingleOrbit)
 {
-	double rotationCoeffComperedToEarth = 1 / rotationalPeriod;
-	double rotationsPerYear = EARTH_ROTATIONS_PER_YEAR * rotationCoeffComperedToEarth;
-	double totalRotationDegreesPerYear = rotationsPerYear * 360;
+	double totalRotationDegreesPerYear = rotationalPeriod * 360;
 	double rotationPerStep = totalRotationDegreesPerYear / ptsInSingleOrbit;
 	return rotationPerStep;
-}
-
-void Planet::TiltPlanet(double tilt)
-{
 }

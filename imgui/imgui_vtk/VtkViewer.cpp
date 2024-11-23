@@ -20,6 +20,9 @@
 #endif
 
 
+constexpr int TOP_PADDING_PX = 30;
+
+
 
 void VtkViewer::isCurrentCallbackFn(vtkObject* caller, long unsigned int eventId, void* clientData, void* callData)
 {
@@ -188,9 +191,9 @@ void VtkViewer::Init()
 
 void VtkViewer::Render()
 {
-	ImVec2 windowSize = ImGui::GetContentRegionAvail();
-	windowSize.y -= 30;
-	Render(windowSize);
+	ImVec2 vtkWindowSize = ImGui::GetContentRegionAvail();
+	vtkWindowSize.y -= TOP_PADDING_PX;
+	Render(vtkWindowSize);
 }
 void VtkViewer::Render(const ImVec2 size)
 {
@@ -250,9 +253,9 @@ void VtkViewer::SetViewportSize(const ImVec2 newSize)
 	}
 
 	m_viewportWidth = static_cast<unsigned int>(newSize.x);
-	m_viewportHeight = static_cast<unsigned int>(newSize.y) - 25;
+	m_viewportHeight = static_cast<unsigned int>(newSize.y);
 
-	int viewportSize[] = {static_cast<int>(newSize.x), static_cast<int>(newSize.y)};
+	int viewportSize[] = {static_cast<int>(m_viewportWidth), static_cast<int>(m_viewportHeight)};
 
 	// Free old buffers
 	glDeleteTextures(1, &m_tex);

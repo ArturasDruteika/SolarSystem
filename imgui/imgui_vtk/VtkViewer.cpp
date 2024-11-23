@@ -89,7 +89,7 @@ VtkViewer::VtkViewer()
 	, m_tex(0)
 	, m_firstRender(true)
 {
-	init();
+	Init();
 }
 
 VtkViewer::VtkViewer(const VtkViewer& vtkViewer) 
@@ -139,7 +139,7 @@ VtkViewer& VtkViewer::operator=(const VtkViewer& vtkViewer)
 	return *this;
 }
 
-void VtkViewer::init() 
+void VtkViewer::Init() 
 {
 	m_renderer = vtkSmartPointer<vtkRenderer>::New();
 	m_renderer->ResetCamera();
@@ -186,15 +186,15 @@ void VtkViewer::init()
 	}
 }
 
-void VtkViewer::render()
+void VtkViewer::Render()
 {
 	ImVec2 windowSize = ImGui::GetContentRegionAvail();
 	windowSize.y -= 30;
-	render(windowSize);
+	Render(windowSize);
 }
-void VtkViewer::render(const ImVec2 size)
+void VtkViewer::Render(const ImVec2 size)
 {
-	setViewportSize(size);
+	SetViewportSize(size);
 
 	if (ImGui::Button("Reset To Original View", ImVec2(200, 25)))
 	{
@@ -213,13 +213,13 @@ void VtkViewer::render(const ImVec2 size)
 	ImGui::PopStyleVar();
 }
 
-void VtkViewer::addActor(const vtkSmartPointer<vtkProp>& actor)
+void VtkViewer::AddActor(const vtkSmartPointer<vtkProp>& actor)
 {
 	m_renderer->AddActor(actor);
 	m_renderer->ResetCamera();
 }
 
-void VtkViewer::addActors(const vtkSmartPointer<vtkPropCollection>& actors)
+void VtkViewer::AddActors(const vtkSmartPointer<vtkPropCollection>& actors)
 {
 	actors->InitTraversal();
 	vtkProp* actor;
@@ -231,12 +231,12 @@ void VtkViewer::addActors(const vtkSmartPointer<vtkPropCollection>& actors)
 	}
 }
 
-void VtkViewer::removeActor(const vtkSmartPointer<vtkProp>& actor)
+void VtkViewer::RemoveActor(const vtkSmartPointer<vtkProp>& actor)
 {
 	m_renderer->RemoveActor(actor);
 }
 
-void VtkViewer::setViewportSize(const ImVec2 newSize)
+void VtkViewer::SetViewportSize(const ImVec2 newSize)
 {
 	if (gl3wInit()) 
 	{

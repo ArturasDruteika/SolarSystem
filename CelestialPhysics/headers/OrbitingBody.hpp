@@ -32,6 +32,7 @@ public:
 		double focusObjectMass,
 		double semiMajorAxis, 
 		double semiMinorAxis, 
+		double rotationPeriod,
 		double inclination
 	);
 	~OrbitingBody();
@@ -41,6 +42,7 @@ public:
 	double GetEccentricity() const;
 	double GetInclination() const;
 	double GetGravitationalParameter() const;
+	double GetRotationalPeriod() const;
 	std::vector<Point3D> GetOrbitalPoints() const;
 	Point3D GetOrbitalPoints(int id) const;
 	std::vector<double> GetOrbitalSpeeds() const;
@@ -50,11 +52,13 @@ private:
 	void CalculateOrbitalPoints();
 	void CalculateOrbitalSpeedVec(const Point3D& focusPt);
 
+protected:
 	double m_semiMajorAxis;
 	double m_semiMinorAxis;
 	double m_eccentricity;
 	double m_inclination;
 	double m_mu; // gravitational parameter
+	double m_rotationalPeriod;
 	std::vector<Point3D> m_orbitalPoints;
 	std::vector<double> m_orbitalSpeeds;
 	Point3D m_focusObjPoint;

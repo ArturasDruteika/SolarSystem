@@ -60,7 +60,8 @@ void ObjectsInfoWindow::RenderPlanetsInfoTable()
         //"Speed (Km / h)",
         "Rotational Period (Days)",
         "Inclination (Deg)",
-        "Tilt (Deg)"
+        "Tilt (Deg)",
+        "Delete Planet (?)"
     };
 
     ImGui::PushFont(m_customFont);
@@ -89,6 +90,8 @@ void ObjectsInfoWindow::RenderPlanetsInfoTable()
             ImGui::Text("%.5f", objectAttributes.rotationalPeriod);
             ImGui::TableNextColumn();
             ImGui::Text("%.5f", objectAttributes.inclination);
+            ImGui::TableNextColumn();
+            ImGui::Text("%.5f", objectAttributes.tilt);
             ImGui::TableNextColumn();
             if (RenderDeleteButtonOnTable(planetId))
             {

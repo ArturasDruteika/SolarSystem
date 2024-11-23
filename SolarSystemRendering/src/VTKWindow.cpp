@@ -61,6 +61,12 @@ void VTKWindow::DeInitInternal()
 void VTKWindow::RenderMainWindowInternal()
 {
     m_solarSystemVTKInteractor.Step();
+
+    if (ImGui::Button("Reset To Original View", ImVec2(200, 25)))
+    {
+        m_vtkViewer.ResetRendererOrientation();
+    }
+
     m_vtkViewer.Render();
 }
 

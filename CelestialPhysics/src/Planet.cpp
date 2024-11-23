@@ -19,6 +19,7 @@ Planet::Planet(
 		focusObjectMass,
 		planetAttributes.semiMajorAxis, 
 		planetAttributes.semiMinorAxis,
+		planetAttributes.rotationalPeriod,
 		planetAttributes.inclination
 	)
 	, m_planetAttributes{ planetAttributes }
@@ -55,6 +56,11 @@ void Planet::UpdateStepIterator()
 	{
 		m_stepIterator = 0;
 	}
+}
+
+double Planet::GetCurrentSpeed() const
+{
+	return m_orbitalSpeeds.at(m_stepIterator);
 }
 
 PlanetAttributes Planet::GetPlanetAttributes() const

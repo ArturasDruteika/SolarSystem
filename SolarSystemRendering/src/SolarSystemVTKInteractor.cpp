@@ -6,6 +6,7 @@
 
 
 SolarSystemVTKInteractor::SolarSystemVTKInteractor()
+	: m_solarSystemModel{ SolarSystemModel::GetInstance() }
 {
 }
 

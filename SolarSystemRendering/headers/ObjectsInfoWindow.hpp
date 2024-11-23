@@ -4,6 +4,7 @@
 
 #include "GraphicalWindow.hpp"
 #include "ObjectsComponents.hpp"
+#include "SolarSystemModel.hpp"
 #include "imgui.h"
 #include "boost/signals2.hpp"
 #include <string>
@@ -36,6 +37,7 @@ private:
     std::map<int, PlanetAttributes> m_planetsAttributesMap;
     ImFont* m_customFont;
     int m_nStyleVars;
+    SolarSystemModel& m_solarSystemModel;
 };
 
 

@@ -6,6 +6,7 @@ ObjectsInfoWindow::ObjectsInfoWindow()
     : m_customFont{ nullptr }
     , m_planetsAttributesMap{}
     , m_nStyleVars{0}
+    , m_solarSystemModel{ SolarSystemModel::GetInstance() }
 {
 }
 
@@ -57,7 +58,7 @@ void ObjectsInfoWindow::RenderPlanetsInfoTable()
         "Radius (Km)",
         "Semi-major axis (Km)",
         "Semi-minor axis (Km)",
-        //"Speed (Km / h)",
+        "Speed (Km / h)",
         "Rotational Period (Days)",
         "Inclination (Deg)",
         "Tilt (Deg)",
@@ -65,6 +66,9 @@ void ObjectsInfoWindow::RenderPlanetsInfoTable()
     };
 
     ImGui::PushFont(m_customFont);
+
+    static std::map<int, Planet> planetsMap;
+    planetsMap = m_solarSystemModel.GetPlanetsMap();
 
     if (ImGui::BeginTable("Planets Info", tableColumnNames.size(), flagsPlanetsTable))
     {
@@ -74,24 +78,24 @@ void ObjectsInfoWindow::RenderPlanetsInfoTable()
         }
         ImGui::TableHeadersRow();
 
-        for (auto& [planetId, objectAttributes] : m_planetsAttributesMap)
+        for (const auto& [planetId, planet] : planetsMap)
         {
             ImGui::TableNextColumn();
             ImGui::Text("%d", planetId);
             ImGui::TableNextColumn();
-            ImGui::Text("%.5f", objectAttributes.radius);
+            ImGui::Text("%.5f", planet.GetRadius());
             ImGui::TableNextColumn();
-            ImGui::Text("%.5f", objectAttributes.semiMajorAxis);
+            ImGui::Text("%.5f", planet.GetSemiMajorAxis());
             ImGui::TableNextColumn();
-            ImGui::Text("%.5f", objectAttributes.semiMinorAxis);
-            //ImGui::TableNextColumn();
-            //ImGui::Text("%.5f", objectAttributes.speed);
+            ImGui::Text("%.5f", planet.GetSemiMinorAxis());
             ImGui::TableNextColumn();
-            ImGui::Text("%.5f", objectAttributes.rotationalPeriod);
+            ImGui::Text("%.5f", planet.GetCurrentSpeed());
             ImGui::TableNextColumn();
-            ImGui::Text("%.5f", objectAttributes.inclination);
+            ImGui::Text("%.5f", planet.GetRotationalPeriod());
             ImGui::TableNextColumn();
-            ImGui::Text("%.5f", objectAttributes.tilt);
+            ImGui::Text("%.5f", planet.GetInclination());
+            ImGui::TableNextColumn();
+            ImGui::Text("%.5f", planet.GetTilt());
             ImGui::TableNextColumn();
             if (RenderDeleteButtonOnTable(planetId))
             {

@@ -29,37 +29,39 @@
 class CELESTIALPHYSICS_API SolarSystemModel
 {
 public:
-	SolarSystemModel();
-	~SolarSystemModel();
+    // Delete copy constructor and assignment operator to enforce singleton pattern
+    SolarSystemModel(const SolarSystemModel&) = delete;
+    SolarSystemModel& operator=(const SolarSystemModel&) = delete;
 
-	void AddStar(int id, double starRadius);
-	void AddPlanet(int id, PlanetAttributes objectAttributes);
-	void OnDeleteStar(int id);
-	void OnDeletePlanet(int id);
-	int GetPlanetsCount() const;
-	std::map<int, Star> GetStarsMap() const;
-	std::map<int, Planet> GetPlanetsMap() const;
-	std::map<int, Point3D> GetPlanetsNextOrbitalPositions(int orbitalPointId) const;
-	std::map<int, double> GetPlanetsRotationDegrees() const;
-	std::map<int, int> GetPlanetsStepIterators() const;
-	void Step();
+    // Provide a static method to access the singleton instance
+    static SolarSystemModel& GetInstance();
+
+    void AddStar(int id, double starRadius);
+    void AddPlanet(int id, PlanetAttributes objectAttributes);
+    void OnDeleteStar(int id);
+    void OnDeletePlanet(int id);
+    int GetPlanetsCount() const;
+    std::map<int, Star> GetStarsMap() const;
+    std::map<int, Planet> GetPlanetsMap() const;
+    std::map<int, Point3D> GetPlanetsNextOrbitalPositions(int orbitalPointId) const;
+    std::map<int, double> GetPlanetsRotationDegrees() const;
+    std::map<int, int> GetPlanetsStepIterators() const;
+    void Step();
 
 private:
-	// TODO: consider implementing these functions somehow in the future
-	//void RotatePlanetAroundAxis(int planetId);
-	//void RotatePlanetsAroundAxis();
-	//void MovePlanet(int planetId);
-	//void MovePlanet(int planetId, const std::vector<double> nextOrbitalPt);
-	//void MovePlanets();
-	std::vector<double> GetNextOrbitalPosition(int planetId);
-	void UpdateOrbitalPointsIterator(int planetId);
+    // Private constructor and destructor
+    SolarSystemModel();
+    ~SolarSystemModel();
 
-	Point3D m_starPoint;
-	std::map<int, Star> m_starsMap;
-	std::map<int, Planet> m_planetsMap;
-	std::map<int, int> m_orbitalPointsIteratorMap;
+    std::vector<double> GetNextOrbitalPosition(int planetId);
+    void UpdateOrbitalPointsIterator(int planetId);
 
-	OrbitalMechanics m_orbitalMechanics;
+    Point3D m_starPoint;
+    std::map<int, Star> m_starsMap;
+    std::map<int, Planet> m_planetsMap;
+    std::map<int, int> m_orbitalPointsIteratorMap;
+
+    OrbitalMechanics m_orbitalMechanics;
 };
 
 #endif //CELESTIALPHYSICS_SOLARSYSTEMMODEL_HPP

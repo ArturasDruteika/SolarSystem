@@ -11,13 +11,15 @@ OrbitingBody::OrbitingBody(
 	const Point3D& focusObjectPt,
 	double focusObjectMass, 
 	double semiMajorAxis, 
-	double semiMinorAxis, 
+	double semiMinorAxis,
+	double rotationPeriod,
 	double inclination
 )
 	: CosmicBody(radius, mass)
 	, m_semiMajorAxis{ semiMajorAxis }
 	, m_semiMinorAxis{ semiMinorAxis }
 	, m_inclination{ inclination }
+	, m_rotationalPeriod{ rotationPeriod }
 {
 	m_eccentricity = OrbitalMechanics::CalculateEccentricity(m_semiMajorAxis, m_semiMinorAxis);
 	m_mu = OrbitalMechanics::CalculateGravitationalParameter(focusObjectMass);
@@ -54,6 +56,11 @@ double OrbitingBody::GetGravitationalParameter() const
 	return m_mu;
 }
 
+double OrbitingBody::GetRotationalPeriod() const
+{
+	return m_rotationalPeriod;
+}
+
 std::vector<Point3D> OrbitingBody::GetOrbitalPoints() const
 {
 	return m_orbitalPoints;
@@ -68,6 +75,8 @@ std::vector<double> OrbitingBody::GetOrbitalSpeeds() const
 {
 	return m_orbitalSpeeds;
 }
+
+
 
 void OrbitingBody::CalculateOrbitalPoints()
 {

@@ -62,6 +62,9 @@ public:
 	~VtkViewer();
 
 	VtkViewer& operator=(const VtkViewer& vtkViewer);
+
+	void ResetRendererOrientation();
+
 private:
 	IMGUI_IMPL_API void Init();
 public:

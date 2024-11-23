@@ -20,9 +20,6 @@
 #endif
 
 
-constexpr int TOP_PADDING_PX = 30;
-
-
 
 void VtkViewer::isCurrentCallbackFn(vtkObject* caller, long unsigned int eventId, void* clientData, void* callData)
 {
@@ -142,6 +139,12 @@ VtkViewer& VtkViewer::operator=(const VtkViewer& vtkViewer)
 	return *this;
 }
 
+void VtkViewer::ResetRendererOrientation()
+{
+	m_renderer->GetActiveCamera()->DeepCopy(m_initialCameraState);
+	m_renderer->ResetCamera();
+}
+
 void VtkViewer::Init() 
 {
 	m_renderer = vtkSmartPointer<vtkRenderer>::New();
@@ -191,19 +194,11 @@ void VtkViewer::Init()
 
 void VtkViewer::Render()
 {
-	ImVec2 vtkWindowSize = ImGui::GetContentRegionAvail();
-	vtkWindowSize.y -= TOP_PADDING_PX;
-	Render(vtkWindowSize);
+	Render(ImGui::GetContentRegionAvail());
 }
 void VtkViewer::Render(const ImVec2 size)
 {
 	SetViewportSize(size);
-
-	if (ImGui::Button("Reset To Original View", ImVec2(200, 25)))
-	{
-		m_renderer->GetActiveCamera()->DeepCopy(m_initialCameraState);
-		m_renderer->ResetCamera();
-	}
 
 	m_renderWindow->Render();
 	m_renderWindow->WaitForCompletion();

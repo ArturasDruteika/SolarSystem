@@ -40,8 +40,8 @@ void VTKWindow::SetUpWindowPointers(ObjectCreationWindow* pObjectCreationWindow,
 void VTKWindow::InitializeVtkActors()
 {
     m_solarSystemVTKInteractor.AddStar(0, 2.0);
-    m_vtkViewer.getRenderer()->SetBackground(0, 0, 0);
-    m_vtkViewer.addActor(m_solarSystemVTKInteractor.GetStarsSpheresMap().at(0).GetObjectActor());
+    m_vtkViewer.GetRenderer()->SetBackground(0, 0, 0);
+    m_vtkViewer.AddActor(m_solarSystemVTKInteractor.GetStarsSpheresMap().at(0).GetObjectActor());
 }
 
 void VTKWindow::InitInternal()
@@ -61,17 +61,17 @@ void VTKWindow::DeInitInternal()
 void VTKWindow::RenderMainWindowInternal()
 {
     m_solarSystemVTKInteractor.Step();
-    m_vtkViewer.render();
+    m_vtkViewer.Render();
 }
 
 void VTKWindow::AddVTKActor(const vtkSmartPointer<vtkActor>& actor)
 {
-    m_vtkViewer.addActor(actor);
+    m_vtkViewer.AddActor(actor);
 }
 
 void VTKWindow::RemoveVTKActor(const vtkSmartPointer<vtkActor>& actor)
 {
-    m_vtkViewer.removeActor(actor);
+    m_vtkViewer.RemoveActor(actor);
 }
 
 void VTKWindow::OnNewPlanet(int id, PlanetAttributes objectAttributes)
@@ -110,7 +110,7 @@ void VTKWindow::SetUpCamera()
 {
     m_camera = vtkSmartPointer<vtkCamera>::New();
     m_camera->Elevation(270);
-    m_vtkViewer.getRenderer()->SetActiveCamera(m_camera);
+    m_vtkViewer.GetRenderer()->SetActiveCamera(m_camera);
 }
 
 

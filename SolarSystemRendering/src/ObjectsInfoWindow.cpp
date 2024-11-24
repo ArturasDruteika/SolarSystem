@@ -4,7 +4,6 @@
 
 ObjectsInfoWindow::ObjectsInfoWindow()
     : m_customFont{ nullptr }
-    , m_planetsAttributesMap{}
     , m_nStyleVars{0}
     , m_solarSystemModel{ SolarSystemModel::GetInstance() }
 {
@@ -22,11 +21,6 @@ void ObjectsInfoWindow::Init()
 void ObjectsInfoWindow::DeInit()
 {
     DeInitInternal();
-}
-
-void ObjectsInfoWindow::AddPlanetRecord(int id, const PlanetAttributes& objectAttributes)
-{
-    m_planetsAttributesMap.insert({ id, objectAttributes });
 }
 
 void ObjectsInfoWindow::InitInternal()
@@ -113,7 +107,6 @@ bool ObjectsInfoWindow::RenderDeleteButtonOnTable(int buttonId)
     ImGui::PushID(std::to_string(buttonId).c_str());
     if (ImGui::Button("Delete", ImVec2(55, 25)))
     {
-        m_planetsAttributesMap.erase(buttonId);
         OnDeleteRecord(buttonId);
         isPressed = true;
     }

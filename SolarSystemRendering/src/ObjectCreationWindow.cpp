@@ -5,11 +5,10 @@
 #include <string>
 
 
-ObjectCreationWindow::ObjectCreationWindow(ObjectsInfoWindow* pObjectsInfoWindow)
+ObjectCreationWindow::ObjectCreationWindow()
     : m_planetsAttributesMap{}
     , m_planetsCount{0}
     , m_customFont{nullptr}
-    , m_pObjectsInfoWindow{ pObjectsInfoWindow }
 {
     SetInitialValues();
 }
@@ -28,14 +27,6 @@ void ObjectCreationWindow::DeInit()
 
 void ObjectCreationWindow::InitInternal()
 {
-    m_pObjectsInfoWindow->OnDeleteRecord.connect(
-        boost::bind(
-            &ObjectCreationWindow::OnDeletePlanet,
-            this,
-            boost::placeholders::_1
-        )
-    );
-
     // Font part
     std::string executableDir = boost::dll::program_location().parent_path().string();
     std::string fontPath = executableDir + "//res//fonts//Roboto-Bold.ttf";
@@ -44,7 +35,6 @@ void ObjectCreationWindow::InitInternal()
 
 void ObjectCreationWindow::DeInitInternal()
 {
-    delete m_pObjectsInfoWindow;
     delete m_customFont;
 }
 
@@ -100,7 +90,6 @@ void ObjectCreationWindow::RenderObjectCreationSection()
         PlanetAttributes planetAttributesProcessed = ProcessPlanetAttributes(m_objectAttributes);
         OnCreateSignal(m_planetsCount, planetAttributesProcessed);
         m_planetsAttributesMap.insert({ m_planetsCount, m_objectAttributes });
-        m_pObjectsInfoWindow->AddPlanetRecord(m_planetsCount, m_objectAttributes);
         m_planetsCount++;
     }
 }

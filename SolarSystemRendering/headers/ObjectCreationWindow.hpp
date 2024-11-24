@@ -3,7 +3,6 @@
 
 
 #include "GraphicalWindow.hpp"
-#include "ObjectsInfoWindow.hpp"
 #include "ObjectsComponents.hpp"
 #include "Planet.hpp"
 #include "boost/signals2.hpp"
@@ -18,7 +17,7 @@ typedef boost::signals2::signal<void(const int id)> DeleteSignal;
 class ObjectCreationWindow : public GraphicalWindow
 {
 public:
-    ObjectCreationWindow(ObjectsInfoWindow* pObjectsInfoWindow);
+    ObjectCreationWindow();
     ~ObjectCreationWindow();
 
     void Init() override;
@@ -52,8 +51,6 @@ private:
     std::map<int, PlanetAttributes> m_planetsAttributesMap;
     int m_planetsCount;
     ImFont* m_customFont;
-
-    ObjectsInfoWindow* m_pObjectsInfoWindow;
 };
 
 

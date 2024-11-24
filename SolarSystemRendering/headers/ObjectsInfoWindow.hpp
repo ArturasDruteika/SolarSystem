@@ -23,7 +23,6 @@ public:
     void Init() override;
     void DeInit() override;
 
-    void AddPlanetRecord(int id, const PlanetAttributes& objectAttributes);
     DeletePlanetSignal OnDeleteRecord;
 
 private:
@@ -34,7 +33,6 @@ private:
     void RenderPlanetsInfoTable();
     bool RenderDeleteButtonOnTable(int buttonId);
 
-    std::map<int, PlanetAttributes> m_planetsAttributesMap;
     ImFont* m_customFont;
     int m_nStyleVars;
     SolarSystemModel& m_solarSystemModel;

@@ -51,6 +51,7 @@ private:
     // Load icon
     void CreateWindowIcon();
     void LoadFont();
+    void InitAllWindows();
 
     GLFWwindow* m_window;
     ImVec4 m_backgroundColor;

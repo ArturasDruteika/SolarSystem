@@ -5,6 +5,7 @@
 #include "ObjectCreationWindow.hpp"
 #include "VTKWindow.hpp"
 #include "ObjectsInfoWindow.hpp"
+#include "GraphicalWindow.hpp"
 
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
@@ -57,6 +58,8 @@ private:
     ObjectCreationWindow* m_pObjectCreationWindow;
     VTKWindow* m_pVTKWindow;
     ObjectsInfoWindow* m_pObjectsInfoWindow;
+
+    std::vector<GraphicalWindow*> m_pGraphicalWindows;
 };
 
 

@@ -40,15 +40,18 @@ ContextWindow::ContextWindow()
     , m_pObjectCreationWindow{nullptr}
     , m_pVTKWindow{nullptr}
     , m_pObjectsInfoWindow{ nullptr }
+    , m_pGraphicalWindows{}
 {
 
 }
 
 ContextWindow::~ContextWindow()
 {
-    delete m_pObjectCreationWindow;
-    delete m_pVTKWindow;
-    delete m_pObjectsInfoWindow;
+    for (GraphicalWindow* pGraphicalWindow : m_pGraphicalWindows)
+    {
+        delete pGraphicalWindow;
+    }
+    m_pGraphicalWindows.clear(); // Optional, ensures the vector is emptied.
 }
 
 int ContextWindow::Init()
@@ -139,17 +142,18 @@ int ContextWindow::Init()
     ImPlot::CreateContext();
 
     CreateWindowIcon();
+
     // Window creation
-    m_pObjectsInfoWindow = new ObjectsInfoWindow();
-    m_pObjectCreationWindow = new ObjectCreationWindow();
-    m_pVTKWindow = new VTKWindow();
-
+    m_pObjectsInfoWindow = new ObjectsInfoWindow("Objects Info");
+    m_pObjectCreationWindow = new ObjectCreationWindow("Object Creation");
+    m_pVTKWindow = new VTKWindow("Vtk Viewer");
     m_pVTKWindow->SetUpWindowPointers(m_pObjectCreationWindow, m_pObjectsInfoWindow);
-
-    // Window Initialization
     m_pObjectCreationWindow->Init();
     m_pVTKWindow->Init();
     m_pObjectsInfoWindow->Init();
+    m_pGraphicalWindows.push_back(m_pObjectsInfoWindow);
+    m_pGraphicalWindows.push_back(m_pObjectCreationWindow);
+    m_pGraphicalWindows.push_back(m_pVTKWindow);
 
     return 0;
 }
@@ -197,9 +201,10 @@ int ContextWindow::Run()
         // Dockspace
         ImGui::DockSpaceOverViewport(ImGui::GetMainViewport());
 
-        m_pObjectCreationWindow->RenderMainWindow("Object Creation");
-        m_pObjectsInfoWindow->RenderMainWindow("Objects Info");
-        m_pVTKWindow->RenderMainWindow("Vtk Viewer");
+        for (GraphicalWindow* pGraphicalWindow : m_pGraphicalWindows)
+        {
+            pGraphicalWindow->RenderWindow();
+        }
 
         // Rendering
         ImGui::Render();

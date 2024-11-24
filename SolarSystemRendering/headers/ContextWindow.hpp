@@ -5,6 +5,7 @@
 #include "ObjectCreationWindow.hpp"
 #include "VTKWindow.hpp"
 #include "ObjectsInfoWindow.hpp"
+#include "GraphicalWindow.hpp"
 
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
@@ -50,6 +51,7 @@ private:
     // Load icon
     void CreateWindowIcon();
     void LoadFont();
+    void InitAllWindows();
 
     GLFWwindow* m_window;
     ImVec4 m_backgroundColor;
@@ -57,6 +59,8 @@ private:
     ObjectCreationWindow* m_pObjectCreationWindow;
     VTKWindow* m_pVTKWindow;
     ObjectsInfoWindow* m_pObjectsInfoWindow;
+
+    std::vector<GraphicalWindow*> m_pGraphicalWindows;
 };
 
 

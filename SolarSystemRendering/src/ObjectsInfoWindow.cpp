@@ -2,8 +2,9 @@
 #include <boost/dll.hpp>
 
 
-ObjectsInfoWindow::ObjectsInfoWindow()
-    : m_customFont{ nullptr }
+ObjectsInfoWindow::ObjectsInfoWindow(const std::string& windowName)
+    : GraphicalWindow(windowName)
+    , m_customFont{ nullptr }
     , m_nStyleVars{0}
     , m_solarSystemModel{ SolarSystemModel::GetInstance() }
 {
@@ -36,7 +37,7 @@ void ObjectsInfoWindow::DeInitInternal()
     delete m_customFont;
 }
 
-void ObjectsInfoWindow::RenderMainWindowInternal()
+void ObjectsInfoWindow::RenderWindowInternal()
 {
     RenderPlanetsInfoTable();
 }

@@ -5,8 +5,9 @@
 #include <string>
 
 
-ObjectCreationWindow::ObjectCreationWindow()
-    : m_planetsAttributesMap{}
+ObjectCreationWindow::ObjectCreationWindow(const std::string& windowName)
+    : GraphicalWindow(windowName)
+    , m_planetsAttributesMap{}
     , m_planetsCount{0}
     , m_customFont{nullptr}
 {
@@ -38,7 +39,7 @@ void ObjectCreationWindow::DeInitInternal()
     delete m_customFont;
 }
 
-void ObjectCreationWindow::RenderMainWindowInternal()
+void ObjectCreationWindow::RenderWindowInternal()
 {
     RenderObjectRadiusSection();
     RenderSemiMajorAxisSection();

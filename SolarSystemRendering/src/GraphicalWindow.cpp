@@ -3,8 +3,9 @@
 #include "imgui.h"
 
 
-GraphicalWindow::GraphicalWindow()
+GraphicalWindow::GraphicalWindow(const std::string& windowName)
     : m_nStyleVars{0}
+    , m_windowName{ windowName }
 {
 }
 
@@ -12,11 +13,11 @@ GraphicalWindow::~GraphicalWindow()
 {
 }
 
-void GraphicalWindow::RenderMainWindow(const std::string& windowName)
+void GraphicalWindow::RenderWindow()
 {
-    ImGui::Begin(windowName.c_str(), nullptr, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse);
+    ImGui::Begin(m_windowName.c_str(), nullptr, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoCollapse);
     PushMainWindowStyleVars();
-    RenderMainWindowInternal();
+    RenderWindowInternal();
     PopMainWindowStyleVars();
     ImGui::End();
 }
@@ -44,4 +45,14 @@ ImFont* GraphicalWindow::CreateFont(const std::string& fontPath, float fontSize)
     std::string executableDir = boost::dll::program_location().parent_path().string();
     ImGuiIO& io = ImGui::GetIO();
     return io.Fonts->AddFontFromFileTTF(fontPath.c_str(), fontSize);
+}
+
+std::string GraphicalWindow::GetWindowName() const
+{
+    return m_windowName;
+}
+
+void GraphicalWindow::SetWindowName(const std::string& windowName)
+{
+    m_windowName = windowName;
 }

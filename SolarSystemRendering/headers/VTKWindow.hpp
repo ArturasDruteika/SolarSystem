@@ -17,7 +17,7 @@
 class VTKWindow : public GraphicalWindow
 {
 public:
-    VTKWindow();
+    VTKWindow(const std::string& windowName);
     ~VTKWindow();
 
     void Init() override;
@@ -29,7 +29,7 @@ public:
 private:
     void InitInternal() override;
     void DeInitInternal() override;
-    void RenderMainWindowInternal() override;
+    void RenderWindowInternal() override;
 
     void AddVTKActor(const vtkSmartPointer<vtkActor>& actor);
     void RemoveVTKActor(const vtkSmartPointer<vtkActor>& actor);

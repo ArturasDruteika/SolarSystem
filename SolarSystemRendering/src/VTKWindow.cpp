@@ -8,8 +8,9 @@
 
 
 
-VTKWindow::VTKWindow()
-    : m_isVtkOpen{ true }
+VTKWindow::VTKWindow(const std::string& windowName)
+    : GraphicalWindow(windowName)
+    , m_isVtkOpen{ true }
     , m_pObjectCreationWindow{ nullptr }
     , m_pObjectInfoWindow{ nullptr }
     , m_solarSystemVTKInteractor{}
@@ -58,7 +59,7 @@ void VTKWindow::DeInitInternal()
     m_pObjectInfoWindow = nullptr;
 }
 
-void VTKWindow::RenderMainWindowInternal()
+void VTKWindow::RenderWindowInternal()
 {
     m_solarSystemVTKInteractor.Step();
 

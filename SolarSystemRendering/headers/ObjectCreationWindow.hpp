@@ -17,7 +17,7 @@ typedef boost::signals2::signal<void(const int id)> DeleteSignal;
 class ObjectCreationWindow : public GraphicalWindow
 {
 public:
-    ObjectCreationWindow();
+    ObjectCreationWindow(const std::string& windowName);
     ~ObjectCreationWindow();
 
     void Init() override;
@@ -29,7 +29,7 @@ public:
 private:
     void InitInternal() override;
     void DeInitInternal() override;
-    void RenderMainWindowInternal() override;
+    void RenderWindowInternal() override;
 
     void RenderObjectRadiusSection();
     void RenderSemiMajorAxisSection();

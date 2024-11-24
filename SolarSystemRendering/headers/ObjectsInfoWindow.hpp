@@ -17,7 +17,7 @@ typedef boost::signals2::signal<void(int id)> DeletePlanetSignal;
 class ObjectsInfoWindow : public GraphicalWindow
 {
 public:
-    ObjectsInfoWindow();
+    ObjectsInfoWindow(const std::string& windowName);
     ~ObjectsInfoWindow();
 
     void Init() override;
@@ -28,7 +28,7 @@ public:
 private:
     void InitInternal() override;
     void DeInitInternal() override;
-    void RenderMainWindowInternal() override;
+    void RenderWindowInternal() override;
 
     void RenderPlanetsInfoTable();
     bool RenderDeleteButtonOnTable(int buttonId);

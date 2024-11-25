@@ -62,8 +62,8 @@ std::map<int, Sphere> SolarSystemVTKInteractor::GetPlanetsSpheresMap() const
 
 void SolarSystemVTKInteractor::Step()
 {
-	std::map<int, Planet> planetMap = m_solarSystemModel.GetPlanetsMap();
-	std::map<int, double> planetsRotationDegrees = m_solarSystemModel.GetPlanetsRotationDegrees();
+	const std::map<int, Planet>& planetMap = m_solarSystemModel.GetPlanetsMap();
+	static const std::map<int, double>& planetsRotationDegrees = m_solarSystemModel.GetPlanetsRotationDegrees();
 	for (auto& [id, planet] : planetMap)
 	{
 		int stepIterator = planetMap.at(id).GetStepIterator();

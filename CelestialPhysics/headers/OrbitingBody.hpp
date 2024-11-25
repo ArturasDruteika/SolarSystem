@@ -43,9 +43,9 @@ public:
 	double GetInclination() const;
 	double GetGravitationalParameter() const;
 	double GetRotationalPeriod() const;
-	std::vector<Point3D> GetOrbitalPoints() const;
+	const std::vector<Point3D>& GetOrbitalPoints() const;
 	Point3D GetOrbitalPoints(int id) const;
-	std::vector<double> GetOrbitalSpeeds() const;
+	const std::vector<double>& GetOrbitalSpeeds() const;
 
 
 private:

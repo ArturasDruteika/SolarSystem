@@ -29,9 +29,9 @@ void SolarSystemModel::AddStar(int id, double starRadius)
     m_starsMap.insert({ id, Star(starRadius, 0.0) });
 }
 
-void SolarSystemModel::AddPlanet(int id, PlanetAttributes objectAttributes)
+void SolarSystemModel::AddPlanet(int id, const PlanetAttributes& objectAttributes)
 {
-    m_planetsMap.insert({ id, Planet(objectAttributes, m_starPoint, 10000, N_ORBIT_PTS) });
+    m_planetsMap.insert({ id, Planet(objectAttributes, m_starPoint, 10000.0, N_ORBIT_PTS) });
     m_orbitalPointsIteratorMap.insert({ id, 0 });
 }
 
@@ -50,12 +50,12 @@ int SolarSystemModel::GetPlanetsCount() const
     return m_planetsMap.size();
 }
 
-std::map<int, Star> SolarSystemModel::GetStarsMap() const
+const std::map<int, Star>& SolarSystemModel::GetStarsMap() const
 {
     return m_starsMap;
 }
 
-std::map<int, Planet> SolarSystemModel::GetPlanetsMap() const
+const std::map<int, Planet>& SolarSystemModel::GetPlanetsMap() const
 {
     return m_planetsMap;
 }

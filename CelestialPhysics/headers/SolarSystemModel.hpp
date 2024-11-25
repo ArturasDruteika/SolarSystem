@@ -37,12 +37,12 @@ public:
     static SolarSystemModel& GetInstance();
 
     void AddStar(int id, double starRadius);
-    void AddPlanet(int id, PlanetAttributes objectAttributes);
+    void AddPlanet(int id, const PlanetAttributes& objectAttributes);
     void OnDeleteStar(int id);
     void OnDeletePlanet(int id);
     int GetPlanetsCount() const;
-    std::map<int, Star> GetStarsMap() const;
-    std::map<int, Planet> GetPlanetsMap() const;
+    const std::map<int, Star>& GetStarsMap() const;
+    const std::map<int, Planet>& GetPlanetsMap() const;
     std::map<int, Point3D> GetPlanetsNextOrbitalPositions(int orbitalPointId) const;
     std::map<int, double> GetPlanetsRotationDegrees() const;
     std::map<int, int> GetPlanetsStepIterators() const;

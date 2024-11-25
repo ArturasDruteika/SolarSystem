@@ -20,7 +20,6 @@
 #include "Planet.hpp"
 #include "Star.hpp"
 #include "ObjectsComponents.hpp"
-#include "OrbitalMechanics.hpp"
 #include <map>
 #include <vector>
 #include <utility>
@@ -59,8 +58,6 @@ private:
     std::map<int, Point3D> m_planetsNextOrbitalPositions;
     std::map<int, double> m_planetsRotationDegrees;
     std::map<int, int> m_planetsStepIterators;
-
-    OrbitalMechanics m_orbitalMechanics;
 };
 
 #endif //CELESTIALPHYSICS_SOLARSYSTEMMODEL_HPP

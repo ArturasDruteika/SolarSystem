@@ -61,7 +61,7 @@ double OrbitingBody::GetRotationalPeriod() const
 	return m_rotationalPeriod;
 }
 
-std::vector<Point3D> OrbitingBody::GetOrbitalPoints() const
+const std::vector<Point3D>& OrbitingBody::GetOrbitalPoints() const
 {
 	return m_orbitalPoints;
 }
@@ -71,12 +71,10 @@ Point3D OrbitingBody::GetOrbitalPoints(int id) const
 	return m_orbitalPoints[id];
 }
 
-std::vector<double> OrbitingBody::GetOrbitalSpeeds() const
+const std::vector<double>& OrbitingBody::GetOrbitalSpeeds() const
 {
 	return m_orbitalSpeeds;
 }
-
-
 
 void OrbitingBody::CalculateOrbitalPoints()
 {

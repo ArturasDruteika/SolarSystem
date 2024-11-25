@@ -43,9 +43,9 @@ public:
     int GetPlanetsCount() const;
     const std::map<int, Star>& GetStarsMap() const;
     const std::map<int, Planet>& GetPlanetsMap() const;
-    std::map<int, Point3D> GetPlanetsNextOrbitalPositions(int orbitalPointId) const;
-    std::map<int, double> GetPlanetsRotationDegrees() const;
-    std::map<int, int> GetPlanetsStepIterators() const;
+    const std::map<int, Point3D>& GetPlanetsNextOrbitalPositions(int orbitalPointId) const;
+    const std::map<int, double>& GetPlanetsRotationDegrees() const;
+    const std::map<int, int>& GetPlanetsStepIterators() const;
     void Step();
 
 private:
@@ -53,13 +53,12 @@ private:
     SolarSystemModel();
     ~SolarSystemModel();
 
-    std::vector<double> GetNextOrbitalPosition(int planetId);
-    void UpdateOrbitalPointsIterator(int planetId);
-
     Point3D m_starPoint;
     std::map<int, Star> m_starsMap;
     std::map<int, Planet> m_planetsMap;
-    std::map<int, int> m_orbitalPointsIteratorMap;
+    std::map<int, Point3D> m_planetsNextOrbitalPositions;
+    std::map<int, double> m_planetsRotationDegrees;
+    std::map<int, int> m_planetsStepIterators;
 
     OrbitalMechanics m_orbitalMechanics;
 };

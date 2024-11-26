@@ -33,8 +33,8 @@ private:
     void RenderPlanetsInfoTable();
     bool RenderDeleteButtonOnTable(int buttonId);
 
-    ImFont* m_customFont;
     int m_nStyleVars;
+    ImFont* m_customFont;
     SolarSystemModel& m_solarSystemModel;
 };
 

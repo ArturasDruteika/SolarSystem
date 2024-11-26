@@ -34,7 +34,7 @@ void SolarSystemModel::AddStar(int id, double starRadius)
 void SolarSystemModel::AddPlanet(int id, const PlanetAttributes& objectAttributes)
 {
     m_planetsMap.insert({ id, Planet(objectAttributes, m_starPoint, 10000.0, N_ORBIT_PTS) });
-    m_planetsNextOrbitalPositions.insert({ id, m_planetsMap.at(id).GetOrbitalPoints(0) });
+    m_planetsNextOrbitalPositions.insert({ id, m_planetsMap.at(id).GetOrbitalPoints(0)});
     m_planetsRotationDegrees.insert({ id, m_planetsMap.at(id).GetRotationPerStep() });
     m_planetsStepIterators.insert({ id, 0 });
 
@@ -55,27 +55,27 @@ int SolarSystemModel::GetPlanetsCount() const
     return m_planetsMap.size();
 }
 
-const std::map<int, Star>& SolarSystemModel::GetStarsMap() const
+const std::unordered_map<int, Star>& SolarSystemModel::GetStarsMap() const
 {
     return m_starsMap;
 }
 
-const std::map<int, Planet>& SolarSystemModel::GetPlanetsMap() const
+const std::unordered_map<int, Planet>& SolarSystemModel::GetPlanetsMap() const
 {
     return m_planetsMap;
 }
 
-const std::map<int, Point3D>& SolarSystemModel::GetPlanetsNextOrbitalPositions(int orbitalPointId) const
+const std::unordered_map<int, Point3D>& SolarSystemModel::GetPlanetsNextOrbitalPositions(int orbitalPointId) const
 {
     return m_planetsNextOrbitalPositions;
 }
 
-const std::map<int, double>& SolarSystemModel::GetPlanetsRotationDegrees() const
+const std::unordered_map<int, double>& SolarSystemModel::GetPlanetsRotationDegrees() const
 {
     return m_planetsRotationDegrees;
 }
 
-const std::map<int, int>& SolarSystemModel::GetPlanetsStepIterators() const
+const std::unordered_map<int, int>& SolarSystemModel::GetPlanetsStepIterators() const
 {
     return m_planetsStepIterators;
 }

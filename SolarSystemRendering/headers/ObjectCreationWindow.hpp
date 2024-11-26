@@ -48,7 +48,7 @@ private:
     PlanetAttributes ProcessPlanetAttributes(const PlanetAttributes& objectAttributes);
 
     PlanetAttributes m_objectAttributes;
-    std::map<int, PlanetAttributes> m_planetsAttributesMap;
+    std::unordered_map<int, PlanetAttributes> m_planetsAttributesMap;
     int m_planetsCount;
     ImFont* m_customFont;
 };

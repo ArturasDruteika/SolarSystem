@@ -12,6 +12,7 @@
 #include "vtkSmartPointer.h"
 #include "vtkCamera.h"
 #include <vector>
+#include <unordered_map>
 
 
 class VTKWindow : public GraphicalWindow
@@ -43,7 +44,7 @@ private:
     VtkViewer m_vtkViewer;
     ObjectCreationWindow* m_pObjectCreationWindow;
     ObjectsInfoWindow* m_pObjectInfoWindow;
-    std::map<int, std::vector<std::vector<double>>> m_planetsRotationCoords;
+    std::unordered_map<int, std::vector<std::vector<double>>> m_planetsRotationCoords;
     SolarSystemVTKInteractor m_solarSystemVTKInteractor;
 };
 

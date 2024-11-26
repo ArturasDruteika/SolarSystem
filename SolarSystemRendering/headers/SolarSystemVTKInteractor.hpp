@@ -4,7 +4,7 @@
 
 #include "Sphere.hpp"
 #include "SolarSystemModel.hpp"
-#include <map>
+#include <unordered_map>
 
 
 class SolarSystemVTKInteractor
@@ -18,14 +18,14 @@ public:
 	void OnDeleteStar(int id);
 	void OnDeletePlanet(int id);
 	int GetPlanetsCount() const;
-	std::map<int, Sphere> GetStarsSpheresMap() const;
-	std::map<int, Sphere> GetPlanetsSpheresMap() const;
+	std::unordered_map<int, Sphere> GetStarsSpheresMap() const;
+	std::unordered_map<int, Sphere> GetPlanetsSpheresMap() const;
 
 	void Step();
 
 private:
-	std::map<int, Sphere> m_starSpheresMap;
-	std::map<int, Sphere> m_planetSpheresMap;
+	std::unordered_map<int, Sphere> m_starSpheresMap;
+	std::unordered_map<int, Sphere> m_planetSpheresMap;
 
 	SolarSystemModel& m_solarSystemModel;
 };

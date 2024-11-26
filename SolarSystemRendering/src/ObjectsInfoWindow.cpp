@@ -62,7 +62,7 @@ void ObjectsInfoWindow::RenderPlanetsInfoTable()
 
     ImGui::PushFont(m_customFont);
 
-    static std::map<int, Planet> planetsMap;
+    static std::unordered_map<int, Planet> planetsMap;
     planetsMap = m_solarSystemModel.GetPlanetsMap();
 
     if (ImGui::BeginTable("Planets Info", tableColumnNames.size(), flagsPlanetsTable))

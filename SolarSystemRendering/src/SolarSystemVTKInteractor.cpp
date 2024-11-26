@@ -50,20 +50,20 @@ int SolarSystemVTKInteractor::GetPlanetsCount() const
 	return m_solarSystemModel.GetPlanetsCount();
 }
 
-std::map<int, Sphere> SolarSystemVTKInteractor::GetStarsSpheresMap() const
+std::unordered_map<int, Sphere> SolarSystemVTKInteractor::GetStarsSpheresMap() const
 {
 	return m_starSpheresMap;
 }
 
-std::map<int, Sphere> SolarSystemVTKInteractor::GetPlanetsSpheresMap() const
+std::unordered_map<int, Sphere> SolarSystemVTKInteractor::GetPlanetsSpheresMap() const
 {
 	return m_planetSpheresMap;
 }
 
 void SolarSystemVTKInteractor::Step()
 {
-	const std::map<int, Planet>& planetMap = m_solarSystemModel.GetPlanetsMap();
-	static const std::map<int, double>& planetsRotationDegrees = m_solarSystemModel.GetPlanetsRotationDegrees();
+	const std::unordered_map<int, Planet>& planetMap = m_solarSystemModel.GetPlanetsMap();
+	static const std::unordered_map<int, double>& planetsRotationDegrees = m_solarSystemModel.GetPlanetsRotationDegrees();
 	for (auto& [id, planet] : planetMap)
 	{
 		int stepIterator = planetMap.at(id).GetStepIterator();

@@ -50,11 +50,6 @@ void SolarSystemModel::OnDeletePlanet(int id)
     m_planetsMap.erase(id);
 }
 
-int SolarSystemModel::GetPlanetsCount() const
-{
-    return m_planetsMap.size();
-}
-
 const std::unordered_map<int, Star>& SolarSystemModel::GetStarsMap() const
 {
     return m_starsMap;

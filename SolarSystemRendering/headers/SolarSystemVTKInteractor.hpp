@@ -17,7 +17,6 @@ public:
 	void AddPlanet(int id, PlanetAttributes planetAttributes);
 	void OnDeleteStar(int id);
 	void OnDeletePlanet(int id);
-	int GetPlanetsCount() const;
 	std::unordered_map<int, Sphere> GetStarsSpheresMap() const;
 	std::unordered_map<int, Sphere> GetPlanetsSpheresMap() const;
 

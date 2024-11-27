@@ -45,11 +45,6 @@ void SolarSystemVTKInteractor::OnDeletePlanet(int id)
 	m_solarSystemModel.OnDeletePlanet(id);
 }
 
-int SolarSystemVTKInteractor::GetPlanetsCount() const
-{
-	return m_solarSystemModel.GetPlanetsCount();
-}
-
 std::unordered_map<int, Sphere> SolarSystemVTKInteractor::GetStarsSpheresMap() const
 {
 	return m_starSpheresMap;

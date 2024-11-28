@@ -119,3 +119,20 @@ double OrbitalMechanics::CalculateOrbitalSpeed(double orbitalRadius, double semi
 {
     return std::sqrt(mu * (2.0 / orbitalRadius - 1.0 / semiMajorAxis));
 }
+
+std::vector<double> OrbitalMechanics::CalculateOrbitalSpeeds(
+    double semiMajorAxis, 
+    double gravitationalParameter, 
+    const std::vector<Point3D>& orbitalPoints, 
+    const Point3D& focusPt
+)
+{
+    std::vector<double> orbitalSpeeds;
+    for (const Point3D& orbitalPt : orbitalPoints)
+    {
+        double orbitalRadius = CalculateOrbitalRadius(focusPt, orbitalPt);
+        double orbitalSpeed = CalculateOrbitalSpeed(orbitalRadius, semiMajorAxis, gravitationalParameter);
+        orbitalSpeeds.push_back(orbitalSpeed);
+    }
+    return orbitalSpeeds;
+}

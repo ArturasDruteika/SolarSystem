@@ -18,6 +18,12 @@ public:
 	static double CalculateGravitationalParameter(double focusMass);
 	static double CalculateOrbitalRadius(const Point3D& focusPt, const Point3D& bodyPoint);
 	static double CalculateOrbitalSpeed(double orbitalRadius, double semiMajorAxis, double mu);
+	static std::vector<double> CalculateOrbitalSpeeds(
+		double semiMajorAxis, 
+		double gravitationalParameter, 
+		const std::vector<Point3D>& orbitalPoints, 
+		const Point3D& focusPt
+	);
 
 private:
 

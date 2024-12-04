@@ -50,17 +50,24 @@ private:
     static void glfw_error_callback(int error, const char* description);
     // Load icon
     void CreateWindowIcon();
+    // Load Font
     void LoadFont();
-    void InitAllWindows();
+    // Create all the separate windows
+    void CreateAllGraphicalWindows();
+    // Initialize all the separate windows
+    void InitAllGraphicalWindows();
+    // Add all the separate windows to the graphical windows vector
+    void AddAllGraphicalWindows();
+    // Set up all the separate windows
+    void SetUpAllGraphicalWindows();
 
+
+    std::vector<GraphicalWindow*> m_pGraphicalWindows;
     GLFWwindow* m_window;
     ImVec4 m_backgroundColor;
-
     ObjectCreationWindow* m_pObjectCreationWindow;
     VTKWindow* m_pVTKWindow;
     ObjectsInfoWindow* m_pObjectsInfoWindow;
-
-    std::vector<GraphicalWindow*> m_pGraphicalWindows;
 };
 
 

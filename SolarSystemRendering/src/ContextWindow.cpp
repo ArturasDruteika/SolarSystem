@@ -142,8 +142,7 @@ int ContextWindow::Init()
     ImPlot::CreateContext();
 
     CreateWindowIcon();
-
-    InitAllWindows();
+    SetUpAllGraphicalWindows();
 
     return 0;
 }
@@ -264,17 +263,32 @@ void ContextWindow::LoadFont()
     io.Fonts->AddFontFromFileTTF(fontPath.c_str(), 14);
 }
 
-void ContextWindow::InitAllWindows()
+void ContextWindow::CreateAllGraphicalWindows()
 {
-    // Window creation
     m_pObjectsInfoWindow = new ObjectsInfoWindow("Objects Info");
     m_pObjectCreationWindow = new ObjectCreationWindow("Object Creation");
     m_pVTKWindow = new VTKWindow("Vtk Viewer");
-    m_pVTKWindow->SetUpWindowPointers(m_pObjectCreationWindow, m_pObjectsInfoWindow);
+}
+
+void ContextWindow::InitAllGraphicalWindows()
+{
     m_pObjectCreationWindow->Init();
     m_pVTKWindow->Init();
     m_pObjectsInfoWindow->Init();
+
+}
+
+void ContextWindow::AddAllGraphicalWindows()
+{
     m_pGraphicalWindows.push_back(m_pObjectsInfoWindow);
     m_pGraphicalWindows.push_back(m_pObjectCreationWindow);
     m_pGraphicalWindows.push_back(m_pVTKWindow);
+}
+
+void ContextWindow::SetUpAllGraphicalWindows()
+{
+    CreateAllGraphicalWindows();
+    m_pVTKWindow->SetUpWindowPointers(m_pObjectCreationWindow, m_pObjectsInfoWindow);
+    InitAllGraphicalWindows();
+    AddAllGraphicalWindows();
 }

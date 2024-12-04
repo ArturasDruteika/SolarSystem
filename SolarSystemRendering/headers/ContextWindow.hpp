@@ -56,6 +56,8 @@ private:
     void CreateAllGraphicalWindows();
     // Initialize all the separate windows
     void InitAllGraphicalWindows();
+    // Connect observers
+    void ConnectObservers();
     // Add all the separate windows to the graphical windows vector
     void AddAllGraphicalWindows();
     // Set up all the separate windows

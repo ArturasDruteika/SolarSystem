@@ -278,6 +278,26 @@ void ContextWindow::InitAllGraphicalWindows()
 
 }
 
+void ContextWindow::ConnectObservers()
+{
+    m_pObjectCreationWindow->OnCreateSignal.connect(
+        boost::bind(
+            &VTKWindow::OnNewPlanet,
+            m_pVTKWindow,
+            boost::placeholders::_1,
+            boost::placeholders::_2
+        )
+    );
+
+    m_pObjectsInfoWindow->OnDeleteRecord.connect(
+        boost::bind(
+            &VTKWindow::OnDeletePlanet,
+            m_pVTKWindow,
+            boost::placeholders::_1
+        )
+    );
+}
+
 void ContextWindow::AddAllGraphicalWindows()
 {
     m_pGraphicalWindows.push_back(m_pObjectsInfoWindow);
@@ -288,7 +308,7 @@ void ContextWindow::AddAllGraphicalWindows()
 void ContextWindow::SetUpAllGraphicalWindows()
 {
     CreateAllGraphicalWindows();
-    m_pVTKWindow->SetUpWindowPointers(m_pObjectCreationWindow, m_pObjectsInfoWindow);
     InitAllGraphicalWindows();
+    ConnectObservers();
     AddAllGraphicalWindows();
 }

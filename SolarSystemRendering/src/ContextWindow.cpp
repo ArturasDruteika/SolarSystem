@@ -296,6 +296,13 @@ void ContextWindow::ConnectObservers()
             boost::placeholders::_1
         )
     );
+    m_pObjectsInfoWindow->OnDeleteRecord.connect(
+        boost::bind(
+            &ObjectCreationWindow::OnDeletePlanet,
+            m_pObjectCreationWindow,
+            boost::placeholders::_1
+        )
+    );
 }
 
 void ContextWindow::AddAllGraphicalWindows()

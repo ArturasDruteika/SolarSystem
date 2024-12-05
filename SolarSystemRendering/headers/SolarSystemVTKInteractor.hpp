@@ -14,7 +14,7 @@ public:
 	~SolarSystemVTKInteractor();
 
 	void AddStar(int id, double starRadius);
-	void AddPlanet(int id, PlanetAttributes planetAttributes);
+	void AddPlanet(int id, const PlanetAttributes& planetAttributes);
 	void OnDeleteStar(int id);
 	void OnDeletePlanet(int id);
 	std::unordered_map<int, Sphere> GetStarsSpheresMap() const;

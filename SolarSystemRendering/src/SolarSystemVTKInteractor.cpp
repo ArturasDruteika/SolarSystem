@@ -1,7 +1,6 @@
 #include "SolarSystemVTKInteractor.hpp"
 #include "OrbitalPoint.hpp"
 #include "ColorsVTK.hpp"
-
 #include "spdlog/spdlog.h"
 
 
@@ -22,7 +21,7 @@ void SolarSystemVTKInteractor::AddStar(int id, double starRadius)
 	m_starSpheresMap.insert({ id, Sphere(starRadius, starCoords, ColorsVTK::YELLOW) });
 }
 
-void SolarSystemVTKInteractor::AddPlanet(int id, PlanetAttributes planetAttributes)
+void SolarSystemVTKInteractor::AddPlanet(int id, const PlanetAttributes& planetAttributes)
 {
 	m_solarSystemModel.AddPlanet(id, planetAttributes);
 	Point3D initialCoords = m_solarSystemModel.GetPlanetsMap().at(id).GetOrbitalPoints()[0];
@@ -43,6 +42,7 @@ void SolarSystemVTKInteractor::OnDeleteStar(int id)
 void SolarSystemVTKInteractor::OnDeletePlanet(int id)
 {
 	m_solarSystemModel.OnDeletePlanet(id);
+	m_planetSpheresMap.erase(id);
 }
 
 std::unordered_map<int, Sphere> SolarSystemVTKInteractor::GetStarsSpheresMap() const
@@ -58,6 +58,11 @@ std::unordered_map<int, Sphere> SolarSystemVTKInteractor::GetPlanetsSpheresMap()
 void SolarSystemVTKInteractor::Step()
 {
 	const std::unordered_map<int, Planet>& planetMap = m_solarSystemModel.GetPlanetsMap();
+	// Check needed to ensure that during planet addition or deletion there was enough time to create planet object and planet sphere
+	if (m_planetSpheresMap.size() != planetMap.size())
+	{
+		return;
+	}
 	static const std::unordered_map<int, double>& planetsRotationDegrees = m_solarSystemModel.GetPlanetsRotationDegrees();
 	for (auto& [id, planet] : planetMap)
 	{

@@ -11,6 +11,9 @@
 #include "vtkCamera.h"
 #include <vector>
 #include <unordered_map>
+#include <mutex>
+#include <thread>
+#include <atomic>
 
 
 class VTKWindow : public GraphicalWindow
@@ -23,7 +26,7 @@ public:
     void DeInit() override;
 
     void InitializeVtkActors();
-    void OnNewPlanet(int id, PlanetAttributes objectAttributes);
+    void OnNewPlanet(int id, const PlanetAttributes& objectAttributes);
     void OnDeletePlanet(int planetId);
 
 private:
@@ -34,8 +37,12 @@ private:
     void AddVTKActor(const vtkSmartPointer<vtkActor>& actor);
     void RemoveVTKActor(const vtkSmartPointer<vtkActor>& actor);
     void SetUpCamera();
+    void SetUpPlanet(int id, const PlanetAttributes& objectAttributes);
 
     bool m_isVtkOpen;
+    std::mutex m_guiUpdateMutex;
+    std::jthread m_addPlanetThread;
+    std::atomic<bool> m_addPlanetThreadRunning;
     vtkSmartPointer<vtkCamera> m_camera;
     VtkViewer m_vtkViewer;
     std::unordered_map<int, std::vector<std::vector<double>>> m_planetsRotationCoords;

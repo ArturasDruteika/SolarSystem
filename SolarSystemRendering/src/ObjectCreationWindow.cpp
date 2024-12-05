@@ -26,6 +26,11 @@ void ObjectCreationWindow::DeInit()
     DeInitInternal();
 }
 
+void ObjectCreationWindow::OnDeletePlanet(int id)
+{
+    m_planetsCount--;
+}
+
 void ObjectCreationWindow::InitInternal()
 {
     // Font part
@@ -142,11 +147,6 @@ void ObjectCreationWindow::RenderObjectAttributeSelectionSection(const std::stri
     ImGui::InputDouble("", &parameterValue, 1.f, 1.0f, "%.4f");
     ImGui::PopID();
     ImGui::PopItemWidth();
-}
-
-void ObjectCreationWindow::OnDeletePlanet(int id)
-{
-    m_planetsCount--;
 }
 
 void ObjectCreationWindow::ReplaceDegreesToRadians(PlanetAttributes& planetAttributes)

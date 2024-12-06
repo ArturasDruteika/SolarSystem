@@ -3,12 +3,12 @@
 #include "imgui.h"
 #include <boost/dll.hpp>
 #include <string>
+#include <set>
 
 
 ObjectCreationWindow::ObjectCreationWindow(const std::string& windowName)
     : GraphicalWindow(windowName)
     , m_planetsAttributesMap{}
-    , m_planetsCount{0}
     , m_customFont{nullptr}
 {
     SetInitialValues();
@@ -24,6 +24,11 @@ void ObjectCreationWindow::Init()
 void ObjectCreationWindow::DeInit()
 {
     DeInitInternal();
+}
+
+void ObjectCreationWindow::OnDeletePlanet(int id)
+{
+    m_planetsIds = RemoveIntegerFromVector(m_planetsIds, id);
 }
 
 void ObjectCreationWindow::InitInternal()
@@ -88,10 +93,11 @@ void ObjectCreationWindow::RenderObjectCreationSection()
 {
     if (ImGui::Button("Create", ImVec2(250, 20)))
     {
+        int nextAvailableNumber = GetNextAvailableNumber(m_planetsIds);
+        m_planetsIds.push_back(nextAvailableNumber);
         PlanetAttributes planetAttributesProcessed = ProcessPlanetAttributes(m_objectAttributes);
-        OnCreateSignal(m_planetsCount, planetAttributesProcessed);
-        m_planetsAttributesMap.insert({ m_planetsCount, m_objectAttributes });
-        m_planetsCount++;
+        OnCreateSignal(nextAvailableNumber, planetAttributesProcessed);
+        m_planetsAttributesMap.insert({ nextAvailableNumber, m_objectAttributes });
     }
 }
 
@@ -109,7 +115,7 @@ void ObjectCreationWindow::RenderPlanetsTableSection()
         ImGui::TableNextColumn();
         ImGui::Text("Planets");
         ImGui::TableNextColumn();
-        ImGui::Text("%d", m_planetsCount);
+        ImGui::Text("%d", m_planetsIds.size());
 
         ImGui::EndTable();
     }
@@ -144,11 +150,6 @@ void ObjectCreationWindow::RenderObjectAttributeSelectionSection(const std::stri
     ImGui::PopItemWidth();
 }
 
-void ObjectCreationWindow::OnDeletePlanet(int id)
-{
-    m_planetsCount--;
-}
-
 void ObjectCreationWindow::ReplaceDegreesToRadians(PlanetAttributes& planetAttributes)
 {
     planetAttributes.inclination = AnglesOperations::Deg2Rad(planetAttributes.inclination);
@@ -159,4 +160,42 @@ PlanetAttributes ObjectCreationWindow::ProcessPlanetAttributes(const PlanetAttri
     PlanetAttributes planetAttributesProcessed = objectAttributes;
     ReplaceDegreesToRadians(planetAttributesProcessed);
     return planetAttributesProcessed;
+}
+
+int ObjectCreationWindow::GetNextAvailableNumber(const std::vector<int>& values)
+{
+    // Create a copy of the input vector and sort it
+    std::vector<int> sortedValues = values;
+    std::sort(sortedValues.begin(), sortedValues.end());
+
+    // Find the smallest non-negative integer not in the sorted vector
+    int nextAvailable = 0;
+    for (int value : sortedValues) 
+    {
+        if (value < nextAvailable) 
+        {
+            // Ignore negative values or duplicates
+            continue;
+        }
+        if (value != nextAvailable) 
+        {
+            break;
+        }
+        ++nextAvailable;
+    }
+
+    return nextAvailable;
+}
+
+std::vector<int> ObjectCreationWindow::RemoveIntegerFromVector(const std::vector<int>& inputVector, int numberToRemove)
+{
+    std::vector<int> result;
+    for (int value : inputVector) 
+    {
+        if (value != numberToRemove) 
+        {
+            result.push_back(value);
+        }
+    }
+    return result;
 }

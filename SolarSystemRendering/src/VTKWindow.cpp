@@ -11,10 +11,9 @@
 VTKWindow::VTKWindow(const std::string& windowName)
     : GraphicalWindow(windowName)
     , m_isVtkOpen{ true }
-    , m_pObjectCreationWindow{ nullptr }
-    , m_pObjectInfoWindow{ nullptr }
     , m_solarSystemVTKInteractor{}
     , m_planetsRotationCoords{}
+    , m_addPlanetThreadRunning{ false }
 {
 }
 
@@ -32,12 +31,6 @@ void VTKWindow::DeInit()
     DeInitInternal();
 }
 
-void VTKWindow::SetUpWindowPointers(ObjectCreationWindow* pObjectCreationWindow, ObjectsInfoWindow* pObjectInfoWindow)
-{
-    m_pObjectCreationWindow = pObjectCreationWindow;
-    m_pObjectInfoWindow = pObjectInfoWindow;
-}
-
 void VTKWindow::InitializeVtkActors()
 {
     m_solarSystemVTKInteractor.AddStar(0, 2.0);
@@ -45,18 +38,29 @@ void VTKWindow::InitializeVtkActors()
     m_vtkViewer.AddActor(m_solarSystemVTKInteractor.GetStarsSpheresMap().at(0).GetObjectActor());
 }
 
+void VTKWindow::OnNewPlanet(int id, const PlanetAttributes& objectAttributes)
+{
+    if (m_addPlanetThreadRunning.exchange(true)) // Ensure only one thread is running
+    {
+        spdlog::warn("Annotation thread is already running.");
+        return;
+    }
+    m_addPlanetThread = std::jthread(&VTKWindow::SetUpPlanet, this, id, objectAttributes);
+}
+
+void VTKWindow::OnDeletePlanet(int planetId)
+{
+    RemoveVTKActor(m_solarSystemVTKInteractor.GetPlanetsSpheresMap().at(planetId).GetObjectActor());
+    m_solarSystemVTKInteractor.OnDeletePlanet(planetId);
+}
+
 void VTKWindow::InitInternal()
 {
-    SetUpObserverSubscribers();
     SetUpCamera();
 }
 
 void VTKWindow::DeInitInternal()
 {
-    delete m_pObjectCreationWindow;
-    delete m_pObjectInfoWindow;
-    m_pObjectCreationWindow = nullptr;
-    m_pObjectInfoWindow = nullptr;
 }
 
 void VTKWindow::RenderWindowInternal()
@@ -81,43 +85,30 @@ void VTKWindow::RemoveVTKActor(const vtkSmartPointer<vtkActor>& actor)
     m_vtkViewer.RemoveActor(actor);
 }
 
-void VTKWindow::OnNewPlanet(int id, PlanetAttributes objectAttributes)
-{
-    m_solarSystemVTKInteractor.AddPlanet(id, objectAttributes);
-    AddVTKActor(m_solarSystemVTKInteractor.GetPlanetsSpheresMap().at(id).GetObjectActor());
-}
-
-void VTKWindow::OnDeletePlanet(int planetId)
-{
-    RemoveVTKActor(m_solarSystemVTKInteractor.GetPlanetsSpheresMap().at(planetId).GetObjectActor());
-    m_solarSystemVTKInteractor.OnDeletePlanet(planetId);
-}
-
-void VTKWindow::SetUpObserverSubscribers()
-{
-    m_pObjectCreationWindow->OnCreateSignal.connect(
-        boost::bind(
-            &VTKWindow::OnNewPlanet,
-            this,
-            boost::placeholders::_1,
-            boost::placeholders::_2
-        )
-    );
-
-    m_pObjectInfoWindow->OnDeleteRecord.connect(
-        boost::bind(
-            &VTKWindow::OnDeletePlanet,
-            this,
-            boost::placeholders::_1
-        )
-    );
-}
-
 void VTKWindow::SetUpCamera()
 {
     m_camera = vtkSmartPointer<vtkCamera>::New();
     m_camera->Elevation(270);
     m_vtkViewer.GetRenderer()->SetActiveCamera(m_camera);
+}
+
+void VTKWindow::SetUpPlanet(int id, const PlanetAttributes& objectAttributes)
+{
+    try
+    {
+        // Post back to the main thread to update GUI
+        std::lock_guard<std::mutex> lock(m_guiUpdateMutex); // Use a mutex if necessary
+        // Perform the long-running task in this thread
+        m_solarSystemVTKInteractor.AddPlanet(id, objectAttributes);
+        vtkSmartPointer<vtkActor> actor = m_solarSystemVTKInteractor.GetPlanetsSpheresMap().at(id).GetObjectActor();
+        AddVTKActor(actor);
+        m_addPlanetThreadRunning = false;
+    }
+    catch (const std::runtime_error& e)
+    {
+        spdlog::error("Runtime error: {}", e.what());
+    }
+
 }
 
 

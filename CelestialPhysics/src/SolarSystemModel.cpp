@@ -37,7 +37,6 @@ void SolarSystemModel::AddPlanet(int id, const PlanetAttributes& objectAttribute
     m_planetsNextOrbitalPositions.insert({ id, m_planetsMap.at(id).GetOrbitalPoints(0)});
     m_planetsRotationDegrees.insert({ id, m_planetsMap.at(id).GetRotationPerStep() });
     m_planetsStepIterators.insert({ id, 0 });
-
 }
 
 void SolarSystemModel::OnDeleteStar(int id)
@@ -48,11 +47,6 @@ void SolarSystemModel::OnDeleteStar(int id)
 void SolarSystemModel::OnDeletePlanet(int id)
 {
     m_planetsMap.erase(id);
-}
-
-int SolarSystemModel::GetPlanetsCount() const
-{
-    return m_planetsMap.size();
 }
 
 const std::unordered_map<int, Star>& SolarSystemModel::GetStarsMap() const

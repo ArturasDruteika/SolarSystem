@@ -142,8 +142,7 @@ int ContextWindow::Init()
     ImPlot::CreateContext();
 
     CreateWindowIcon();
-
-    InitAllWindows();
+    SetUpAllGraphicalWindows();
 
     return 0;
 }
@@ -264,17 +263,59 @@ void ContextWindow::LoadFont()
     io.Fonts->AddFontFromFileTTF(fontPath.c_str(), 14);
 }
 
-void ContextWindow::InitAllWindows()
+void ContextWindow::CreateAllGraphicalWindows()
 {
-    // Window creation
     m_pObjectsInfoWindow = new ObjectsInfoWindow("Objects Info");
     m_pObjectCreationWindow = new ObjectCreationWindow("Object Creation");
     m_pVTKWindow = new VTKWindow("Vtk Viewer");
-    m_pVTKWindow->SetUpWindowPointers(m_pObjectCreationWindow, m_pObjectsInfoWindow);
+}
+
+void ContextWindow::InitAllGraphicalWindows()
+{
     m_pObjectCreationWindow->Init();
     m_pVTKWindow->Init();
     m_pObjectsInfoWindow->Init();
+
+}
+
+void ContextWindow::ConnectObservers()
+{
+    m_pObjectCreationWindow->OnCreateSignal.connect(
+        boost::bind(
+            &VTKWindow::OnNewPlanet,
+            m_pVTKWindow,
+            boost::placeholders::_1,
+            boost::placeholders::_2
+        )
+    );
+
+    m_pObjectsInfoWindow->OnDeleteRecord.connect(
+        boost::bind(
+            &VTKWindow::OnDeletePlanet,
+            m_pVTKWindow,
+            boost::placeholders::_1
+        )
+    );
+    m_pObjectsInfoWindow->OnDeleteRecord.connect(
+        boost::bind(
+            &ObjectCreationWindow::OnDeletePlanet,
+            m_pObjectCreationWindow,
+            boost::placeholders::_1
+        )
+    );
+}
+
+void ContextWindow::AddAllGraphicalWindows()
+{
     m_pGraphicalWindows.push_back(m_pObjectsInfoWindow);
     m_pGraphicalWindows.push_back(m_pObjectCreationWindow);
     m_pGraphicalWindows.push_back(m_pVTKWindow);
+}
+
+void ContextWindow::SetUpAllGraphicalWindows()
+{
+    CreateAllGraphicalWindows();
+    InitAllGraphicalWindows();
+    ConnectObservers();
+    AddAllGraphicalWindows();
 }

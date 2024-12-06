@@ -22,6 +22,7 @@ public:
 
     void Init() override;
     void DeInit() override;
+    void OnDeletePlanet(int id);
 
     CreationSignal OnCreateSignal;
     DeleteSignal OnDeleteSignal;
@@ -43,13 +44,14 @@ private:
 
     void SetInitialValues();
     void RenderObjectAttributeSelectionSection(const std::string& separatorText, const std::string& idText, double& parameterValue);
-    void OnDeletePlanet(int id);
     void ReplaceDegreesToRadians(PlanetAttributes& planetAttributes);
     PlanetAttributes ProcessPlanetAttributes(const PlanetAttributes& objectAttributes);
+    int GetNextAvailableNumber(const std::vector<int>& values);
+    std::vector<int> RemoveIntegerFromVector(const std::vector<int>& inputVector, int numberToRemove);
 
-    PlanetAttributes m_objectAttributes;
+    std::vector<int> m_planetsIds;
     std::unordered_map<int, PlanetAttributes> m_planetsAttributesMap;
-    int m_planetsCount;
+    PlanetAttributes m_objectAttributes;
     ImFont* m_customFont;
 };
 

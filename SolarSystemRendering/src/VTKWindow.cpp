@@ -94,14 +94,21 @@ void VTKWindow::SetUpCamera()
 
 void VTKWindow::SetUpPlanet(int id, const PlanetAttributes& objectAttributes)
 {
-    // Post back to the main thread to update GUI
-    std::lock_guard<std::mutex> lock(m_guiUpdateMutex); // Use a mutex if necessary
-    // Perform the long-running task in this thread
-    m_solarSystemVTKInteractor.AddPlanet(id, objectAttributes);
-    vtkSmartPointer<vtkActor> actor = m_solarSystemVTKInteractor.GetPlanetsSpheresMap().at(id).GetObjectActor();
-    AddVTKActor(actor);
+    try
+    {
+        // Post back to the main thread to update GUI
+        std::lock_guard<std::mutex> lock(m_guiUpdateMutex); // Use a mutex if necessary
+        // Perform the long-running task in this thread
+        m_solarSystemVTKInteractor.AddPlanet(id, objectAttributes);
+        vtkSmartPointer<vtkActor> actor = m_solarSystemVTKInteractor.GetPlanetsSpheresMap().at(id).GetObjectActor();
+        AddVTKActor(actor);
+        m_addPlanetThreadRunning = false;
+    }
+    catch (const std::runtime_error& e)
+    {
+        spdlog::error("Runtime error: {}", e.what());
+    }
 
-    m_addPlanetThreadRunning = false;
 }
 
 

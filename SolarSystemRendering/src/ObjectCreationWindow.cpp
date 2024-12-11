@@ -10,6 +10,8 @@ ObjectCreationWindow::ObjectCreationWindow(const std::string& windowName)
     : GraphicalWindow(windowName)
     , m_planetsAttributesMap{}
     , m_customFont{nullptr}
+    , m_isButtonDisabled{ false }
+    , m_disableTimer{ 4.0f }
 {
     SetInitialValues();
 }
@@ -91,42 +93,18 @@ void ObjectCreationWindow::RenderObjectTiltSection()
 
 void ObjectCreationWindow::RenderObjectCreationSection()
 {
-    // Add these variables to your class or function scope
-    static float disableTimer = 0.0f;
-    static bool isButtonDisabled = false;
+    UpdateDisableTimer(); // Update the timer logic
 
-    // Update the timer if the button is disabled
-    if (isButtonDisabled)
+    if (m_isButtonDisabled)
     {
-        disableTimer -= ImGui::GetIO().DeltaTime; // Decrease timer based on frame time
-        if (disableTimer <= 0.0f)
-        {
-            isButtonDisabled = false; // Re-enable the button after the timer ends
-        }
+        ImGui::BeginDisabled();
     }
 
-    // Check if the button should be disabled
-    if (isButtonDisabled)
-    {
-        ImGui::BeginDisabled(); // Disable the button
-    }
+    RenderCreateButton();
 
-    if (ImGui::Button("Create", ImVec2(250, 20)) && !isButtonDisabled)
+    if (m_isButtonDisabled)
     {
-        int nextAvailableNumber = GetNextAvailableNumber(m_planetsIds);
-        m_planetsIds.push_back(nextAvailableNumber);
-        PlanetAttributes planetAttributesProcessed = ProcessPlanetAttributes(m_objectAttributes);
-        OnCreateSignal(nextAvailableNumber, planetAttributesProcessed);
-        m_planetsAttributesMap.insert({ nextAvailableNumber, m_objectAttributes });
-
-        // Start the disable timer
-        disableTimer = 4.0f; // Set timer to 4 seconds
-        isButtonDisabled = true;
-    }
-
-    if (isButtonDisabled)
-    {
-        ImGui::EndDisabled(); // Re-enable the UI rendering
+        ImGui::EndDisabled();
     }
 }
 
@@ -156,6 +134,14 @@ void ObjectCreationWindow::RenderCreatedPlanetsInfoSection()
     static int planetIdToDelete;
     static bool unusedSelectionSection = false;
     static std::string sectionName = "PlanetToDelete";
+}
+
+void ObjectCreationWindow::RenderCreateButton()
+{
+    if (ImGui::Button("Create", ImVec2(250, 20)) && !m_isButtonDisabled)
+    {
+        CreatePlanet();
+    }
 }
 
 void ObjectCreationWindow::SetInitialValues()
@@ -227,4 +213,33 @@ std::vector<int> ObjectCreationWindow::RemoveIntegerFromVector(const std::vector
         }
     }
     return result;
+}
+
+void ObjectCreationWindow::UpdateDisableTimer()
+{
+    if (m_isButtonDisabled)
+    {
+        m_disableTimer -= ImGui::GetIO().DeltaTime; // Decrease timer based on frame time
+        if (m_disableTimer <= 0.0f)
+        {
+            m_isButtonDisabled = false; // Re-enable the button after the timer ends
+        }
+    }
+}
+
+void ObjectCreationWindow::StartDisableTimer()
+{
+    m_disableTimer = 4.0f; // Set timer to 4 seconds
+    m_isButtonDisabled = true;
+}
+
+void ObjectCreationWindow::CreatePlanet()
+{
+    int nextAvailableNumber = GetNextAvailableNumber(m_planetsIds);
+    m_planetsIds.push_back(nextAvailableNumber);
+    PlanetAttributes planetAttributesProcessed = ProcessPlanetAttributes(m_objectAttributes);
+    OnCreateSignal(nextAvailableNumber, planetAttributesProcessed);
+    m_planetsAttributesMap.insert({ nextAvailableNumber, m_objectAttributes });
+
+    StartDisableTimer(); // Start the disable timer
 }

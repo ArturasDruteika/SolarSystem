@@ -91,13 +91,42 @@ void ObjectCreationWindow::RenderObjectTiltSection()
 
 void ObjectCreationWindow::RenderObjectCreationSection()
 {
-    if (ImGui::Button("Create", ImVec2(250, 20)))
+    // Add these variables to your class or function scope
+    static float disableTimer = 0.0f;
+    static bool isButtonDisabled = false;
+
+    // Update the timer if the button is disabled
+    if (isButtonDisabled)
+    {
+        disableTimer -= ImGui::GetIO().DeltaTime; // Decrease timer based on frame time
+        if (disableTimer <= 0.0f)
+        {
+            isButtonDisabled = false; // Re-enable the button after the timer ends
+        }
+    }
+
+    // Check if the button should be disabled
+    if (isButtonDisabled)
+    {
+        ImGui::BeginDisabled(); // Disable the button
+    }
+
+    if (ImGui::Button("Create", ImVec2(250, 20)) && !isButtonDisabled)
     {
         int nextAvailableNumber = GetNextAvailableNumber(m_planetsIds);
         m_planetsIds.push_back(nextAvailableNumber);
         PlanetAttributes planetAttributesProcessed = ProcessPlanetAttributes(m_objectAttributes);
         OnCreateSignal(nextAvailableNumber, planetAttributesProcessed);
         m_planetsAttributesMap.insert({ nextAvailableNumber, m_objectAttributes });
+
+        // Start the disable timer
+        disableTimer = 4.0f; // Set timer to 4 seconds
+        isButtonDisabled = true;
+    }
+
+    if (isButtonDisabled)
+    {
+        ImGui::EndDisabled(); // Re-enable the UI rendering
     }
 }
 

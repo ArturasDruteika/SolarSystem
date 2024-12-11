@@ -6,12 +6,15 @@
 #include <set>
 
 
+constexpr float CREATE_BUTTON_DISABLE_TIME = 4.0f;
+
+
 ObjectCreationWindow::ObjectCreationWindow(const std::string& windowName)
     : GraphicalWindow(windowName)
     , m_planetsAttributesMap{}
     , m_customFont{nullptr}
     , m_isButtonDisabled{ false }
-    , m_disableTimer{ 4.0f }
+    , m_disableTimer{ CREATE_BUTTON_DISABLE_TIME }
 {
     SetInitialValues();
 }
@@ -229,7 +232,7 @@ void ObjectCreationWindow::UpdateDisableTimer()
 
 void ObjectCreationWindow::StartDisableTimer()
 {
-    m_disableTimer = 4.0f; // Set timer to 4 seconds
+    m_disableTimer = CREATE_BUTTON_DISABLE_TIME; // Set timer to 4 seconds
     m_isButtonDisabled = true;
 }
 

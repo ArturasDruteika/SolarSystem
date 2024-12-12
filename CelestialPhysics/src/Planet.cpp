@@ -8,7 +8,7 @@
 
 Planet::Planet(
 	PlanetAttributes planetAttributes,
-	const Point3D& focusObjectPt,
+	const Physics::Point3D& focusObjectPt,
 	double focusObjectMass, 
 	int ptsInSingleOrbit
 )
@@ -52,7 +52,7 @@ double Planet::GetStepIterator() const
 void Planet::UpdateStepIterator()
 {
 	m_stepIterator += 1;
-	if (m_stepIterator == N_ORBIT_PTS)
+	if (m_stepIterator == Physics::N_ORBIT_PTS)
 	{
 		m_stepIterator = 0;
 	}

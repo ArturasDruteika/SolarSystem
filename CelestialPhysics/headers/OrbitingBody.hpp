@@ -28,7 +28,7 @@ public:
 	OrbitingBody(
 		double radius, 
 		double mass, 
-		const Point3D& focusObjectPt,
+		const Physics::Point3D& focusObjectPt,
 		double focusObjectMass,
 		double semiMajorAxis, 
 		double semiMinorAxis, 
@@ -43,14 +43,14 @@ public:
 	double GetInclination() const;
 	double GetGravitationalParameter() const;
 	double GetRotationalPeriod() const;
-	const std::vector<Point3D>& GetOrbitalPoints() const;
-	Point3D GetOrbitalPoints(int id) const;
+	const std::vector<Physics::Point3D>& GetOrbitalPoints() const;
+	Physics::Point3D GetOrbitalPoints(int id) const;
 	const std::vector<double>& GetOrbitalSpeeds() const;
 
 
 private:
 	void CalculateOrbitalPoints();
-	void CalculateOrbitalSpeedVec(const Point3D& focusPt);
+	void CalculateOrbitalSpeedVec(const Physics::Point3D& focusPt);
 
 protected:
 	double m_semiMajorAxis;
@@ -59,9 +59,9 @@ protected:
 	double m_inclination;
 	double m_mu; // gravitational parameter
 	double m_rotationalPeriod;
-	std::vector<Point3D> m_orbitalPoints;
+	std::vector<Physics::Point3D> m_orbitalPoints;
 	std::vector<double> m_orbitalSpeeds;
-	Point3D m_focusObjPoint;
+	Physics::Point3D m_focusObjPoint;
 };
 
 

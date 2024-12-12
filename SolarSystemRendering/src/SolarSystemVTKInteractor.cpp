@@ -24,7 +24,7 @@ void SolarSystemVTKInteractor::AddStar(int id, double starRadius)
 void SolarSystemVTKInteractor::AddPlanet(int id, const PlanetAttributes& planetAttributes)
 {
 	m_solarSystemModel.AddPlanet(id, planetAttributes);
-	Point3D initialCoords = m_solarSystemModel.GetPlanetsMap().at(id).GetOrbitalPoints()[0];
+	Physics::Point3D initialCoords = m_solarSystemModel.GetPlanetsMap().at(id).GetOrbitalPoints()[0];
 	std::vector<double> initialCoordsVec;
 	initialCoordsVec.push_back(initialCoords.x);
 	initialCoordsVec.push_back(initialCoords.y);
@@ -67,7 +67,7 @@ void SolarSystemVTKInteractor::Step()
 	for (auto& [id, planet] : planetMap)
 	{
 		int stepIterator = planetMap.at(id).GetStepIterator();
-		Point3D nextOrbitalPoint = planet.GetOrbitalPoints().at(stepIterator);
+		Physics::Point3D nextOrbitalPoint = planet.GetOrbitalPoints().at(stepIterator);
 		m_planetSpheresMap.at(id).MoveActor(
 			nextOrbitalPoint.x,
 			nextOrbitalPoint.y,

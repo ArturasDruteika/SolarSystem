@@ -66,8 +66,9 @@ add_library(${PROJECT_NAME} SHARED
 
 include_directories(
     headers
-    ../GraphicalObjects/headers/
-    ../CelestialPhysics/headers/
+    ..//GraphicalObjects//headers//
+    ..//CelestialPhysics//headers//
+    ..//Physics//headers//
     ..//imgui//implot//
     ..//imgui//
     ..//imgui//imgui//
@@ -85,10 +86,11 @@ include_directories(
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
     imgui
-    spdlog::spdlog
     GraphicalObjects
     CelestialPhysics
+    Physics
     Utils
+    spdlog::spdlog
     ${Boost_LIBRARIES}
     ${OPENGL_LIBRARIES}
     ${VTK_LIBRARIES}
@@ -98,6 +100,7 @@ add_dependencies(${PROJECT_NAME}
     imgui
     GraphicalObjects
     CelestialPhysics
+    Physics
     Utils
     )
 

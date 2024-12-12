@@ -8,7 +8,7 @@
 OrbitingBody::OrbitingBody(
 	double radius, 
 	double mass, 
-	const Point3D& focusObjectPt,
+	const Physics::Point3D& focusObjectPt,
 	double focusObjectMass, 
 	double semiMajorAxis, 
 	double semiMinorAxis,
@@ -21,8 +21,8 @@ OrbitingBody::OrbitingBody(
 	, m_inclination{ inclination }
 	, m_rotationalPeriod{ rotationPeriod }
 {
-	m_eccentricity = OrbitalMechanics::CalculateEccentricity(m_semiMajorAxis, m_semiMinorAxis);
-	m_mu = OrbitalMechanics::CalculateGravitationalParameter(focusObjectMass);
+	m_eccentricity = Physics::OrbitalMechanics::CalculateEccentricity(m_semiMajorAxis, m_semiMinorAxis);
+	m_mu = Physics::OrbitalMechanics::CalculateGravitationalParameter(focusObjectMass);
 	CalculateOrbitalPoints();
 	CalculateOrbitalSpeedVec(focusObjectPt);
 }
@@ -61,12 +61,12 @@ double OrbitingBody::GetRotationalPeriod() const
 	return m_rotationalPeriod;
 }
 
-const std::vector<Point3D>& OrbitingBody::GetOrbitalPoints() const
+const std::vector<Physics::Point3D>& OrbitingBody::GetOrbitalPoints() const
 {
 	return m_orbitalPoints;
 }
 
-Point3D OrbitingBody::GetOrbitalPoints(int id) const
+Physics::Point3D OrbitingBody::GetOrbitalPoints(int id) const
 {
 	return m_orbitalPoints[id];
 }
@@ -78,15 +78,15 @@ const std::vector<double>& OrbitingBody::GetOrbitalSpeeds() const
 
 void OrbitingBody::CalculateOrbitalPoints()
 {
-	m_orbitalPoints = OrbitalMechanics::GenerateEllipticalOrbit(
+	m_orbitalPoints = Physics::OrbitalMechanics::GenerateEllipticalOrbit(
 		m_semiMajorAxis,
 		m_eccentricity,
 		m_inclination,
-		N_ORBIT_PTS
+		Physics::N_ORBIT_PTS
 	);
 }
 
-void OrbitingBody::CalculateOrbitalSpeedVec(const Point3D& focusPt)
+void OrbitingBody::CalculateOrbitalSpeedVec(const Physics::Point3D& focusPt)
 {
-	m_orbitalSpeeds = OrbitalMechanics::CalculateOrbitalSpeeds(m_semiMajorAxis, m_mu, m_orbitalPoints, focusPt);
+	m_orbitalSpeeds = Physics::OrbitalMechanics::CalculateOrbitalSpeeds(m_semiMajorAxis, m_mu, m_orbitalPoints, focusPt);
 }

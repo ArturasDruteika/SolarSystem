@@ -27,7 +27,7 @@ class CELESTIALPHYSICS_API Planet : public OrbitingBody
 public:
 	Planet(
 		PlanetAttributes planetAttributes, 
-		const Point3D& focusObjectPt,
+		const Physics::Point3D& focusObjectPt,
 		double focusObjectMass, 
 		int ptsInSingleOrbit
 	);

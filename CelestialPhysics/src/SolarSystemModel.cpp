@@ -33,7 +33,7 @@ void SolarSystemModel::AddStar(int id, double starRadius)
 
 void SolarSystemModel::AddPlanet(int id, const PlanetAttributes& objectAttributes)
 {
-    m_planetsMap.insert({ id, Planet(objectAttributes, m_starPoint, 10000.0, N_ORBIT_PTS) });
+    m_planetsMap.insert({ id, Planet(objectAttributes, m_starPoint, 10000.0, Physics::N_ORBIT_PTS) });
     m_planetsNextOrbitalPositions.insert({ id, m_planetsMap.at(id).GetOrbitalPoints(0)});
     m_planetsRotationDegrees.insert({ id, m_planetsMap.at(id).GetRotationPerStep() });
     m_planetsStepIterators.insert({ id, 0 });
@@ -59,7 +59,7 @@ const std::unordered_map<int, Planet>& SolarSystemModel::GetPlanetsMap() const
     return m_planetsMap;
 }
 
-const std::unordered_map<int, Point3D>& SolarSystemModel::GetPlanetsNextOrbitalPositions(int orbitalPointId) const
+const std::unordered_map<int, Physics::Point3D>& SolarSystemModel::GetPlanetsNextOrbitalPositions(int orbitalPointId) const
 {
     return m_planetsNextOrbitalPositions;
 }

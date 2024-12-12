@@ -2,12 +2,15 @@
 #define PHYSICS_ORBITALPOINT_HPP
 
 
-struct Point3D
+namespace Physics
 {
-	double x;
-	double y;
-	double z;
-};
+	struct Point3D
+	{
+		double x{ 0.0 };
+		double y{ 0.0 };
+		double z{ 0.0 };
+	};
+}
 
 
 #endif // PHYSICS_ORBITALPOINT_HPP

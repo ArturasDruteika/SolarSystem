@@ -21,27 +21,31 @@
 #include <vector>
 
 
-class PHYSICS_API OrbitalMechanics
+namespace Physics
 {
-public:
-	OrbitalMechanics();
-	~OrbitalMechanics();
+	class PHYSICS_API OrbitalMechanics
+	{
+	public:
+		OrbitalMechanics();
+		~OrbitalMechanics();
 
-	static std::vector<Point3D> CalculateOrbitPoints(double semiMajorAxis, double eccentricity, double inclination, int numPoints);
-	static std::vector<Point3D> GenerateEllipticalOrbit(double semiMajorAxis,double eccentricity,double inclination, int numPoints);
-	static double CalculateEccentricity(double semiMajorAxis, double semiMinorAxis);
-	static double CalculateGravitationalParameter(double focusMass);
-	static double CalculateOrbitalRadius(const Point3D& focusPt, const Point3D& bodyPoint);
-	static double CalculateOrbitalSpeed(double orbitalRadius, double semiMajorAxis, double mu);
-	static std::vector<double> CalculateOrbitalSpeeds(
-		double semiMajorAxis, 
-		double gravitationalParameter, 
-		const std::vector<Point3D>& orbitalPoints, 
-		const Point3D& focusPt
-	);
+		static std::vector<Point3D> CalculateOrbitPoints(double semiMajorAxis, double eccentricity, double inclination, int numPoints);
+		static std::vector<Point3D> GenerateEllipticalOrbit(double semiMajorAxis, double eccentricity, double inclination, int numPoints);
+		static double CalculateEccentricity(double semiMajorAxis, double semiMinorAxis);
+		static double CalculateGravitationalParameter(double focusMass);
+		static double CalculateOrbitalRadius(const Point3D& focusPt, const Point3D& bodyPoint);
+		static double CalculateOrbitalSpeed(double orbitalRadius, double semiMajorAxis, double mu);
+		static std::vector<double> CalculateOrbitalSpeeds(
+			double semiMajorAxis,
+			double gravitationalParameter,
+			const std::vector<Point3D>& orbitalPoints,
+			const Point3D& focusPt
+		);
 
-private:
+	private:
 
-};
+	};
+}
+
 
 #endif //PHYSICS_ORBITALMECHANICS_HPP

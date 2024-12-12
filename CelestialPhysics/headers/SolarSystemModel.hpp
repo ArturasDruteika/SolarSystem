@@ -41,7 +41,7 @@ public:
     void OnDeletePlanet(int id);
     const std::unordered_map<int, Star>& GetStarsMap() const;
     const std::unordered_map<int, Planet>& GetPlanetsMap() const;
-    const std::unordered_map<int, Point3D>& GetPlanetsNextOrbitalPositions(int orbitalPointId) const;
+    const std::unordered_map<int, Physics::Point3D>& GetPlanetsNextOrbitalPositions(int orbitalPointId) const;
     const std::unordered_map<int, double>& GetPlanetsRotationDegrees() const;
     const std::unordered_map<int, int>& GetPlanetsStepIterators() const;
     void Step();
@@ -51,10 +51,10 @@ private:
     SolarSystemModel();
     ~SolarSystemModel();
 
-    Point3D m_starPoint;
+    Physics::Point3D m_starPoint;
     std::unordered_map<int, Star> m_starsMap;
     std::unordered_map<int, Planet> m_planetsMap;
-    std::unordered_map<int, Point3D> m_planetsNextOrbitalPositions;
+    std::unordered_map<int, Physics::Point3D> m_planetsNextOrbitalPositions;
     std::unordered_map<int, double> m_planetsRotationDegrees;
     std::unordered_map<int, int> m_planetsStepIterators;
 };

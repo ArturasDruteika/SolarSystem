@@ -42,23 +42,25 @@ add_library(${PROJECT_NAME} SHARED
     headers/ObjectsComponents.hpp
 	headers/SolarSystemModel.hpp
 	src/SolarSystemModel.cpp
-    headers/OrbitalMechanics.hpp
-    src/OrbitalMechanics.cpp
-    headers/OrbitalPoint.hpp
     headers/CosmicBody.hpp
     src/CosmicBody.cpp
     headers/OrbitingBody.hpp
     src/OrbitingBody.cpp
-    headers/PhysicalConstants.hpp
 )
 
 include_directories(
     headers
+    ..//Physics//headers//
     ${Boost_INCLUDE_DIR}
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
+    Physics
     spdlog::spdlog
     ${OPENGL_LIBRARIES}
     ${Boost_LIBRARIES}
+)
+
+add_dependencies(${PROJECT_NAME}
+    Physics
 )

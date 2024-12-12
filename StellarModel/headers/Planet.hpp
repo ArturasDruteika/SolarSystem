@@ -1,13 +1,13 @@
-#ifndef CELESTIALPHYSICS_PLANETS_HPP
-#define CELESTIALPHYSICS_PLANETS_HPP
+#ifndef STELLARMODEL_PLANETS_HPP
+#define STELLARMODEL_PLANETS_HPP
 
 
 #if defined (_WIN32)
-#if defined(CELESTIALPHYSICS_EXPORT)
-#define CELESTIALPHYSICS_API __declspec(dllexport)
+#if defined(STELLARMODEL_EXPORT)
+#define STELLARMODEL_API __declspec(dllexport)
 #else
-#define  CELESTIALPHYSICS_API __declspec(dllimport)
-#endif /* CELESTIALPHYSICS_API */
+#define  STELLARMODEL_API __declspec(dllimport)
+#endif /* STELLARMODEL_API */
 #define _sprintf sprintf_s
 #endif
 
@@ -22,7 +22,7 @@
 #include <utility>
 
 
-class CELESTIALPHYSICS_API Planet : public OrbitingBody
+class STELLARMODEL_API Planet : public OrbitingBody
 {
 public:
 	Planet(
@@ -50,4 +50,4 @@ private:
 	PlanetAttributes m_planetAttributes;
 };
 
-#endif //CELESTIALPHYSICS_PLANETS_HPP
+#endif //STELLARMODEL_PLANETS_HPP

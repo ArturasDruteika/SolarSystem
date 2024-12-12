@@ -1,13 +1,13 @@
-#ifndef CELESTIALPHYSICS_OBJECTSCOMPONENTS_HPP
-#define CELESTIALPHYSICS_OBJECTSCOMPONENTS_HPP
+#ifndef STELLARMODEL_OBJECTSCOMPONENTS_HPP
+#define STELLARMODEL_OBJECTSCOMPONENTS_HPP
 
 
 #if defined (_WIN32)
-#if defined(CELESTIALPHYSICS_EXPORT)
-#define CELESTIALPHYSICS_API __declspec(dllexport)
+#if defined(STELLARMODEL_EXPORT)
+#define STELLARMODEL_API __declspec(dllexport)
 #else
-#define  CELESTIALPHYSICS_API __declspec(dllimport)
-#endif /* CELESTIALPHYSICS_API */
+#define  STELLARMODEL_API __declspec(dllimport)
+#endif /* STELLARMODEL_API */
 #define _sprintf sprintf_s
 #endif
 
@@ -17,7 +17,7 @@
 #endif
 
 
-typedef CELESTIALPHYSICS_API struct
+typedef STELLARMODEL_API struct
 {
     double radius; // km
     double mass; // kg
@@ -29,4 +29,4 @@ typedef CELESTIALPHYSICS_API struct
 } PlanetAttributes;
 
 
-#endif // CELESTIALPHYSICS_OBJECTSCOMPONENTS_HPP
+#endif // STELLARMODEL_OBJECTSCOMPONENTS_HPP

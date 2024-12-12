@@ -1,13 +1,13 @@
-#ifndef CELESTIALPHYSICS_SOLARSYSTEMMODEL_HPP
-#define CELESTIALPHYSICS_SOLARSYSTEMMODEL_HPP
+#ifndef STELLARMODEL_SOLARSYSTEMMODEL_HPP
+#define STELLARMODEL_SOLARSYSTEMMODEL_HPP
 
 
 #if defined (_WIN32)
-#if defined(CELESTIALPHYSICS_EXPORT)
-#define CELESTIALPHYSICS_API __declspec(dllexport)
+#if defined(STELLARMODEL_EXPORT)
+#define STELLARMODEL_API __declspec(dllexport)
 #else
-#define  CELESTIALPHYSICS_API __declspec(dllimport)
-#endif /* CELESTIALPHYSICS_API */
+#define  STELLARMODEL_API __declspec(dllimport)
+#endif /* STELLARMODEL_API */
 #define _sprintf sprintf_s
 #endif
 
@@ -25,7 +25,7 @@
 #include <utility>
 
 
-class CELESTIALPHYSICS_API SolarSystemModel
+class STELLARMODEL_API SolarSystemModel
 {
 public:
     // Delete copy constructor and assignment operator to enforce singleton pattern
@@ -59,4 +59,4 @@ private:
     std::unordered_map<int, int> m_planetsStepIterators;
 };
 
-#endif //CELESTIALPHYSICS_SOLARSYSTEMMODEL_HPP
+#endif //STELLARMODEL_SOLARSYSTEMMODEL_HPP

@@ -1,13 +1,13 @@
-#ifndef CELESTIALPHYSICS_COSMICBODY_HPP
-#define CELESTIALPHYSICS_COSMICBODY_HPP
+#ifndef STELLARMODEL_COSMICBODY_HPP
+#define STELLARMODEL_COSMICBODY_HPP
 
 
 #if defined (_WIN32)
-#if defined(CELESTIALPHYSICS_EXPORT)
-#define CELESTIALPHYSICS_API __declspec(dllexport)
+#if defined(STELLARMODEL_EXPORT)
+#define STELLARMODEL_API __declspec(dllexport)
 #else
-#define  CELESTIALPHYSICS_API __declspec(dllimport)
-#endif /* CELESTIALPHYSICS_API */
+#define  STELLARMODEL_API __declspec(dllimport)
+#endif /* STELLARMODEL_API */
 #define _sprintf sprintf_s
 #endif
 
@@ -17,7 +17,7 @@
 #endif
 
 
-class CELESTIALPHYSICS_API CosmicBody
+class STELLARMODEL_API CosmicBody
 {
 public:
 	CosmicBody(double radius, double mass);
@@ -32,4 +32,4 @@ private:
 };
 
 
-#endif //CELESTIALPHYSICS_COSMICBODY_HPP
+#endif //STELLARMODEL_COSMICBODY_HPP

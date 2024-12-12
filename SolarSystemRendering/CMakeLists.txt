@@ -67,7 +67,7 @@ add_library(${PROJECT_NAME} SHARED
 include_directories(
     headers
     ..//GraphicalObjects//headers//
-    ..//CelestialPhysics//headers//
+    ..//StellarModel//headers//
     ..//Physics//headers//
     ..//imgui//implot//
     ..//imgui//
@@ -87,7 +87,7 @@ include_directories(
 target_link_libraries(${PROJECT_NAME} PRIVATE
     imgui
     GraphicalObjects
-    CelestialPhysics
+    StellarModel
     Physics
     Utils
     spdlog::spdlog
@@ -99,7 +99,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
 add_dependencies(${PROJECT_NAME}
     imgui
     GraphicalObjects
-    CelestialPhysics
+    StellarModel
     Physics
     Utils
     )

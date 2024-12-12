@@ -41,6 +41,7 @@ private:
     void RenderObjectCreationSection();
     void RenderPlanetsTableSection();
     void RenderCreatedPlanetsInfoSection();
+    void RenderCreateButton();
 
     void SetInitialValues();
     void RenderObjectAttributeSelectionSection(const std::string& separatorText, const std::string& idText, double& parameterValue);
@@ -48,7 +49,12 @@ private:
     PlanetAttributes ProcessPlanetAttributes(const PlanetAttributes& objectAttributes);
     int GetNextAvailableNumber(const std::vector<int>& values);
     std::vector<int> RemoveIntegerFromVector(const std::vector<int>& inputVector, int numberToRemove);
+    void UpdateDisableTimer();
+    void StartDisableTimer();
+    void CreatePlanet();
 
+    bool m_isButtonDisabled;
+    float m_disableTimer;
     std::vector<int> m_planetsIds;
     std::unordered_map<int, PlanetAttributes> m_planetsAttributesMap;
     PlanetAttributes m_objectAttributes;

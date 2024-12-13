@@ -6,7 +6,7 @@ ObjectsInfoWindow::ObjectsInfoWindow(const std::string& windowName)
     : GraphicalWindow(windowName)
     , m_customFont{ nullptr }
     , m_nStyleVars{0}
-    , m_solarSystemModel{ SolarSystemModel::GetInstance() }
+    , m_solarSystemModel{ StellarSystem::SolarSystemModel::GetInstance() }
 {
 }
 
@@ -62,7 +62,7 @@ void ObjectsInfoWindow::RenderPlanetsInfoTable()
 
     ImGui::PushFont(m_customFont);
 
-    static std::unordered_map<int, Planet> planetsMap;
+    static std::unordered_map<int, StellarSystem::Planet> planetsMap;
     planetsMap = m_solarSystemModel.GetPlanetsMap();
 
     if (ImGui::BeginTable("Planets Info", tableColumnNames.size(), flagsPlanetsTable))

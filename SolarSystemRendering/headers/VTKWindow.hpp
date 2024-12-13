@@ -26,7 +26,7 @@ public:
     void DeInit() override;
 
     void InitializeVtkActors();
-    void OnNewPlanet(int id, const PlanetAttributes& objectAttributes);
+    void OnNewPlanet(int id, const StellarSystem::PlanetAttributes& objectAttributes);
     void OnDeletePlanet(int planetId);
 
 private:
@@ -37,7 +37,7 @@ private:
     void AddVTKActor(const vtkSmartPointer<vtkActor>& actor);
     void RemoveVTKActor(const vtkSmartPointer<vtkActor>& actor);
     void SetUpCamera();
-    void SetUpPlanet(int id, const PlanetAttributes& objectAttributes);
+    void SetUpPlanet(int id, const StellarSystem::PlanetAttributes& objectAttributes);
 
     bool m_isVtkOpen;
     std::mutex m_guiUpdateMutex;

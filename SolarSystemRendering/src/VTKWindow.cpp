@@ -38,7 +38,7 @@ void VTKWindow::InitializeVtkActors()
     m_vtkViewer.AddActor(m_solarSystemVTKInteractor.GetStarsSpheresMap().at(0).GetObjectActor());
 }
 
-void VTKWindow::OnNewPlanet(int id, const PlanetAttributes& objectAttributes)
+void VTKWindow::OnNewPlanet(int id, const StellarSystem::PlanetAttributes& objectAttributes)
 {
     if (m_addPlanetThreadRunning.exchange(true)) // Ensure only one thread is running
     {
@@ -92,7 +92,7 @@ void VTKWindow::SetUpCamera()
     m_vtkViewer.GetRenderer()->SetActiveCamera(m_camera);
 }
 
-void VTKWindow::SetUpPlanet(int id, const PlanetAttributes& objectAttributes)
+void VTKWindow::SetUpPlanet(int id, const StellarSystem::PlanetAttributes& objectAttributes)
 {
     try
     {
@@ -108,7 +108,6 @@ void VTKWindow::SetUpPlanet(int id, const PlanetAttributes& objectAttributes)
     {
         spdlog::error("Runtime error: {}", e.what());
     }
-
 }
 
 

@@ -97,15 +97,17 @@ void ObjectCreationWindow::RenderObjectTiltSection()
 void ObjectCreationWindow::RenderObjectCreationSection()
 {
     UpdateDisableTimer(); // Update the timer logic
+    static bool isDisabled;
+    isDisabled = m_isButtonDisabled;
 
-    if (m_isButtonDisabled)
+    if (isDisabled)
     {
         ImGui::BeginDisabled();
     }
 
     RenderCreateButton();
 
-    if (m_isButtonDisabled)
+    if (isDisabled)
     {
         ImGui::EndDisabled();
     }
@@ -168,14 +170,14 @@ void ObjectCreationWindow::RenderObjectAttributeSelectionSection(const std::stri
     ImGui::PopItemWidth();
 }
 
-void ObjectCreationWindow::ReplaceDegreesToRadians(PlanetAttributes& planetAttributes)
+void ObjectCreationWindow::ReplaceDegreesToRadians(StellarSystem::PlanetAttributes& planetAttributes)
 {
     planetAttributes.inclination = AnglesOperations::Deg2Rad(planetAttributes.inclination);
 }
 
-PlanetAttributes ObjectCreationWindow::ProcessPlanetAttributes(const PlanetAttributes& objectAttributes)
+StellarSystem::PlanetAttributes ObjectCreationWindow::ProcessPlanetAttributes(const StellarSystem::PlanetAttributes& objectAttributes)
 {
-    PlanetAttributes planetAttributesProcessed = objectAttributes;
+    StellarSystem::PlanetAttributes planetAttributesProcessed = objectAttributes;
     ReplaceDegreesToRadians(planetAttributesProcessed);
     return planetAttributesProcessed;
 }
@@ -240,7 +242,7 @@ void ObjectCreationWindow::CreatePlanet()
 {
     int nextAvailableNumber = GetNextAvailableNumber(m_planetsIds);
     m_planetsIds.push_back(nextAvailableNumber);
-    PlanetAttributes planetAttributesProcessed = ProcessPlanetAttributes(m_objectAttributes);
+    StellarSystem::PlanetAttributes planetAttributesProcessed = ProcessPlanetAttributes(m_objectAttributes);
     OnCreateSignal(nextAvailableNumber, planetAttributesProcessed);
     m_planetsAttributesMap.insert({ nextAvailableNumber, m_objectAttributes });
 

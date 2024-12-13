@@ -5,7 +5,7 @@
 
 
 SolarSystemVTKInteractor::SolarSystemVTKInteractor()
-	: m_solarSystemModel{ SolarSystemModel::GetInstance() }
+	: m_solarSystemModel{ StellarSystem::SolarSystemModel::GetInstance() }
 {
 }
 
@@ -21,7 +21,7 @@ void SolarSystemVTKInteractor::AddStar(int id, double starRadius)
 	m_starSpheresMap.insert({ id, Sphere(starRadius, starCoords, ColorsVTK::YELLOW) });
 }
 
-void SolarSystemVTKInteractor::AddPlanet(int id, const PlanetAttributes& planetAttributes)
+void SolarSystemVTKInteractor::AddPlanet(int id, const StellarSystem::PlanetAttributes& planetAttributes)
 {
 	m_solarSystemModel.AddPlanet(id, planetAttributes);
 	Physics::Point3D initialCoords = m_solarSystemModel.GetPlanetsMap().at(id).GetOrbitalPoints()[0];
@@ -57,7 +57,7 @@ std::unordered_map<int, Sphere> SolarSystemVTKInteractor::GetPlanetsSpheresMap()
 
 void SolarSystemVTKInteractor::Step()
 {
-	const std::unordered_map<int, Planet>& planetMap = m_solarSystemModel.GetPlanetsMap();
+	const std::unordered_map<int, StellarSystem::Planet>& planetMap = m_solarSystemModel.GetPlanetsMap();
 	// Check needed to ensure that during planet addition or deletion there was enough time to create planet object and planet sphere
 	if (m_planetSpheresMap.size() != planetMap.size())
 	{

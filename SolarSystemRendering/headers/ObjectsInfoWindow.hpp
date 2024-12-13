@@ -35,7 +35,7 @@ private:
 
     int m_nStyleVars;
     ImFont* m_customFont;
-    SolarSystemModel& m_solarSystemModel;
+    StellarSystem::SolarSystemModel& m_solarSystemModel;
 };
 
 

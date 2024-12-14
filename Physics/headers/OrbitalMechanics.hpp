@@ -26,12 +26,11 @@ namespace Physics
 	class PHYSICS_API OrbitalMechanics
 	{
 	public:
-		OrbitalMechanics();
-		~OrbitalMechanics();
-
 		static std::vector<Point3D> CalculateOrbitPoints(double semiMajorAxis, double eccentricity, double inclination, int numPoints);
 		static std::vector<Point3D> GenerateEllipticalOrbit(double semiMajorAxis, double eccentricity, double inclination, int numPoints);
 		static double CalculateEccentricity(double semiMajorAxis, double semiMinorAxis);
+		// TODO: remove perihelion later, not nec. for this calculation.
+		static double CalculateEccentricity(double semiMajorAxis, double aphelion, double perihelion);
 		static double CalculateGravitationalParameter(double focusMass);
 		static double CalculateOrbitalRadius(const Point3D& focusPt, const Point3D& bodyPoint);
 		static double CalculateOrbitalSpeed(double orbitalRadius, double semiMajorAxis, double mu);
@@ -41,9 +40,11 @@ namespace Physics
 			const std::vector<Point3D>& orbitalPoints,
 			const Point3D& focusPt
 		);
-
-	private:
-
+		// Calculates orbital period in seconds
+		static double CalculateOrbitalPeriod(double semiMajorAxis, double massOfCentralBody);
+		static double CalculateOrbitalSpeedAtPoint(double semiMajorAxis, double eccentricity, double radius);
+		static Point3D CalculatePosition(double semiMajorAxis, double eccentricity, double inclination, double trueAnomaly);
+		static std::vector<Point3D> CalculateElipticalOrbitPoints(double semiMajorAxis, double eccentricity, double inclination, int nSteps);
 	};
 }
 

@@ -7,14 +7,6 @@
 
 namespace Physics
 {
-    OrbitalMechanics::OrbitalMechanics()
-    {
-    }
-
-    OrbitalMechanics::~OrbitalMechanics()
-    {
-    }
-
     std::vector<Point3D> OrbitalMechanics::CalculateOrbitPoints(double semiMajorAxis, double eccentricity, double inclination, int numPoints)
     {
         std::vector<Point3D> points;
@@ -102,6 +94,11 @@ namespace Physics
         return std::sqrt(1 - (semiMinorAxis * semiMinorAxis) / (semiMajorAxis * semiMajorAxis));
     }
 
+    double OrbitalMechanics::CalculateEccentricity(double semiMajorAxis, double aphelion, double perihelion)
+    {
+        return (aphelion - semiMajorAxis) / semiMajorAxis;
+    }
+
     double OrbitalMechanics::CalculateGravitationalParameter(double focusMass)
     {
         return GRAVITATIONAL_CONSTANT * focusMass;
@@ -136,5 +133,42 @@ namespace Physics
             orbitalSpeeds.push_back(orbitalSpeed);
         }
         return orbitalSpeeds;
+    }
+
+    double OrbitalMechanics::CalculateOrbitalPeriod(double semiMajorAxis, double massOfCentralBody)
+    {
+        return 2 * M_PI * std::sqrt(std::pow(semiMajorAxis, 3) / (GRAVITATIONAL_CONSTANT * massOfCentralBody));
+    }
+
+    Point3D OrbitalMechanics::CalculatePosition(double semiMajorAxis, double eccentricity, double inclination, double trueAnomaly)
+    {
+        // Radius at current true anomaly
+        double radius = semiMajorAxis * (1 - eccentricity * eccentricity) / (1 + eccentricity * std::cos(trueAnomaly));
+
+        // Position in orbital plane
+        double x_plane = radius * std::cos(trueAnomaly);
+        double y_plane = radius * std::sin(trueAnomaly);
+
+        // Convert to 3D space considering inclination
+        Point3D pos;
+        pos.x = x_plane;
+        pos.y = y_plane * std::cos(inclination);
+        pos.z = y_plane * std::sin(inclination);
+
+        return pos;
+    }
+
+    std::vector<Point3D> OrbitalMechanics::CalculateElipticalOrbitPoints(double semiMajorAxis, double eccentricity, double inclination, int nSteps)
+    {
+        std::vector<Point3D> elipticalOrbitPts;
+        elipticalOrbitPts.reserve(nSteps);
+
+        for (int i = 0; i < nSteps; i++)
+        {
+            double trueAnomaly = 2 * M_PI * i / nSteps; // Divide orbit into equal angles
+            Point3D pos = CalculatePosition(semiMajorAxis, eccentricity, inclination, trueAnomaly);
+            elipticalOrbitPts.push_back(pos);
+        }
+        return elipticalOrbitPts;
     }
 }

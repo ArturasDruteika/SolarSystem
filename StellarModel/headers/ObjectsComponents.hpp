@@ -8,8 +8,8 @@ namespace StellarSystem
     {
         double radius; // km
         double mass; // kg
-        double semiMajorAxis; // km
-        double semiMinorAxis; // km
+        double aphelion; // km
+        double perihelion; // km
         double rotationalPeriod; // days
         double inclination; // radians (for orbit calculation) / degrees (for rendering)
         double tilt; // degrees

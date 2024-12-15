@@ -94,7 +94,7 @@ namespace Physics
         return std::sqrt(1 - (semiMinorAxis * semiMinorAxis) / (semiMajorAxis * semiMajorAxis));
     }
 
-    double OrbitalMechanics::CalculateEccentricity(double semiMajorAxis, double aphelion, double perihelion)
+    double OrbitalMechanics::CalculateEccentricityUsingAphelion(double semiMajorAxis, double aphelion)
     {
         return (aphelion - semiMajorAxis) / semiMajorAxis;
     }

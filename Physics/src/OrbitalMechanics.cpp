@@ -113,6 +113,11 @@ namespace Physics
         );
     }
 
+    double OrbitalMechanics::CalculateOrbitalSpeed(double orbitalRadius, double semiMajorAxis, double massCentralBody, double gravitationalParameter)
+    {
+        return std::sqrt(gravitationalParameter * massCentralBody * (2.0 / orbitalRadius - 1.0 / semiMajorAxis));
+    }
+
     double OrbitalMechanics::CalculateOrbitalSpeed(double orbitalRadius, double semiMajorAxis, double mu)
     {
         return std::sqrt(mu * (2.0 / orbitalRadius - 1.0 / semiMajorAxis));
@@ -129,7 +134,7 @@ namespace Physics
         for (const Point3D& orbitalPt : orbitalPoints)
         {
             double orbitalRadius = CalculateOrbitalRadius(focusPt, orbitalPt);
-            double orbitalSpeed = CalculateOrbitalSpeed(orbitalRadius, semiMajorAxis, gravitationalParameter);
+            double orbitalSpeed = CalculateOrbitalSpeed(orbitalRadius * 1000000000.0, semiMajorAxis * 1000000000.0, gravitationalParameter);
             orbitalSpeeds.push_back(orbitalSpeed);
         }
         return orbitalSpeeds;
@@ -146,14 +151,14 @@ namespace Physics
         double radius = semiMajorAxis * (1 - eccentricity * eccentricity) / (1 + eccentricity * std::cos(trueAnomaly));
 
         // Position in orbital plane
-        double x_plane = radius * std::cos(trueAnomaly);
-        double y_plane = radius * std::sin(trueAnomaly);
+        double xPlane = radius * std::cos(trueAnomaly);
+        double yPlane = radius * std::sin(trueAnomaly);
 
         // Convert to 3D space considering inclination
         Point3D pos;
-        pos.x = x_plane;
-        pos.y = y_plane * std::cos(inclination);
-        pos.z = y_plane * std::sin(inclination);
+        pos.x = xPlane;
+        pos.y = yPlane * std::cos(inclination);
+        pos.z = yPlane * std::sin(inclination);
 
         return pos;
     }

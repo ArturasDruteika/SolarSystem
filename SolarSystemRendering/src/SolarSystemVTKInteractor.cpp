@@ -26,9 +26,9 @@ void SolarSystemVTKInteractor::AddPlanet(int id, const StellarSystem::PlanetAttr
 	m_solarSystemModel.AddPlanet(id, planetAttributes);
 	Physics::Point3D initialCoords = m_solarSystemModel.GetPlanetsMap().at(id).GetOrbitalPoints()[0];
 	std::vector<double> initialCoordsVec;
-	initialCoordsVec.push_back(initialCoords.x);
-	initialCoordsVec.push_back(initialCoords.y);
-	initialCoordsVec.push_back(initialCoords.z);
+	initialCoordsVec.push_back(initialCoords.x / StellarSystem::DISTANCE_MULTIPLIER);
+	initialCoordsVec.push_back(initialCoords.y / StellarSystem::DISTANCE_MULTIPLIER);
+	initialCoordsVec.push_back(initialCoords.z / StellarSystem::DISTANCE_MULTIPLIER);
 	Sphere planetSphere = Sphere(planetAttributes.radius, initialCoordsVec, ColorsVTK::BLUE);
 	planetSphere.RotateY(m_solarSystemModel.GetPlanetsMap().at(id).GetTilt());
 	m_planetSpheresMap.insert({ id, planetSphere });
@@ -69,9 +69,9 @@ void SolarSystemVTKInteractor::Step()
 		int stepIterator = planetMap.at(id).GetStepIterator();
 		Physics::Point3D nextOrbitalPoint = planet.GetOrbitalPoints().at(stepIterator);
 		m_planetSpheresMap.at(id).MoveActor(
-			nextOrbitalPoint.x,
-			nextOrbitalPoint.y,
-			nextOrbitalPoint.z
+			nextOrbitalPoint.x / StellarSystem::DISTANCE_MULTIPLIER,
+			nextOrbitalPoint.y / StellarSystem::DISTANCE_MULTIPLIER,
+			nextOrbitalPoint.z / StellarSystem::DISTANCE_MULTIPLIER
 		);
 		m_planetSpheresMap.at(id).RotateActor(planetsRotationDegrees.at(id));
 		m_solarSystemModel.Step();

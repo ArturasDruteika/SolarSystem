@@ -134,7 +134,7 @@ namespace Physics
         for (const Point3D& orbitalPt : orbitalPoints)
         {
             double orbitalRadius = CalculateOrbitalRadius(focusPt, orbitalPt);
-            double orbitalSpeed = CalculateOrbitalSpeed(orbitalRadius * 1000000000.0, semiMajorAxis * 1000000000.0, gravitationalParameter);
+            double orbitalSpeed = CalculateOrbitalSpeed(orbitalRadius, semiMajorAxis, gravitationalParameter);
             orbitalSpeeds.push_back(orbitalSpeed);
         }
         return orbitalSpeeds;

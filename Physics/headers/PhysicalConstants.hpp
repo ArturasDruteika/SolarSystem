@@ -10,6 +10,7 @@ namespace Physics
 	constexpr double N_ORBIT_PTS = 10'000;
 	constexpr int ECCENTRIC_ANOMALY_ITERATIONS = 10'000;
 	constexpr double SOLAR_MASS = 1988416e24; // kg
+	constexpr double KM = 1000.0; // meters in kilometer
 }
 
 

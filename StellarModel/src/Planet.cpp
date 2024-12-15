@@ -18,8 +18,8 @@ namespace StellarSystem
 			planetAttributes.mass, 
 			focusObjectPt,
 			focusObjectMass,
-			planetAttributes.semiMajorAxis, 
-			planetAttributes.semiMinorAxis,
+			planetAttributes.aphelion, 
+			planetAttributes.perihelion,
 			planetAttributes.rotationalPeriod,
 			planetAttributes.inclination
 		)
@@ -61,7 +61,8 @@ namespace StellarSystem
 
 	double Planet::GetCurrentSpeed() const
 	{
-		return m_orbitalSpeeds.at(m_stepIterator);
+		double orbitalSpeed = m_orbitalSpeeds.at(m_stepIterator);
+		return orbitalSpeed / Physics::KM;
 	}
 
 	PlanetAttributes Planet::GetPlanetAttributes() const

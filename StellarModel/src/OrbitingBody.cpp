@@ -89,7 +89,8 @@ namespace StellarSystem
 	void OrbitingBody::Init(const Physics::Point3D& focusObjectPt, double focusObjectMass)
 	{
 		m_semiMajorAxis = CalculateSemiMajorAxis(m_aphelion, m_perihelion);
-		m_eccentricity = Physics::OrbitalMechanics::CalculateEccentricity(m_semiMajorAxis, m_aphelion, m_perihelion);
+		m_eccentricity = Physics::OrbitalMechanics::CalculateEccentricityUsingAphelion(m_semiMajorAxis, m_aphelion);
+		m_semiMinorAxis = CalculateSemiMinorAxis(m_semiMajorAxis, m_eccentricity);
 		m_mu = Physics::OrbitalMechanics::CalculateGravitationalParameter(focusObjectMass);
 		m_orbitalPoints = Physics::OrbitalMechanics::CalculateElipticalOrbitPoints(
 			m_semiMajorAxis,
@@ -114,9 +115,15 @@ namespace StellarSystem
 	{
 		m_orbitalSpeeds = Physics::OrbitalMechanics::CalculateOrbitalSpeeds(m_semiMajorAxis, m_mu, m_orbitalPoints, focusPt);
 	}
+
 	double OrbitingBody::CalculateSemiMajorAxis(double aphelion, double perihelion)
 	{
 		return (aphelion + perihelion) / 2.0;
+	}
+
+	double OrbitingBody::CalculateSemiMinorAxis(double semiMajorAxis, double eccentricity)
+	{
+		return semiMajorAxis * std::sqrt(1 - std::pow(eccentricity, 2));
 	}
 }
 

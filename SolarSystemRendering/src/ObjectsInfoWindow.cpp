@@ -50,10 +50,10 @@ void ObjectsInfoWindow::RenderPlanetsInfoTable()
     static std::vector<std::string> tableColumnNames = 
     {
         "Planet Number", 
-        "Radius (Km)",
-        "Semi-major axis (Km)",
-        "Semi-minor axis (Km)",
-        "Speed (Km / h)",
+        "Radius (km)",
+        "Aphelion (mln km)",
+        "Perihelion (mln km)",
+        "Speed (km / h)",
         "Rotational Period (Days)",
         "Inclination (Deg)",
         "Tilt (Deg)",
@@ -80,9 +80,9 @@ void ObjectsInfoWindow::RenderPlanetsInfoTable()
             ImGui::TableNextColumn();
             ImGui::Text("%.5f", planet.GetRadius());
             ImGui::TableNextColumn();
-            ImGui::Text("%.5f", planet.GetSemiMajorAxis());
+            ImGui::Text("%.5f", planet.GetAphelion() / StellarSystem::DISTANCE_MULTIPLIER);
             ImGui::TableNextColumn();
-            ImGui::Text("%.5f", planet.GetSemiMinorAxis());
+            ImGui::Text("%.5f", planet.GetPerihelion() / StellarSystem::DISTANCE_MULTIPLIER);
             ImGui::TableNextColumn();
             ImGui::Text("%.5f", planet.GetCurrentSpeed());
             ImGui::TableNextColumn();

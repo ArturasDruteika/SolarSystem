@@ -66,17 +66,17 @@ void ObjectCreationWindow::RenderWindowInternal()
 
 void ObjectCreationWindow::RenderObjectRadiusSection()
 {
-    RenderObjectAttributeSelectionSection("Radius", "Radius", m_objectAttributes.radius);
+    RenderObjectAttributeSelectionSection("Radius (km)", "Radius", m_objectAttributes.radius);
 }
 
 void ObjectCreationWindow::RenderSemiMajorAxisSection()
 {
-    RenderObjectAttributeSelectionSection("Aphelion (km)", "Aphelion", m_objectAttributes.aphelion);
+    RenderObjectAttributeSelectionSection("Aphelion (mln km)", "Aphelion", m_objectAttributes.aphelion);
 }
 
 void ObjectCreationWindow::RenderSemiMinorAxisSection()
 {
-    RenderObjectAttributeSelectionSection("Perihelion (km)", "Perihelion", m_objectAttributes.perihelion);
+    RenderObjectAttributeSelectionSection("Perihelion (mln km)", "Perihelion", m_objectAttributes.perihelion);
 }
 
 void ObjectCreationWindow::RenderObjectRotationalPeriodSection()

@@ -39,6 +39,8 @@ namespace StellarSystem
 		);
 		~OrbitingBody();
 
+		double GetAphelion() const;
+		double GetPerihelion() const;
 		double GetSemiMajorAxis() const;
 		double GetSemiMinorAxis() const;
 		double GetEccentricity() const;
@@ -51,10 +53,14 @@ namespace StellarSystem
 
 
 	private:
+		void Init(const Physics::Point3D& focusObjectPt, double focusObjectMass);
 		void CalculateOrbitalPoints();
 		void CalculateOrbitalSpeedVec(const Physics::Point3D& focusPt);
+		double CalculateSemiMajorAxis(double aphelion, double perihelion);
 
 	protected:
+		double m_aphelion;
+		double m_perihelion;
 		double m_semiMajorAxis;
 		double m_semiMinorAxis;
 		double m_eccentricity;

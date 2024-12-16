@@ -50,6 +50,7 @@ namespace StellarSystem
 		const std::vector<Physics::Point3D>& GetOrbitalPoints() const;
 		Physics::Point3D GetOrbitalPoints(int id) const;
 		const std::vector<double>& GetOrbitalSpeeds() const;
+		const double GetCurrentSpeed() const;
 
 
 	private:

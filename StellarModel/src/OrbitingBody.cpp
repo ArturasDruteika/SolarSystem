@@ -86,6 +86,11 @@ namespace StellarSystem
 		return m_orbitalSpeeds;
 	}
 
+	const double OrbitingBody::GetCurrentSpeed() const
+	{
+		return 0.0;
+	}
+
 	void OrbitingBody::Init(const Physics::Point3D& focusObjectPt, double focusObjectMass)
 	{
 		m_semiMajorAxis = CalculateSemiMajorAxis(m_aphelion, m_perihelion);

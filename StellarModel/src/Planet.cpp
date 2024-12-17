@@ -26,7 +26,6 @@ namespace StellarSystem
 		, m_planetAttributes{ planetAttributes }
 		, m_rotationPerStep{ 0 }
 		, m_tilt{ planetAttributes.tilt }
-		, m_stepIterator{ 0 }
 	{
 		Init(planetAttributes, ptsInSingleOrbit);
 	}
@@ -43,26 +42,6 @@ namespace StellarSystem
 	double Planet::GetTilt() const
 	{
 		return m_tilt;
-	}
-
-	double Planet::GetStepIterator() const
-	{
-		return m_stepIterator;
-	}
-
-	void Planet::UpdateStepIterator()
-	{
-		m_stepIterator += 1;
-		if (m_stepIterator == Physics::N_ORBIT_PTS)
-		{
-			m_stepIterator = 0;
-		}
-	}
-
-	double Planet::GetCurrentSpeed() const
-	{
-		double orbitalSpeed = m_orbitalSpeeds.at(m_stepIterator);
-		return orbitalSpeed / Physics::KM;
 	}
 
 	PlanetAttributes Planet::GetPlanetAttributes() const

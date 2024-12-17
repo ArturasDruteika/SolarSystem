@@ -23,6 +23,7 @@ namespace StellarSystem
 		, m_inclination{ inclination }
 		, m_rotationalPeriod{ rotationPeriod }
 		, m_semiMajorAxis{}
+		, m_stepIterator{ 0 }
 	{
 		Init(focusObjectPt, focusObjectMass);
 	}
@@ -71,6 +72,20 @@ namespace StellarSystem
 		return m_rotationalPeriod;
 	}
 
+	double OrbitingBody::GetStepIterator() const
+	{
+		return m_stepIterator;
+	}
+
+	void OrbitingBody::UpdateStepIterator()
+	{
+		m_stepIterator += 1;
+		if (m_stepIterator == Physics::N_ORBIT_PTS)
+		{
+			m_stepIterator = 0;
+		}
+	}
+
 	const std::vector<Physics::Point3D>& OrbitingBody::GetOrbitalPoints() const
 	{
 		return m_orbitalPoints;
@@ -88,7 +103,7 @@ namespace StellarSystem
 
 	const double OrbitingBody::GetCurrentSpeed() const
 	{
-		return 0.0;
+		return m_orbitalSpeeds[m_stepIterator];
 	}
 
 	void OrbitingBody::Init(const Physics::Point3D& focusObjectPt, double focusObjectMass)

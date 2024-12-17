@@ -37,9 +37,6 @@ namespace StellarSystem
 
 		double GetRotationPerStep() const;
 		double GetTilt() const;
-		double GetStepIterator() const;
-		void UpdateStepIterator();
-		double GetCurrentSpeed() const;
 		PlanetAttributes GetPlanetAttributes() const;
 
 	private:
@@ -48,7 +45,6 @@ namespace StellarSystem
 
 		double m_rotationPerStep;
 		double m_tilt;
-		int m_stepIterator;
 		PlanetAttributes m_planetAttributes;
 	};
 }

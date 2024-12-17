@@ -47,6 +47,8 @@ namespace StellarSystem
 		double GetInclination() const;
 		double GetGravitationalParameter() const;
 		double GetRotationalPeriod() const;
+		double GetStepIterator() const;
+		void UpdateStepIterator();
 		const std::vector<Physics::Point3D>& GetOrbitalPoints() const;
 		Physics::Point3D GetOrbitalPoints(int id) const;
 		const std::vector<double>& GetOrbitalSpeeds() const;
@@ -69,6 +71,7 @@ namespace StellarSystem
 		double m_inclination;
 		double m_mu; // gravitational parameter
 		double m_rotationalPeriod;
+		int m_stepIterator;
 		std::vector<Physics::Point3D> m_orbitalPoints;
 		std::vector<double> m_orbitalSpeeds;
 		Physics::Point3D m_focusObjPoint;

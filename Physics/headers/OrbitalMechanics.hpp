@@ -29,7 +29,6 @@ namespace Physics
 		static double CalculateEccentricity(double semiMajorAxis, double semiMinorAxis);
 		static double CalculateEccentricityUsingAphelion(double semiMajorAxis, double aphelion);
 		static double CalculateGravitationalParameter(double centralBodyMass);
-		static double CalculateOrbitalRadius(const Point3D& focusPt, const Point3D& bodyPoint);
 		static double CalculateOrbitalSpeed(double orbitalRadius, double semiMajorAxis, double massCentralBody, double gravitationalParameter);
 		static double CalculateOrbitalSpeed(double orbitalRadius, double semiMajorAxis, double mu);
 		static std::vector<double> CalculateOrbitalSpeeds(

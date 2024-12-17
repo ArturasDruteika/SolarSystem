@@ -1,5 +1,6 @@
 ﻿#include "PhysicalConstants.hpp"
 #include "OrbitalMechanics.hpp"
+#include "Geometry.hpp"
 #include "spdlog/spdlog.h"
 #include <cmath>
 #include <string>
@@ -27,15 +28,6 @@ namespace Physics
         return GRAVITATIONAL_CONSTANT * centralBodyMass;
     }
 
-    double OrbitalMechanics::CalculateOrbitalRadius(const Point3D& focusPt, const Point3D& bodyPoint)
-    {
-        return std::sqrt(
-            std::pow(focusPt.x - bodyPoint.x, 2) +
-            std::pow(focusPt.y - bodyPoint.y, 2) +
-            std::pow(focusPt.z - bodyPoint.z, 2)
-        );
-    }
-
     double OrbitalMechanics::CalculateOrbitalSpeed(double orbitalRadius, double semiMajorAxis, double massCentralBody, double gravitationalParameter)
     {
         return std::sqrt(gravitationalParameter * massCentralBody * (2.0 / orbitalRadius - 1.0 / semiMajorAxis));
@@ -56,7 +48,7 @@ namespace Physics
         std::vector<double> orbitalSpeeds;
         for (const Point3D& orbitalPt : orbitalPoints)
         {
-            double orbitalRadius = CalculateOrbitalRadius(focusPt, orbitalPt);
+            double orbitalRadius = Geometry::CalculateEuclidianDistance(focusPt, orbitalPt);
             double orbitalSpeed = CalculateOrbitalSpeed(orbitalRadius, semiMajorAxis, gravitationalParameter);
             orbitalSpeeds.push_back(orbitalSpeed);
         }

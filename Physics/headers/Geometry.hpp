@@ -26,9 +26,9 @@ namespace Physics
 	class PHYSICS_API Geometry
 	{
 	public:
-		double CalculateEuclidianDistance(const Point2D& pt1, const Point2D& pt2);
-		double CalculateEuclidianDistance(const Point3D& pt1, const Point3D& pt2);
-		double CalculateEuclidianDistance(const std::vector<double>& pt1, const std::vector<double> pt2);
+		static double CalculateEuclidianDistance(const Point2D& pt1, const Point2D& pt2);
+		static double CalculateEuclidianDistance(const Point3D& pt1, const Point3D& pt2);
+		static double CalculateEuclidianDistance(const std::vector<double>& pt1, const std::vector<double> pt2);
 	};
 }
 

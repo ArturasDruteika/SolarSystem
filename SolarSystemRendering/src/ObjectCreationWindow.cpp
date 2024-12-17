@@ -6,7 +6,7 @@
 #include <set>
 
 
-constexpr float CREATE_BUTTON_DISABLE_TIME = 4.0f;
+constexpr float CREATE_BUTTON_DISABLE_TIME = 1.0f;
 
 
 ObjectCreationWindow::ObjectCreationWindow(const std::string& windowName)

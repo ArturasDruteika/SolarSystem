@@ -41,4 +41,8 @@ namespace Physics
         // Return the square root of the sum
         return std::sqrt(sum);
     }
+    double Geometry::CalculateSemiMinorAxis(double semiMajorAxis, double eccentricity)
+    {
+        return semiMajorAxis * std::sqrt(1 - std::pow(eccentricity, 2));
+    }
 }

@@ -1,6 +1,7 @@
 #include "OrbitingBody.hpp"
 #include "OrbitalMechanics.hpp"
 #include "PhysicalConstants.hpp"
+#include "Geometry.hpp"
 #include <stdexcept>
 #include <complex>
 
@@ -110,7 +111,7 @@ namespace StellarSystem
 	{
 		m_semiMajorAxis = CalculateSemiMajorAxis(m_aphelion, m_perihelion);
 		m_eccentricity = Physics::OrbitalMechanics::CalculateEccentricityUsingAphelion(m_semiMajorAxis, m_aphelion);
-		m_semiMinorAxis = CalculateSemiMinorAxis(m_semiMajorAxis, m_eccentricity);
+		m_semiMinorAxis = Physics::Geometry::CalculateSemiMinorAxis(m_semiMajorAxis, m_eccentricity);
 		m_mu = Physics::OrbitalMechanics::CalculateGravitationalParameter(focusObjectMass);
 		m_orbitalPoints = Physics::OrbitalMechanics::CalculateElipticalOrbitPoints(
 			m_semiMajorAxis,
@@ -140,11 +141,6 @@ namespace StellarSystem
 	double OrbitingBody::CalculateSemiMajorAxis(double aphelion, double perihelion)
 	{
 		return (aphelion + perihelion) / 2.0;
-	}
-
-	double OrbitingBody::CalculateSemiMinorAxis(double semiMajorAxis, double eccentricity)
-	{
-		return semiMajorAxis * std::sqrt(1 - std::pow(eccentricity, 2));
 	}
 }
 

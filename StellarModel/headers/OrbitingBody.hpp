@@ -60,7 +60,6 @@ namespace StellarSystem
 		void CalculateOrbitalPoints();
 		void CalculateOrbitalSpeedVec(const Physics::Point3D& focusPt);
 		double CalculateSemiMajorAxis(double aphelion, double perihelion);
-		double CalculateSemiMinorAxis(double semiMajorAxis, double eccentricity);
 
 	protected:
 		double m_aphelion;

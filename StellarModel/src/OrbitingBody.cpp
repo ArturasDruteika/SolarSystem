@@ -119,6 +119,7 @@ namespace StellarSystem
 			Physics::N_ORBIT_PTS
 		);
 		m_orbitalSpeeds = Physics::OrbitalMechanics::CalculateOrbitalSpeeds(m_semiMajorAxis, m_mu, m_orbitalPoints, focusObjectPt);
+		m_orbitalTravelTimesBetweenPoints = Physics::OrbitalMechanics::CalculateTravelTimesBetweenPoints(m_orbitalPoints, m_orbitalSpeeds);
 	}
 
 	void OrbitingBody::CalculateOrbitalPoints()

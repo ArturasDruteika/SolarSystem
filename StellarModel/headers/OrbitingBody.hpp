@@ -74,6 +74,7 @@ namespace StellarSystem
 		int m_stepIterator;
 		std::vector<Physics::Point3D> m_orbitalPoints;
 		std::vector<double> m_orbitalSpeeds;
+		std::vector<double> m_orbitalTravelTimesBetweenPoints;
 		Physics::Point3D m_focusObjPoint;
 	};
 }

@@ -12,25 +12,34 @@ namespace StellarSystem
 		double mass, 
 		const Physics::Point3D& focusObjectPt,
 		double focusObjectMass, 
-		double semiMajorAxis, 
-		double semiMinorAxis,
+		double aphelion, 
+		double perihelion,
 		double rotationPeriod,
 		double inclination
 	)
 		: CosmicBody(radius, mass)
-		, m_semiMajorAxis{ semiMajorAxis }
-		, m_semiMinorAxis{ semiMinorAxis }
+		, m_aphelion{ aphelion }
+		, m_perihelion{ perihelion }
 		, m_inclination{ inclination }
 		, m_rotationalPeriod{ rotationPeriod }
+		, m_semiMajorAxis{}
+		, m_stepIterator{ 0 }
 	{
-		m_eccentricity = Physics::OrbitalMechanics::CalculateEccentricity(m_semiMajorAxis, m_semiMinorAxis);
-		m_mu = Physics::OrbitalMechanics::CalculateGravitationalParameter(focusObjectMass);
-		CalculateOrbitalPoints();
-		CalculateOrbitalSpeedVec(focusObjectPt);
+		Init(focusObjectPt, focusObjectMass);
 	}
 
 	OrbitingBody::~OrbitingBody()
 	{
+	}
+
+	double OrbitingBody::GetAphelion() const
+	{
+		return m_aphelion;
+	}
+
+	double OrbitingBody::GetPerihelion() const
+	{
+		return m_perihelion;
 	}
 
 	double OrbitingBody::GetSemiMajorAxis() const
@@ -63,6 +72,20 @@ namespace StellarSystem
 		return m_rotationalPeriod;
 	}
 
+	double OrbitingBody::GetStepIterator() const
+	{
+		return m_stepIterator;
+	}
+
+	void OrbitingBody::UpdateStepIterator()
+	{
+		m_stepIterator += 1;
+		if (m_stepIterator == Physics::N_ORBIT_PTS)
+		{
+			m_stepIterator = 0;
+		}
+	}
+
 	const std::vector<Physics::Point3D>& OrbitingBody::GetOrbitalPoints() const
 	{
 		return m_orbitalPoints;
@@ -78,9 +101,30 @@ namespace StellarSystem
 		return m_orbitalSpeeds;
 	}
 
+	const double OrbitingBody::GetCurrentSpeed() const
+	{
+		return m_orbitalSpeeds[m_stepIterator];
+	}
+
+	void OrbitingBody::Init(const Physics::Point3D& focusObjectPt, double focusObjectMass)
+	{
+		m_semiMajorAxis = CalculateSemiMajorAxis(m_aphelion, m_perihelion);
+		m_eccentricity = Physics::OrbitalMechanics::CalculateEccentricityUsingAphelion(m_semiMajorAxis, m_aphelion);
+		m_semiMinorAxis = CalculateSemiMinorAxis(m_semiMajorAxis, m_eccentricity);
+		m_mu = Physics::OrbitalMechanics::CalculateGravitationalParameter(focusObjectMass);
+		m_orbitalPoints = Physics::OrbitalMechanics::CalculateElipticalOrbitPoints(
+			m_semiMajorAxis,
+			m_eccentricity,
+			m_inclination,
+			Physics::N_ORBIT_PTS
+		);
+		m_orbitalSpeeds = Physics::OrbitalMechanics::CalculateOrbitalSpeeds(m_semiMajorAxis, m_mu, m_orbitalPoints, focusObjectPt);
+		m_orbitalTravelTimesBetweenPoints = Physics::OrbitalMechanics::CalculateTravelTimesBetweenPoints(m_orbitalPoints, m_orbitalSpeeds);
+	}
+
 	void OrbitingBody::CalculateOrbitalPoints()
 	{
-		m_orbitalPoints = Physics::OrbitalMechanics::GenerateEllipticalOrbit(
+		m_orbitalPoints = Physics::OrbitalMechanics::CalculateElipticalOrbitPoints(
 			m_semiMajorAxis,
 			m_eccentricity,
 			m_inclination,
@@ -91,6 +135,16 @@ namespace StellarSystem
 	void OrbitingBody::CalculateOrbitalSpeedVec(const Physics::Point3D& focusPt)
 	{
 		m_orbitalSpeeds = Physics::OrbitalMechanics::CalculateOrbitalSpeeds(m_semiMajorAxis, m_mu, m_orbitalPoints, focusPt);
+	}
+
+	double OrbitingBody::CalculateSemiMajorAxis(double aphelion, double perihelion)
+	{
+		return (aphelion + perihelion) / 2.0;
+	}
+
+	double OrbitingBody::CalculateSemiMinorAxis(double semiMajorAxis, double eccentricity)
+	{
+		return semiMajorAxis * std::sqrt(1 - std::pow(eccentricity, 2));
 	}
 }
 

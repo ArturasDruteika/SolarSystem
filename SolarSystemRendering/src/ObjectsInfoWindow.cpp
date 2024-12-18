@@ -1,4 +1,5 @@
 #include "ObjectsInfoWindow.hpp"
+#include "PhysicalConstants.hpp"
 #include <boost/dll.hpp>
 
 
@@ -50,10 +51,10 @@ void ObjectsInfoWindow::RenderPlanetsInfoTable()
     static std::vector<std::string> tableColumnNames = 
     {
         "Planet Number", 
-        "Radius (Km)",
-        "Semi-major axis (Km)",
-        "Semi-minor axis (Km)",
-        "Speed (Km / h)",
+        "Radius (km)",
+        "Aphelion (mln km)",
+        "Perihelion (mln km)",
+        "Speed (km / h)",
         "Rotational Period (Days)",
         "Inclination (Deg)",
         "Tilt (Deg)",
@@ -78,19 +79,19 @@ void ObjectsInfoWindow::RenderPlanetsInfoTable()
             ImGui::TableNextColumn();
             ImGui::Text("%d", planetId);
             ImGui::TableNextColumn();
-            ImGui::Text("%.5f", planet.GetRadius());
+            ImGui::Text("%.2f", planet.GetRadius());
             ImGui::TableNextColumn();
-            ImGui::Text("%.5f", planet.GetSemiMajorAxis());
+            ImGui::Text("%.2f", planet.GetAphelion() / StellarSystem::DISTANCE_MULTIPLIER);
             ImGui::TableNextColumn();
-            ImGui::Text("%.5f", planet.GetSemiMinorAxis());
+            ImGui::Text("%.2f", planet.GetPerihelion() / StellarSystem::DISTANCE_MULTIPLIER);
             ImGui::TableNextColumn();
-            ImGui::Text("%.5f", planet.GetCurrentSpeed());
+            ImGui::Text("%.2f", planet.GetCurrentSpeed() / Physics::KM);
             ImGui::TableNextColumn();
-            ImGui::Text("%.5f", planet.GetRotationalPeriod());
+            ImGui::Text("%.2f", planet.GetRotationalPeriod());
             ImGui::TableNextColumn();
-            ImGui::Text("%.5f", planet.GetInclination());
+            ImGui::Text("%.2f", planet.GetInclination());
             ImGui::TableNextColumn();
-            ImGui::Text("%.5f", planet.GetTilt());
+            ImGui::Text("%.2f", planet.GetTilt());
             ImGui::TableNextColumn();
             if (RenderDeleteButtonOnTable(planetId))
             {

@@ -5,11 +5,12 @@
 
 namespace StellarSystem
 {
+
     // Private constructor for singleton
     SolarSystemModel::SolarSystemModel()
         : m_starsMap{}
         , m_planetsMap{}
-        , m_starPoint{ 0, 0, 0 }
+        , m_starPoint{ 0.0, 0.0, 0.0 }
         , m_planetsNextOrbitalPositions{}
         , m_planetsRotationDegrees{}
         , m_planetsStepIterators{}
@@ -35,7 +36,10 @@ namespace StellarSystem
 
     void SolarSystemModel::AddPlanet(int id, const PlanetAttributes& objectAttributes)
     {
-        m_planetsMap.insert({ id, Planet(objectAttributes, m_starPoint, 10000.0, Physics::N_ORBIT_PTS) });
+        PlanetAttributes planetAttributes = objectAttributes;
+        planetAttributes.aphelion *= DISTANCE_MULTIPLIER;
+        planetAttributes.perihelion *= DISTANCE_MULTIPLIER;
+        m_planetsMap.insert({ id, Planet(planetAttributes, m_starPoint, Physics::SOLAR_MASS, Physics::N_ORBIT_PTS) });
         m_planetsNextOrbitalPositions.insert({ id, m_planetsMap.at(id).GetOrbitalPoints(0)});
         m_planetsRotationDegrees.insert({ id, m_planetsMap.at(id).GetRotationPerStep() });
         m_planetsStepIterators.insert({ id, 0 });

@@ -26,14 +26,10 @@ namespace Physics
 	class PHYSICS_API OrbitalMechanics
 	{
 	public:
-		OrbitalMechanics();
-		~OrbitalMechanics();
-
-		static std::vector<Point3D> CalculateOrbitPoints(double semiMajorAxis, double eccentricity, double inclination, int numPoints);
-		static std::vector<Point3D> GenerateEllipticalOrbit(double semiMajorAxis, double eccentricity, double inclination, int numPoints);
 		static double CalculateEccentricity(double semiMajorAxis, double semiMinorAxis);
-		static double CalculateGravitationalParameter(double focusMass);
-		static double CalculateOrbitalRadius(const Point3D& focusPt, const Point3D& bodyPoint);
+		static double CalculateEccentricityUsingAphelion(double semiMajorAxis, double aphelion);
+		static double CalculateGravitationalParameter(double centralBodyMass);
+		static double CalculateOrbitalSpeed(double orbitalRadius, double semiMajorAxis, double massCentralBody, double gravitationalParameter);
 		static double CalculateOrbitalSpeed(double orbitalRadius, double semiMajorAxis, double mu);
 		static std::vector<double> CalculateOrbitalSpeeds(
 			double semiMajorAxis,
@@ -41,9 +37,11 @@ namespace Physics
 			const std::vector<Point3D>& orbitalPoints,
 			const Point3D& focusPt
 		);
-
-	private:
-
+		// Calculates orbital period in seconds
+		static double CalculateOrbitalPeriod(double semiMajorAxis, double massOfCentralBody);
+		static Point3D CalculatePosition(double semiMajorAxis, double eccentricity, double inclination, double trueAnomaly);
+		static std::vector<Point3D> CalculateElipticalOrbitPoints(double semiMajorAxis, double eccentricity, double inclination, int nSteps);
+		static std::vector<double> CalculateTravelTimesBetweenPoints(const std::vector<Point3D>& points, const std::vector<double>& speeds);
 	};
 }
 

@@ -6,7 +6,7 @@
 #include <set>
 
 
-constexpr float CREATE_BUTTON_DISABLE_TIME = 4.0f;
+constexpr float CREATE_BUTTON_DISABLE_TIME = 1.0f;
 
 
 ObjectCreationWindow::ObjectCreationWindow(const std::string& windowName)
@@ -66,17 +66,17 @@ void ObjectCreationWindow::RenderWindowInternal()
 
 void ObjectCreationWindow::RenderObjectRadiusSection()
 {
-    RenderObjectAttributeSelectionSection("Radius", "Radius", m_objectAttributes.radius);
+    RenderObjectAttributeSelectionSection("Radius (km)", "Radius", m_objectAttributes.radius);
 }
 
 void ObjectCreationWindow::RenderSemiMajorAxisSection()
 {
-    RenderObjectAttributeSelectionSection("Semi-major axis (km)", "Semi-major", m_objectAttributes.semiMajorAxis);
+    RenderObjectAttributeSelectionSection("Aphelion (mln km)", "Aphelion", m_objectAttributes.aphelion);
 }
 
 void ObjectCreationWindow::RenderSemiMinorAxisSection()
 {
-    RenderObjectAttributeSelectionSection("Semi-minor axis (km)", "Semi-minor", m_objectAttributes.semiMinorAxis);
+    RenderObjectAttributeSelectionSection("Perihelion (mln km)", "Perihelion", m_objectAttributes.perihelion);
 }
 
 void ObjectCreationWindow::RenderObjectRotationalPeriodSection()
@@ -153,8 +153,8 @@ void ObjectCreationWindow::SetInitialValues()
 {
     m_objectAttributes.radius = 0.5;
     m_objectAttributes.mass = 0.0;
-    m_objectAttributes.semiMajorAxis = 10.0;
-    m_objectAttributes.semiMinorAxis = 8.0;
+    m_objectAttributes.aphelion = 10.0;
+    m_objectAttributes.perihelion = 8.0;
     m_objectAttributes.rotationalPeriod = 1.0;
     m_objectAttributes.inclination = 0.0;
     m_objectAttributes.tilt = 0.0;

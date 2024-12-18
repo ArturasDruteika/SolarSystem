@@ -27,6 +27,8 @@
 
 namespace StellarSystem
 {
+    constexpr double DISTANCE_MULTIPLIER = 1e9;
+
     class STELLARMODEL_API SolarSystemModel
     {
     public:

@@ -1,5 +1,6 @@
 ﻿#include "PhysicalConstants.hpp"
 #include "OrbitalMechanics.hpp"
+#include "Geometry.hpp"
 #include "spdlog/spdlog.h"
 #include <cmath>
 #include <string>
@@ -7,91 +8,6 @@
 
 namespace Physics
 {
-    OrbitalMechanics::OrbitalMechanics()
-    {
-    }
-
-    OrbitalMechanics::~OrbitalMechanics()
-    {
-    }
-
-    std::vector<Point3D> OrbitalMechanics::CalculateOrbitPoints(double semiMajorAxis, double eccentricity, double inclination, int numPoints)
-    {
-        std::vector<Point3D> points;
-
-        // Calculate semi-minor axis and focal distance
-        double semiMinorAxis = semiMajorAxis * std::sqrt(1 - eccentricity * eccentricity);
-        double focalDistance = semiMajorAxis * eccentricity; // Distance from center to focus
-
-        // Step size for dividing the orbit into equal intervals
-        double step = 2 * M_PI / numPoints;
-
-        for (int n = 0; n < numPoints; ++n)
-        {
-            // True anomaly (angle around the orbit in radians)
-            double t = n * step;
-
-            // Parametric equations for an ellipse with a focal offset
-            double x = semiMajorAxis * std::cos(t) + focalDistance;  // Shift x by focal distance
-            double y = semiMinorAxis * std::sin(t);                  // Y-coordinate in orbital plane
-
-            // Account for orbital inclination to project into 3D space
-            Point3D point;
-            point.x = x;                            // X-coordinate remains unchanged
-            point.y = y * std::cos(inclination);    // Y-coordinate adjusted for inclination
-            point.z = y * std::sin(inclination);    // Z-coordinate comes from inclination
-
-            points.push_back(point);
-        }
-        return points;
-    }
-
-    std::vector<Point3D> OrbitalMechanics::GenerateEllipticalOrbit(double semiMajorAxis, double eccentricity, double inclination, int numPoints)
-    {
-        std::vector<Point3D> orbit;
-        orbit.reserve(numPoints);
-
-        // Semi-minor axis and inclination calculations
-        double semiMinorAxis = semiMajorAxis * std::sqrt(1 - eccentricity * eccentricity);
-
-        // Loop over evenly spaced mean anomalies
-        for (int i = 0; i < numPoints; ++i)
-        {
-            double meanAnomaly = 2 * M_PI * i / numPoints; // Mean anomaly for this time step
-
-            // Solve Kepler's equation: M = E - e*sin(E) (using numerical approximation)
-            double eccentricAnomaly = meanAnomaly; // Initial guess
-            for (int j = 0; j < ECCENTRIC_ANOMALY_ITERATIONS; ++j) // Iterate for better accuracy
-            {
-                eccentricAnomaly -= (eccentricAnomaly - eccentricity * std::sin(eccentricAnomaly) - meanAnomaly) /
-                    (1 - eccentricity * std::cos(eccentricAnomaly));
-            }
-
-            // Convert eccentric anomaly to true anomaly
-            double trueAnomaly = 2 * std::atan2(
-                std::sqrt(1 + eccentricity) * std::sin(eccentricAnomaly / 2),
-                std::sqrt(1 - eccentricity) * std::cos(eccentricAnomaly / 2)
-            );
-
-            // Orbital radius
-            double radius = (semiMajorAxis * (1 - eccentricity * eccentricity)) /
-                (1 + eccentricity * std::cos(trueAnomaly));
-
-            // Cartesian coordinates in the orbital plane
-            double x = radius * std::cos(trueAnomaly);
-            double y = radius * std::sin(trueAnomaly);
-
-            // Apply inclination
-            double z = y * std::sin(inclination);
-            y = y * std::cos(inclination);
-
-            // Store the point
-            orbit.push_back({ x, y, z });
-        }
-
-        return orbit;
-    }
-
     double OrbitalMechanics::CalculateEccentricity(double semiMajorAxis, double semiMinorAxis)
     {
         if (semiMajorAxis <= 0 || semiMinorAxis <= 0 || semiMinorAxis > semiMajorAxis)
@@ -102,18 +18,19 @@ namespace Physics
         return std::sqrt(1 - (semiMinorAxis * semiMinorAxis) / (semiMajorAxis * semiMajorAxis));
     }
 
-    double OrbitalMechanics::CalculateGravitationalParameter(double focusMass)
+    double OrbitalMechanics::CalculateEccentricityUsingAphelion(double semiMajorAxis, double aphelion)
     {
-        return GRAVITATIONAL_CONSTANT * focusMass;
+        return (aphelion - semiMajorAxis) / semiMajorAxis;
     }
 
-    double OrbitalMechanics::CalculateOrbitalRadius(const Point3D& focusPt, const Point3D& bodyPoint)
+    double OrbitalMechanics::CalculateGravitationalParameter(double centralBodyMass)
     {
-        return std::sqrt(
-            std::pow(focusPt.x - bodyPoint.x, 2) +
-            std::pow(focusPt.y - bodyPoint.y, 2) +
-            std::pow(focusPt.z - bodyPoint.z, 2)
-        );
+        return GRAVITATIONAL_CONSTANT * centralBodyMass;
+    }
+
+    double OrbitalMechanics::CalculateOrbitalSpeed(double orbitalRadius, double semiMajorAxis, double massCentralBody, double gravitationalParameter)
+    {
+        return std::sqrt(gravitationalParameter * massCentralBody * (2.0 / orbitalRadius - 1.0 / semiMajorAxis));
     }
 
     double OrbitalMechanics::CalculateOrbitalSpeed(double orbitalRadius, double semiMajorAxis, double mu)
@@ -131,10 +48,77 @@ namespace Physics
         std::vector<double> orbitalSpeeds;
         for (const Point3D& orbitalPt : orbitalPoints)
         {
-            double orbitalRadius = CalculateOrbitalRadius(focusPt, orbitalPt);
+            double orbitalRadius = Geometry::CalculateEuclidianDistance(focusPt, orbitalPt);
             double orbitalSpeed = CalculateOrbitalSpeed(orbitalRadius, semiMajorAxis, gravitationalParameter);
             orbitalSpeeds.push_back(orbitalSpeed);
         }
         return orbitalSpeeds;
+    }
+
+    double OrbitalMechanics::CalculateOrbitalPeriod(double semiMajorAxis, double massOfCentralBody)
+    {
+        return 2 * M_PI * std::sqrt(std::pow(semiMajorAxis, 3) / (GRAVITATIONAL_CONSTANT * massOfCentralBody));
+    }
+
+    Point3D OrbitalMechanics::CalculatePosition(double semiMajorAxis, double eccentricity, double inclination, double trueAnomaly)
+    {
+        // Radius at current true anomaly
+        double radius = semiMajorAxis * (1 - eccentricity * eccentricity) / (1 + eccentricity * std::cos(trueAnomaly));
+
+        // Position in orbital plane
+        double xPlane = radius * std::cos(trueAnomaly);
+        double yPlane = radius * std::sin(trueAnomaly);
+
+        // Convert to 3D space considering inclination
+        Point3D pos;
+        pos.x = xPlane;
+        pos.y = yPlane * std::cos(inclination);
+        pos.z = yPlane * std::sin(inclination);
+
+        return pos;
+    }
+
+    std::vector<Point3D> OrbitalMechanics::CalculateElipticalOrbitPoints(double semiMajorAxis, double eccentricity, double inclination, int nSteps)
+    {
+        std::vector<Point3D> elipticalOrbitPts;
+        elipticalOrbitPts.reserve(nSteps);
+
+        for (int i = 0; i < nSteps; i++)
+        {
+            double trueAnomaly = 2 * M_PI * i / nSteps; // Divide orbit into equal angles
+            Point3D pos = CalculatePosition(semiMajorAxis, eccentricity, inclination, trueAnomaly);
+            elipticalOrbitPts.push_back(pos);
+        }
+        return elipticalOrbitPts;
+    }
+
+    std::vector<double> OrbitalMechanics::CalculateTravelTimesBetweenPoints(const std::vector<Point3D>& points, const std::vector<double>& speeds)
+    {
+        // Validate input sizes
+        if (points.size() != speeds.size()) 
+        {
+            throw std::invalid_argument("Points and speeds vectors must have the same size.");
+        }
+
+        std::vector<double> travelTimes;
+        travelTimes.reserve(points.size() - 1);
+
+        // Loop through the points to calculate travel times
+        for (size_t i = 0; i < points.size(); i++) 
+        {
+            double distance = 0.0;
+            if (i == points.size() - 1)
+            {
+                distance = Geometry::CalculateEuclidianDistance(points[i], points[0]);
+            }
+            else
+            {
+                distance = Geometry::CalculateEuclidianDistance(points[i], points[i + 1]);
+            }
+            double time = distance / speeds[i]; // Assuming speed is constant for the segment
+            travelTimes.push_back(time);
+        }
+
+        return travelTimes;
     }
 }

@@ -91,4 +91,25 @@ namespace Physics
         }
         return elipticalOrbitPts;
     }
+
+    std::vector<double> OrbitalMechanics::CalculateTravelTimesBetweenPoints(const std::vector<Point3D>& points, const std::vector<double>& speeds)
+    {
+        // Validate input sizes
+        if (points.size() != speeds.size()) {
+            throw std::invalid_argument("Points and speeds vectors must have the same size.");
+        }
+
+        std::vector<double> travelTimes;
+        travelTimes.reserve(points.size() - 1);
+
+        // Loop through the points to calculate travel times
+        for (size_t i = 0; i < points.size() - 1; ++i) 
+        {
+            double distance = Geometry::CalculateEuclidianDistance(points[i], points[i + 1]);
+            double time = distance / speeds[i]; // Assuming speed is constant for the segment
+            travelTimes.push_back(time);
+        }
+
+        return travelTimes;
+    }
 }

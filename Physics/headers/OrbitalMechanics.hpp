@@ -41,6 +41,7 @@ namespace Physics
 		static double CalculateOrbitalPeriod(double semiMajorAxis, double massOfCentralBody);
 		static Point3D CalculatePosition(double semiMajorAxis, double eccentricity, double inclination, double trueAnomaly);
 		static std::vector<Point3D> CalculateElipticalOrbitPoints(double semiMajorAxis, double eccentricity, double inclination, int nSteps);
+		static std::vector<double> CalculateTravelTimesBetweenPoints(const std::vector<Point3D>& points, const std::vector<double>& speeds);
 	};
 }
 

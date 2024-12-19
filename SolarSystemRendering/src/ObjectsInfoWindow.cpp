@@ -6,7 +6,7 @@
 ObjectsInfoWindow::ObjectsInfoWindow(const std::string& windowName)
     : GraphicalWindow(windowName)
     , m_customFont{ nullptr }
-    , m_nStyleVars{0}
+    , m_nStyleVars{ 0 }
     , m_solarSystemModel{ StellarSystem::SolarSystemModel::GetInstance() }
 {
 }
@@ -48,12 +48,13 @@ void ObjectsInfoWindow::RenderPlanetsInfoTable()
     ImGui::SeparatorText("Planets Table");
 
     static ImGuiTableFlags flagsPlanetsTable = ImGuiTableFlags_Borders | ImGuiTableFlags_NoHostExtendX;
-    static std::vector<std::string> tableColumnNames = 
+    static std::vector<std::string> tableColumnNames =
     {
-        "Planet Number", 
+        "Planet Number",
         "Radius (km)",
         "Aphelion (mln km)",
         "Perihelion (mln km)",
+        "Eccentricity",
         "Speed (km / h)",
         "Rotational Period (Days)",
         "Inclination (Deg)",
@@ -84,6 +85,8 @@ void ObjectsInfoWindow::RenderPlanetsInfoTable()
             ImGui::Text("%.2f", planet.GetAphelion() / StellarSystem::DISTANCE_MULTIPLIER);
             ImGui::TableNextColumn();
             ImGui::Text("%.2f", planet.GetPerihelion() / StellarSystem::DISTANCE_MULTIPLIER);
+            ImGui::TableNextColumn();
+            ImGui::Text("%.4f", planet.GetEccentricity());
             ImGui::TableNextColumn();
             ImGui::Text("%.2f", planet.GetCurrentSpeed() / Physics::KM);
             ImGui::TableNextColumn();

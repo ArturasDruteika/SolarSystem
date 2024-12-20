@@ -61,6 +61,7 @@ namespace StellarSystem
         std::unordered_map<int, Physics::Point3D> m_planetsNextOrbitalPositions;
         std::unordered_map<int, double> m_planetsRotationDegrees;
         std::unordered_map<int, int> m_planetsStepIterators;
+        std::unordered_map<int, double> m_accumulitiveTimes;
     };
 }
 

@@ -102,17 +102,17 @@ namespace StellarSystem
 		return m_orbitalSpeeds;
 	}
 
-	const double OrbitingBody::GetCurrentSpeed() const
+	double OrbitingBody::GetCurrentSpeed() const
 	{
 		return m_orbitalSpeeds[m_stepIterator];
 	}
 
-	const std::vector<double> OrbitingBody::GetOrbitalTravelTimesBetweenPoints() const
+	const std::vector<double>& OrbitingBody::GetOrbitalTravelTimesBetweenPoints() const
 	{
 		return m_orbitalTravelTimesBetweenPoints;
 	}
 
-	const double OrbitingBody::GetCurrentTime() const
+	double OrbitingBody::GetCurrentTime() const
 	{
 		return m_orbitalTravelTimesBetweenPoints[m_stepIterator];
 	}

@@ -23,6 +23,7 @@ public:
 	void Step();
 
 private:
+	double m_renderingTimeDivisor;
 	std::unordered_map<int, Sphere> m_starSpheresMap;
 	std::unordered_map<int, Sphere> m_planetSpheresMap;
 

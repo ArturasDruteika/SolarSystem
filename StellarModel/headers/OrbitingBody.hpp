@@ -52,7 +52,9 @@ namespace StellarSystem
 		const std::vector<Physics::Point3D>& GetOrbitalPoints() const;
 		Physics::Point3D GetOrbitalPoints(int id) const;
 		const std::vector<double>& GetOrbitalSpeeds() const;
-		const double GetCurrentSpeed() const;
+		double GetCurrentSpeed() const;
+		const std::vector<double>& GetOrbitalTravelTimesBetweenPoints() const;
+		double GetCurrentTime() const;
 
 
 	private:
@@ -60,7 +62,6 @@ namespace StellarSystem
 		void CalculateOrbitalPoints();
 		void CalculateOrbitalSpeedVec(const Physics::Point3D& focusPt);
 		double CalculateSemiMajorAxis(double aphelion, double perihelion);
-		double CalculateSemiMinorAxis(double semiMajorAxis, double eccentricity);
 
 	protected:
 		double m_aphelion;

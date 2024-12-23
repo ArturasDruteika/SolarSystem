@@ -43,6 +43,8 @@ namespace StellarSystem
         m_planetsNextOrbitalPositions.insert({ id, m_planetsMap.at(id).GetOrbitalPoints(0)});
         m_planetsRotationDegrees.insert({ id, m_planetsMap.at(id).GetRotationPerStep() });
         m_planetsStepIterators.insert({ id, 0 });
+        m_accumulitiveTimes.insert({ id, std::chrono::nanoseconds::zero() });
+        m_lastIterationTimes.insert({ id, std::chrono::high_resolution_clock::now() });
     }
 
     void SolarSystemModel::OnDeleteStar(int id)
@@ -80,15 +82,27 @@ namespace StellarSystem
         return m_planetsStepIterators;
     }
 
-    void SolarSystemModel::Step()
+    void SolarSystemModel::Step(double speedUpValue)
     {
         static int stepIterator = 0;
         for (auto& [id, planet] : m_planetsMap)
         {
-            planet.UpdateStepIterator();
-            stepIterator = planet.GetStepIterator();
-            m_planetsNextOrbitalPositions.at(id) = planet.GetOrbitalPoints(stepIterator);
-            m_planetsStepIterators.at(id) = stepIterator;
+            std::chrono::steady_clock::time_point currentTime = std::chrono::high_resolution_clock::now();
+            std::chrono::nanoseconds iterationTime = std::chrono::duration_cast<std::chrono::nanoseconds>(currentTime - m_lastIterationTimes[id]);
+            m_lastIterationTimes[id] = currentTime;
+            m_accumulitiveTimes[id] += iterationTime;
+            double timeBetweenCurrentElypticalPoints = planet.GetCurrentTime();
+            timeBetweenCurrentElypticalPoints /= speedUpValue;
+            std::chrono::nanoseconds nanosecondsBetweenCurrentElypticalPoints = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::duration<double>(timeBetweenCurrentElypticalPoints));
+            
+            if (m_accumulitiveTimes[id] > nanosecondsBetweenCurrentElypticalPoints)
+            {
+                planet.UpdateStepIterator();
+                stepIterator = planet.GetStepIterator();
+                m_planetsNextOrbitalPositions.at(id) = planet.GetOrbitalPoints(stepIterator);
+                m_planetsStepIterators.at(id) = stepIterator;
+                m_accumulitiveTimes[id] = std::chrono::nanoseconds::zero();
+            }
         }
     }
 }

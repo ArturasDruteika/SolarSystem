@@ -23,6 +23,7 @@
 #include <unordered_map>
 #include <vector>
 #include <utility>
+#include <chrono>
 
 
 namespace StellarSystem
@@ -48,7 +49,7 @@ namespace StellarSystem
         const std::unordered_map<int, Physics::Point3D>& GetPlanetsNextOrbitalPositions(int orbitalPointId) const;
         const std::unordered_map<int, double>& GetPlanetsRotationDegrees() const;
         const std::unordered_map<int, int>& GetPlanetsStepIterators() const;
-        void Step();
+        void Step(double speedUpValue = 1.0);
 
     private:
         // Private constructor and destructor
@@ -61,6 +62,8 @@ namespace StellarSystem
         std::unordered_map<int, Physics::Point3D> m_planetsNextOrbitalPositions;
         std::unordered_map<int, double> m_planetsRotationDegrees;
         std::unordered_map<int, int> m_planetsStepIterators;
+        std::unordered_map<int, std::chrono::nanoseconds> m_accumulitiveTimes;
+        std::unordered_map<int, std::chrono::steady_clock::time_point> m_lastIterationTimes;
     };
 }
 

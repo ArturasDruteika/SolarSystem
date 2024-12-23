@@ -6,6 +6,7 @@
 
 SolarSystemVTKInteractor::SolarSystemVTKInteractor()
 	: m_solarSystemModel{ StellarSystem::SolarSystemModel::GetInstance() }
+	, m_renderingTimeDivisor{ 6'000.0 }
 {
 }
 
@@ -66,14 +67,14 @@ void SolarSystemVTKInteractor::Step()
 	static const std::unordered_map<int, double>& planetsRotationDegrees = m_solarSystemModel.GetPlanetsRotationDegrees();
 	for (auto& [id, planet] : planetMap)
 	{
-		int stepIterator = planetMap.at(id).GetStepIterator();
-		Physics::Point3D nextOrbitalPoint = planet.GetOrbitalPoints().at(stepIterator);
+		int stepIterator = planet.GetStepIterator();
+		Physics::Point3D nextOrbitalPoint = planet.GetOrbitalPoints(stepIterator);
 		m_planetSpheresMap.at(id).MoveActor(
 			nextOrbitalPoint.x / StellarSystem::DISTANCE_MULTIPLIER,
 			nextOrbitalPoint.y / StellarSystem::DISTANCE_MULTIPLIER,
 			nextOrbitalPoint.z / StellarSystem::DISTANCE_MULTIPLIER
 		);
 		m_planetSpheresMap.at(id).RotateActor(planetsRotationDegrees.at(id));
-		m_solarSystemModel.Step();
 	}
+	m_solarSystemModel.Step(m_renderingTimeDivisor);
 }

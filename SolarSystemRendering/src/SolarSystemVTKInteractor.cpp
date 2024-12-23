@@ -6,7 +6,7 @@
 
 SolarSystemVTKInteractor::SolarSystemVTKInteractor()
 	: m_solarSystemModel{ StellarSystem::SolarSystemModel::GetInstance() }
-	, m_renderingTimeDivisor{ 60'000.0 }
+	, m_renderingTimeDivisor{ 6'000.0 }
 {
 }
 
